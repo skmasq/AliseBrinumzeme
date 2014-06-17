@@ -8,28 +8,37 @@ namespace AliseBrinumzeme
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+            #region Script Bundles
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+            // Include all individual scripts here
+            string[] SingleScriptInclude = new string[] { };
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+            // Include script directories here
+            Bundle ScriptBundle = new ScriptBundle("~/Scripts")
+                .Include(SingleScriptInclude)
+                .IncludeDirectory("~/Content/js/libraries", "*.js", false)
+                .IncludeDirectory("~/Content/js/site", "*.js", false);
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+            bundles.Add(ScriptBundle);
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+            #endregion
 
-            // Set EnableOptimizations to false for debugging. For more information,
-            // visit http://go.microsoft.com/fwlink/?LinkId=301862
-            BundleTable.EnableOptimizations = true;
+            #region Style Bundles
+
+            // Include individual styles here
+            string[] SingleStyleInclude = new string[] {
+                "~/Content/css/site.css",
+            };
+
+            // Include style directories here
+            Bundle StyleBundle = new StyleBundle("~/Styles")
+                .Include(SingleStyleInclude);
+
+            bundles.Add(StyleBundle);
+
+            #endregion
+
+            BundleTable.EnableOptimizations = false;
         }
     }
 }

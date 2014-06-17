@@ -1,0 +1,500 @@
+﻿body {
+}
+
+body, html {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    min-width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+@import '../fonts/fonts.less';
+@import 'variables.less';
+@import 'functions.less';
+
+/*
+    #viewport: main layer
+    */
+
+#viewport {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 100%;
+    background: url(/Content/images/Background_tile_002.png);
+    background-repeat: repeat;
+    overflow: hidden;
+    /* Minimal zone */
+    min-width: 1200px;
+    min-height: 700px;
+
+    #molbert {
+        width: 149px;
+        position: absolute;
+        left: 645px;
+        bottom: -13px;
+        height: 430px;
+
+        & .rabit-001{
+            position: absolute;
+            bottom: 3px;
+            left: 63px;
+            width: 91px;
+        }
+
+        & .logo-container {
+            position: absolute;
+            width: 155px;
+            top: 153px;
+            left: -1px;
+            z-index: 2;
+        }
+
+        & .logo-background {
+            position: absolute;
+            width: 161px;
+            top: 89px;
+            left: 2px;
+            height: 225px;
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            -o-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+
+        & .molbert-image {
+            height: 430px;
+        }
+    }
+
+    #lamp {
+        position: absolute;
+        top: -30px;
+        left: 510px;
+        z-index: 2;
+
+        & > img {
+            height: 300px;
+        }
+
+        &.turned-on {
+            & .lamp-light-bulb {
+                & img.turned-on {
+                    display: block !important;
+                }
+            }
+        }
+
+        & .lamp-light-bulb {
+            position: absolute;
+
+
+            & img.turned-on {
+                display: block;
+            }
+
+            &.light-bulb-1 {
+                bottom: 145px;
+                left: 10px;
+                z-index: -1;
+            }
+
+            &.light-bulb-2 {
+                bottom: 137px;
+                left: 35px;
+                z-index: -2;
+            }
+
+            &.light-bulb-3 {
+                bottom: 147px;
+                left: 28px;
+                z-index: -1;
+            }
+
+            &.light-bulb-4 {
+                bottom: 152px;
+                left: 90px;
+            }
+
+            &.light-bulb-5 {
+                bottom: 144px;
+                right: 74px;
+            }
+
+            &.light-bulb-6 {
+                bottom: 129px;
+                right: 39px;
+                z-index: -2;
+            }
+
+            &.light-bulb-7 {
+                bottom: 139px;
+                right: 18px;
+            }
+
+            &.light-bulb-8 {
+                bottom: 132px;
+                right: 5px;
+                z-index: -1;
+            }
+        }
+    }
+
+    #bird-with-key {
+        position: absolute;
+        right: 100px;
+        top: 8px;
+
+        & .bird-element {
+            position: absolute;
+            width: 200px;
+            z-index: 3;
+        }
+
+        & .string-container {
+            position: absolute;
+            width: 35px;
+            top: 126px;
+            left: 11px;
+            z-index: 2;
+
+            & .string-element {
+                width: 100%;
+            }
+
+            & .key-element {
+                position: absolute;
+                width: 20px;
+                bottom: -59px;
+                left: 12px;
+                z-index: -1;
+            }
+        }
+    }
+
+    & .viewport-middleholder {
+        position: relative;
+        width: 1200px;
+        height: 100%;
+        margin: 0 auto;
+        #bundle .clearfix();
+    }
+    /*#region Zone: Doors*/
+    #doors-wrap {
+        position: absolute;
+        z-index: 400;
+        width: 324px;
+        height: 724px;
+        left: 155px;
+        bottom: -45px;
+
+        & .doors-container {
+            position: relative;
+            float: left;
+            height: 100%;
+            width: 100%;
+
+            #door-rabbit {
+                position: absolute;
+                bottom: 147px;
+                left: -58px;
+                -webkit-transform: rotate(-25deg) scale(0.25);
+                -moz-transform: rotate(-25deg) scale(0.25);
+                -ms-transform: rotate(-25deg) scale(0.25);
+                -o-transform: rotate(-25deg) scale(0.25);
+                transform: rotate(-25deg) scale(0.25);
+                z-index: -1;
+
+                & .rabbit-head {
+                    position: absolute;
+                    z-index: 1;
+                }
+
+                & .lear-container {
+                    position: absolute;
+                    z-index: -1;
+                    top: -465px;
+                    left: -42px;
+                }
+
+                & .rear-container {
+                    position: absolute;
+                    z-index: -1;
+                    top: -387px;
+                    left: 205px;
+                }
+            }
+
+            #doorknobBack {
+                position: absolute;
+                top: 246px;
+                right: 24px;
+                width: 30px;
+                -moz-transform: rotate(-4deg);
+                -o-transform: rotate(-4deg);
+                -ms-transform: rotate(-4deg); /* IE 9 */
+                -webkit-transform: rotate(-4deg); /* Opera, Chrome, and Safari */
+                transform: rotate(-4deg);
+            }
+
+            #doorknob {
+                position: absolute;
+                top: 268px;
+                right: 24px;
+                width: 30px;
+            }
+
+            & .doors-image {
+            }
+            /* #region Bubble Bird Positioning*/
+            & .bubble-bird-wrap {
+                position: absolute;
+                top: -55px;
+                left: -40px;
+                #bundle .clearfix();
+
+                & .bubble-bird-container {
+                    position: relative;
+                    float: left;
+                    width: 100%;
+                    height: 100%;
+                    #bundle .clearfix();
+
+                    & > img {
+                        position: absolute;
+                    }
+
+                    & .bubble-bird-body {
+                        top: 0;
+                        left: 0;
+                    }
+
+                    & .bubble-bird-top-beak {
+                        left: 146px;
+                        top: 10px;
+                    }
+
+                    & .bubble-bird-bottom-beak {
+                        top: 15px;
+                        left: 146px;
+                    }
+
+                    & .bubble-bird-legs {
+                        top: 57px;
+                        left: 85px;
+                    }
+                }
+            }
+            /* #endregion */
+            /* #region Bubble Text Positioning*/
+            & .bubble-text-wrap {
+                position: absolute;
+                top: -40px;
+                left: 115px;
+                width: 235px;
+                height: 123px;
+
+                & .bubble-text-container {
+                    position: relative;
+                    float: left;
+                    width: 100%;
+                    height: 100%;
+
+                    & .bubble-text-item {
+                        display: none;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                    }
+                }
+            }
+            /* #endregion */
+            /* #region Hitbox Positioning */
+            & .menu-hitbox {
+                position: absolute;
+                left: 69px;
+                width: 176px;
+                height: 45px;
+                cursor: pointer;
+                //background-color: rgba(0, 0, 255, 0.48);
+                &.section-1 {
+                    top: 82px;
+                }
+
+                &.section-2 {
+                    top: 185px;
+                }
+
+                &.section-3 {
+                    top: 290px;
+                }
+
+                &.section-4 {
+                    top: 400px;
+                }
+
+                &.section-5 {
+                    top: 505px;
+                }
+
+                &.section-6 {
+                    top: 610px;
+                }
+            }
+            /* #endregion */
+        }
+    }
+
+    .overlaping-blur {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 500;
+
+        & .overlap-taint {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.36);
+            z-index: 550;
+        }
+
+        & #canvas-container {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 100%;
+            z-index: 520;
+        }
+    }
+    /*#endregion*/
+    #section-wrap {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 666px;
+        width: 502px;
+        margin-top: -333px;
+        margin-left: -251px;
+        z-index: 600;
+
+        & .section-container {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+
+            & .section-background-image {
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 1;
+            }
+
+            & .section-content-wrap {
+                display: none;
+                position: absolute;
+                top: 100px;
+                left: 75px;
+                height: 460px;
+                width: 346px;
+                z-index: 2;
+                //background-color: rgba(0, 0, 255, 0.36);
+                & .section-content-container {
+                    position: relative;
+                    float: left;
+                    height: 100%;
+                    width: 100%;
+
+                    & .main-scene-wrap {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 260px;
+                        //background-color: rgba(0, 0, 255, 0.36);
+                        & .main-scene-container {
+                            position: relative;
+                            float: left;
+                            width: 100%;
+                            height: 100%;
+
+                            & .main-scene-image-container {
+                                display: none;
+                                box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.62);
+
+                                &.vpos-image {
+                                    margin: 0 auto;
+                                }
+                            }
+                        }
+                    }
+
+                    & .thumbnail-scene-wrap {
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        height: 200px; //?
+                        & .thumbnail-scene-container {
+                            position: relative;
+                            float: left;
+                            width: 100%;
+                            height: 100%;
+                            #bundle .box-sizing();
+                            padding-top: 25px;
+
+                            & .thumbnail-top-row, & .thumbnail-bottom-row {
+                                position: relative;
+                                width: 100%;
+                                height: 85px;
+                                //background-color: blue;
+                                & .thumbnail-image-container {
+                                    position: relative;
+                                    float: left;
+                                    //background-color: red;
+                                    margin: 0 6px;
+                                    width: 107px;
+                                    height: 100%;
+                                    overflow: hidden;
+                                    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.62);
+                                    cursor: pointer;
+
+                                    &:first-child {
+                                        margin-left: 0;
+                                    }
+
+                                    &:nth-child(3) {
+                                        margin-right: 0;
+                                    }
+
+                                    & img.thumbnail-image {
+                                        //display: none;
+                                    }
+                                }
+                            }
+
+                            & .thumbnail-bottom-row {
+                                margin-top: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

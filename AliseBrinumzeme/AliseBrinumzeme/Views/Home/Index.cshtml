@@ -1,31 +1,193 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
+﻿<div id="viewport">
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+    <div id="bird-with-key">
+        <img src="~/Content/images/Bird_001_001.png" alt="" class="bird-element" />
+        <div class="string-container">
+            <img src="~/Content/images/String_001_001.png" alt="" class="string-element" />
+            <img src="~/Content/images/Key_001_001.png" alt="" class="key-element" />
+        </div>
+    </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <div class="viewport-middleholder">
+
+        <div id="lamp" class="version-1 turned-on">
+
+            <!--
+            To initiate lamp movement open console and type lampInit(),
+            or in common.js uncomment lampInit() within init()
+        -->
+            <!-- #region Lamp -->
+
+            <img src="/Content/images/Lamp 003 20140524 0040.png" alt="" />
+
+            <!-- #endregion -->
+            <!-- #region Light Bulbs -->
+            <!-- TODO: Merge everything into one image -->
+            <div class="lamp-light-bulb light-bulb-1">
+                <img src="/Content/images/Light_Bulb_001_001.png" alt="" class="turned-on" />
+            </div>
+            <div class="lamp-light-bulb light-bulb-2">
+                <img src="/Content/images/Light_Bulb_001_001.png" alt="" class="turned-on" />
+            </div>
+            <div class="lamp-light-bulb light-bulb-3">
+                <img src="/Content/images/Light_Bulb_001_001.png" alt="" class="turned-on" />
+            </div>
+            <div class="lamp-light-bulb light-bulb-4">
+                <img src="/Content/images/Light_Bulb_001_001.png" alt="" class="turned-on" />
+            </div>
+            <div class="lamp-light-bulb light-bulb-5">
+                <img src="/Content/images/Light_Bulb_001_001.png" alt="" class="turned-on" />
+            </div>
+            <div class="lamp-light-bulb light-bulb-6">
+                <img src="/Content/images/Light_Bulb_001_001.png" alt="" class="turned-on" />
+            </div>
+            <div class="lamp-light-bulb light-bulb-7">
+                <img src="/Content/images/Light_Bulb_001_001.png" alt="" class="turned-on" />
+            </div>
+            <div class="lamp-light-bulb light-bulb-8">
+                <img src="/Content/images/Light_Bulb_001_001.png" alt="" class="turned-on" />
+            </div>
+
+            <!-- #endregion -->
+
+        </div>
+
+        <div id="doors-wrap">
+            <div class="doors-container">
+                <!-- Door Image -->
+                <img src="~/Content/images/Doors_001.png" alt="Doors" class="doors-image" width="324" height="724" />
+
+                <!-- #region Menu Hitboxes -->
+                <!--
+                    Section 1:  Pasākumu Organizēšana
+                    Section 2:  Grims
+                    Section 3:  Fotosesijas
+                    Section 4:  Dekorācijas
+                    Section 5:  Karnevālu tērpu un aksesuāru noma
+                    Section 6:  Par Darbnīcu
+                -->
+
+                <div class="menu-hitbox section-1" data-menutextindex="1"></div>
+                <div class="menu-hitbox section-2" data-menutextindex="2"></div>
+                <div class="menu-hitbox section-3" data-menutextindex="3"></div>
+                <div class="menu-hitbox section-4" data-menutextindex="4"></div>
+                <div class="menu-hitbox section-5" data-menutextindex="5"></div>
+                <div class="menu-hitbox section-6" data-menutextindex="6"></div>
+
+                <!-- #endregion -->
+                <!-- #region Bubble Bird -->
+
+                <div class="bubble-bird-wrap">
+                    <div class="bubble-bird-container">
+                        <img src="~/Content/images/BubbleBird_BodyNoLegs.png" alt="" class="bubble-bird-body" width="150" />
+                        <img src="~/Content/images/BubbleBird_TBeak.png" alt="" class="bubble-bird-top-beak" width="15" />
+                        <img src="~/Content/images/BubbleBird_BBeak.png" alt="" class="bubble-bird-bottom-beak" width="15" />
+                        <img src="~/Content/images/BubbleBird_Legs.png" alt="" class="bubble-bird-legs" width="40" />
+                    </div>
+                </div>
+
+                <!-- #endregion -->
+                <!-- #region Bubble Text -->
+
+                <div class="bubble-text-wrap" data-html2canvas-ignore="true">
+                    <div class="bubble-text-container">
+                        <img width="235" height="123" src="/Content/images/Bubble_PO_V2_001.png" alt="Pasākumu Organizēšana" class="bubble-text-item" data-bubbletextindex="1" />
+                        <img width="235" height="123" src="/Content/images/Bubble_G_V2_001.png" alt="Grims" class="bubble-text-item" data-bubbletextindex="2" />
+                        <img width="235" height="123" src="/Content/images/Bubble_F_V2_001.png" alt="Fotosesijas" class="bubble-text-item" data-bubbletextindex="3" />
+                        <img width="235" height="123" src="/Content/images/Bubble_D_V2_001.png" alt="Dekorācijas" class="bubble-text-item" data-bubbletextindex="4" />
+                        <img width="235" height="123" src="/Content/images/Bubble_KTUAN_V2_001.png" alt="Karnevālu tērpu un aksesuāru noma" class="bubble-text-item" data-bubbletextindex="5" />
+                        <img width="235" height="123" src="/Content/images/Bubble_PD_V2_001.png" alt="Par Darbnīcu" class="bubble-text-item" data-bubbletextindex="6" />
+                    </div>
+                </div>
+
+                <!-- #endregion -->
+
+                <!-- #region Doorknob Back -->
+
+                @*<img id="doorknobBack" alt="" src="~/Content/images/goldenDoorknobBack.png" />*@
+
+                <!-- #endregion -->
+                <!-- #region Door Knob-->
+
+                @*<img id="doorknob" alt="" src="/Content/images/Door_Knob_001_001.png" />*@
+
+                <!-- #endregion -->
+
+                <!-- #region Rabbit -->
+
+                <div id="door-rabbit">
+                    <div class="rabbit-head">
+                        <img src="~/Content/images/Rabbit_Ears_002_Head_001.png" alt="Alternate Text" />
+                    </div>
+                    <div class="lear-container">
+                        <img src="~/Content/images/Rabbit_Ears_002_LEar_001.png" alt="Alternate Text" />
+                    </div>
+                    <div class="rear-container">
+                        <img src="~/Content/images/Rabbit_Ears_002_REar_001.png" alt="Alternate Text" />
+                    </div>
+                </div>
+
+                <!-- #endregion -->
+
+            </div>
+        </div>
+
+        <div id="molbert">
+            <img src="~/Content/images/Molbert_001_006.png" alt="" class="molbert-image" />
+            <img src="~/Content/images/Rabit_001_002.png" alt="" class="element rabit-001" />
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+
+    <div class="overlaping-blur">
+        <div class="overlap-taint"></div>
+        <div id="canvas-container"></div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+
+    <div id="section-wrap" data-html2canvas-ignore="true">
+        <div class="section-container">
+            <img src="~/Content/images/Section_Background.png" alt="" class="section-background-image" width="502" height="666" />
+            <div class="section-content-wrap">
+                <div class="section-content-container">
+                    <div class="main-scene-wrap">
+                        <div class="main-scene-container">
+                            <img src="~/Content/images/u/Image 0001.jpg" alt="" class="main-scene-image-container vpos-image" height="260" width="173" />
+                            <img src="~/Content/images/u/Image 0002.jpg" alt="" class="main-scene-image-container hpos-image" height="231" width="346" />
+                            <img src="~/Content/images/u/Image 0003.jpg" alt="" class="main-scene-image-container hpos-image" height="231" width="346" />
+                            <img src="~/Content/images/u/Image 0004.jpg" alt="" class="main-scene-image-container vpos-image" height="260" width="173" />
+                            <img src="~/Content/images/u/Image 0005.jpg" alt="" class="main-scene-image-container hpos-image" height="231" width="346" />
+                            <img src="~/Content/images/u/Image 0006.jpg" alt="" class="main-scene-image-container vpos-image" height="260" width="173" />
+                        </div>
+                    </div>
+                    <div class="thumbnail-scene-wrap">
+                        <div class="thumbnail-scene-container">
+                            <div class="thumbnail-top-row">
+                                <div class="thumbnail-image-container">
+                                    <img src="~/Content/images/u/Image 0001.jpg" alt="" class="thumbnail-image" width="107" data-mainsceneimageindex="1" />
+                                </div>
+                                <div class="thumbnail-image-container">
+                                    <img src="~/Content/images/u/Image 0002.jpg" alt="" class="thumbnail-image" height="85" data-mainsceneimageindex="2" />
+                                </div>
+                                <div class="thumbnail-image-container">
+                                    <img src="~/Content/images/u/Image 0003.jpg" alt="" class="thumbnail-image" height="85" data-mainsceneimageindex="3" />
+                                </div>
+                            </div>
+                            <div class="thumbnail-bottom-row">
+                                <div class="thumbnail-image-container">
+                                    <img src="~/Content/images/u/Image 0004.jpg" alt="" class="thumbnail-image" width="107" data-mainsceneimageindex="4" />
+                                </div>
+                                <div class="thumbnail-image-container">
+                                    <img src="~/Content/images/u/Image 0005.jpg" alt="" class="thumbnail-image" height="85" data-mainsceneimageindex="5" />
+                                </div>
+                                <div class="thumbnail-image-container">
+                                    <img src="~/Content/images/u/Image 0006.jpg" alt="" class="thumbnail-image" width="107" data-mainsceneimageindex="6" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+
 </div>

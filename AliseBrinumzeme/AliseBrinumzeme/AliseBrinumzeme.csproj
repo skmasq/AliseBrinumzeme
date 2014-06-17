@@ -129,25 +129,69 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\functions.css">
+      <DependentUpon>functions.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\site.css">
+      <DependentUpon>site.less</DependentUpon>
+    </Content>
+    <Content Include="Content\fonts\fonts.css">
+      <DependentUpon>fonts.less</DependentUpon>
+    </Content>
+    <Content Include="Content\images\Background_tile_001.png" />
+    <Content Include="Content\images\Background_tile_002.png" />
+    <Content Include="Content\images\Bird_001_001.png" />
+    <Content Include="Content\images\BubbleBird_BBeak.png" />
+    <Content Include="Content\images\BubbleBird_Body.png" />
+    <Content Include="Content\images\BubbleBird_BodyNoLegs.png" />
+    <Content Include="Content\images\BubbleBird_Legs.png" />
+    <Content Include="Content\images\BubbleBird_TBeak.png" />
+    <Content Include="Content\images\Bubble_D_V2_001.png" />
+    <Content Include="Content\images\Bubble_F_V2_001.png" />
+    <Content Include="Content\images\Bubble_G_V2_001.png" />
+    <Content Include="Content\images\Bubble_KTUAN_V2_001.png" />
+    <Content Include="Content\images\Bubble_PD_V2_001.png" />
+    <Content Include="Content\images\Bubble_PO_V2_001.png" />
+    <Content Include="Content\images\Doors_001.png" />
+    <Content Include="Content\images\Door_Knob_001_001.png" />
+    <Content Include="Content\images\Door_Knob_002_001.png" />
+    <Content Include="Content\images\goldenDoorknobBack.png" />
+    <Content Include="Content\images\Key_001_001.png" />
+    <Content Include="Content\images\Lamp 003 20140524 0040.png" />
+    <Content Include="Content\images\Light_Bulb_001_001.png" />
+    <Content Include="Content\images\Light_Bulb_001_002.png" />
+    <Content Include="Content\images\Molbert_001_006.png" />
+    <Content Include="Content\images\Rabbit_Ears_002_Head_001.png" />
+    <Content Include="Content\images\Rabbit_Ears_002_LEar_001.png" />
+    <Content Include="Content\images\Rabbit_Ears_002_REar_001.png" />
+    <Content Include="Content\images\Rabit_001_002.png" />
+    <Content Include="Content\images\Section_Background.png" />
+    <Content Include="Content\images\String_001_001.png" />
+    <Content Include="Content\images\u\Image 0001.jpg" />
+    <Content Include="Content\images\u\Image 0002.jpg" />
+    <Content Include="Content\images\u\Image 0003.jpg" />
+    <Content Include="Content\images\u\Image 0004.jpg" />
+    <Content Include="Content\images\u\Image 0005.jpg" />
+    <Content Include="Content\images\u\Image 0006.jpg" />
+    <Content Include="Content\images\u\Image 0007.jpg" />
+    <Content Include="Content\js\libraries\ColorPropsPlugin.js" />
+    <Content Include="Content\js\libraries\CSSRulePlugin.js" />
+    <Content Include="Content\js\libraries\html2canvas.js" />
+    <Content Include="Content\js\libraries\jquery-1.10.2.js" />
+    <Content Include="Content\js\libraries\jquery.validate.js" />
+    <Content Include="Content\js\libraries\StackBlur.js" />
+    <Content Include="Content\js\libraries\TweenMax.js" />
+    <Content Include="Content\js\site\common.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Content\fonts\fonts.less" />
+    <Content Include="Content\fonts\harting_plain_latvian-webfont.eot" />
+    <Content Include="Content\fonts\harting_plain_latvian-webfont.ttf" />
+    <Content Include="Content\fonts\harting_plain_latvian-webfont.woff" />
+    <Content Include="Content\css\site.less" />
+    <Content Include="Content\css\variables.less" />
+    <Content Include="Content\css\functions.less" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -160,10 +204,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
