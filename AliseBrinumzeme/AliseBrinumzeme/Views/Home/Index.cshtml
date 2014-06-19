@@ -1,69 +1,41 @@
 ﻿<div id="viewport">
 
     <div id="bird-with-key">
-        <img src="~/Content/images/Bird_001_001.png" alt="" class="bird-element" />
+        <img src="~/Content/images/righttopbird/Bird_001_001.png" alt="" class="bird-element" />
         <div class="string-container">
-            <img src="~/Content/images/String_001_001.png" alt="" class="string-element" />
-            <img src="~/Content/images/Key_001_001.png" alt="" class="key-element" />
+            <img src="~/Content/images/righttopbird/String_001_001.png" alt="" class="string-element" />
+            <img src="~/Content/images/righttopbird/Key_001_001.png" alt="" class="key-element" />
         </div>
     </div>
 
     <div class="viewport-middleholder">
 
-        <div id="lamp" class="version-1 turned-on">
+        <div id="lamp">
 
-            <!--
-            To initiate lamp movement open console and type lampInit(),
-            or in common.js uncomment lampInit() within init()
-        -->
-            <!-- #region Lamp -->
+            <!-- #region Lamp Image -->
 
-            <img src="/Content/images/Lamp 003 20140524 0040.png" alt="" />
-
-            <!-- #endregion -->
-            <!-- #region Light Bulbs -->
-            <!-- TODO: Merge everything into one image -->
-            <div class="lamp-light-bulb light-bulb-1">
-                <img src="/Content/images/Light_Bulb_001_001.png" alt="" class="turned-on" />
-            </div>
-            <div class="lamp-light-bulb light-bulb-2">
-                <img src="/Content/images/Light_Bulb_001_001.png" alt="" class="turned-on" />
-            </div>
-            <div class="lamp-light-bulb light-bulb-3">
-                <img src="/Content/images/Light_Bulb_001_001.png" alt="" class="turned-on" />
-            </div>
-            <div class="lamp-light-bulb light-bulb-4">
-                <img src="/Content/images/Light_Bulb_001_001.png" alt="" class="turned-on" />
-            </div>
-            <div class="lamp-light-bulb light-bulb-5">
-                <img src="/Content/images/Light_Bulb_001_001.png" alt="" class="turned-on" />
-            </div>
-            <div class="lamp-light-bulb light-bulb-6">
-                <img src="/Content/images/Light_Bulb_001_001.png" alt="" class="turned-on" />
-            </div>
-            <div class="lamp-light-bulb light-bulb-7">
-                <img src="/Content/images/Light_Bulb_001_001.png" alt="" class="turned-on" />
-            </div>
-            <div class="lamp-light-bulb light-bulb-8">
-                <img src="/Content/images/Light_Bulb_001_001.png" alt="" class="turned-on" />
-            </div>
+            <img src="~/Content/images/lamp/Lamp_001.png" alt="" />
 
             <!-- #endregion -->
 
         </div>
 
         <div id="doors-wrap">
-            <div class="doors-container">
-                <!-- Door Image -->
-                <img src="~/Content/images/Doors_001.png" alt="Doors" class="doors-image" width="324" height="724" />
 
+            <div class="doors-container">
+
+                <!-- #region Door Background -->
+
+                <img src="~/Content/images/doors/background/Doors_002.png" alt="Doors" class="doors-image" width="324" height="724" />
+
+                <!-- #endregion -->
                 <!-- #region Menu Hitboxes -->
                 <!--
-                    Section 1:  Pasākumu Organizēšana
+                    Section 1:  Dekorācijas
                     Section 2:  Grims
-                    Section 3:  Fotosesijas
-                    Section 4:  Dekorācijas
-                    Section 5:  Karnevālu tērpu un aksesuāru noma
+                    Section 3:  Pasākumu Organizēšana
+                    Section 4:  Karnevālu tērpu un aksesuāru noma
+                    Section 5:  Idejas
                     Section 6:  Par Darbnīcu
                 -->
 
@@ -79,10 +51,10 @@
 
                 <div class="bubble-bird-wrap">
                     <div class="bubble-bird-container">
-                        <img src="~/Content/images/BubbleBird_BodyNoLegs.png" alt="" class="bubble-bird-body" width="150" />
-                        <img src="~/Content/images/BubbleBird_TBeak.png" alt="" class="bubble-bird-top-beak" width="15" />
-                        <img src="~/Content/images/BubbleBird_BBeak.png" alt="" class="bubble-bird-bottom-beak" width="15" />
-                        <img src="~/Content/images/BubbleBird_Legs.png" alt="" class="bubble-bird-legs" width="40" />
+                        <img src="~/Content/images/doors/bubblebird/BubbleBird_BodyNoLegs.png" alt="" class="bubble-bird-body" width="150" />
+                        <img src="~/Content/images/doors/bubblebird/BubbleBird_TBeak.png" alt="" class="bubble-bird-top-beak" width="15" />
+                        <img src="~/Content/images/doors/bubblebird/BubbleBird_BBeak.png" alt="" class="bubble-bird-bottom-beak" width="15" />
+                        <img src="~/Content/images/doors/bubblebird/BubbleBird_Legs.png" alt="" class="bubble-bird-legs" width="40" />
                     </div>
                 </div>
 
@@ -91,39 +63,48 @@
 
                 <div class="bubble-text-wrap" data-html2canvas-ignore="true">
                     <div class="bubble-text-container">
-                        <img width="235" height="123" src="/Content/images/Bubble_PO_V2_001.png" alt="Pasākumu Organizēšana" class="bubble-text-item" data-bubbletextindex="1" />
-                        <img width="235" height="123" src="/Content/images/Bubble_G_V2_001.png" alt="Grims" class="bubble-text-item" data-bubbletextindex="2" />
-                        <img width="235" height="123" src="/Content/images/Bubble_F_V2_001.png" alt="Fotosesijas" class="bubble-text-item" data-bubbletextindex="3" />
-                        <img width="235" height="123" src="/Content/images/Bubble_D_V2_001.png" alt="Dekorācijas" class="bubble-text-item" data-bubbletextindex="4" />
-                        <img width="235" height="123" src="/Content/images/Bubble_KTUAN_V2_001.png" alt="Karnevālu tērpu un aksesuāru noma" class="bubble-text-item" data-bubbletextindex="5" />
-                        <img width="235" height="123" src="/Content/images/Bubble_PD_V2_001.png" alt="Par Darbnīcu" class="bubble-text-item" data-bubbletextindex="6" />
+                        <img width="235" height="123" src="~/Content/images/doors/bubbles/Bubble_D_V2_001.png" alt="Dekorācijas" class="bubble-text-item" data-bubbletextindex="1" />
+                        <img width="235" height="123" src="~/Content/images/doors/bubbles/Bubble_G_V2_001.png" alt="Grims" class="bubble-text-item" data-bubbletextindex="2" />
+                        <img width="235" height="123" src="~/Content/images/doors/bubbles/Bubble_PO_V2_001.png" alt="Pasākumu Organizēšana" class="bubble-text-item" data-bubbletextindex="3" />
+                        <img width="235" height="123" src="~/Content/images/doors/bubbles/Bubble_KTUAN_V2_001.png" alt="Karnevālu tērpu un aksesuāru noma" class="bubble-text-item" data-bubbletextindex="4" />
+                        <img width="235" height="123" src="~/Content/images/doors/bubbles/Bubble_PD_V2_001.png" alt="Par Darbnīcu" class="bubble-text-item" data-bubbletextindex="6" />
                     </div>
                 </div>
 
                 <!-- #endregion -->
-
-                <!-- #region Doorknob Back -->
-
-                @*<img id="doorknobBack" alt="" src="~/Content/images/goldenDoorknobBack.png" />*@
-
-                <!-- #endregion -->
                 <!-- #region Door Knob-->
 
-                @*<img id="doorknob" alt="" src="/Content/images/Door_Knob_001_001.png" />*@
+                <img id="doorknob" alt="" src="~/Content/images/doors/doorknob/Door_Knob_002_001.png" />
 
                 <!-- #endregion -->
-
                 <!-- #region Rabbit -->
 
                 <div id="door-rabbit">
                     <div class="rabbit-head">
-                        <img src="~/Content/images/Rabbit_Ears_002_Head_001.png" alt="Alternate Text" />
+                        <img src="~/Content/images/doors/leftbottomrabbit/Rabbit_Ears_002_Head_001.png" alt="Alternate Text" />
                     </div>
                     <div class="lear-container">
-                        <img src="~/Content/images/Rabbit_Ears_002_LEar_001.png" alt="Alternate Text" />
+                        <img src="~/Content/images/doors/leftbottomrabbit/Rabbit_Ears_002_LEar_001.png" alt="Alternate Text" />
                     </div>
                     <div class="rear-container">
-                        <img src="~/Content/images/Rabbit_Ears_002_REar_001.png" alt="Alternate Text" />
+                        <img src="~/Content/images/doors/leftbottomrabbit/Rabbit_Ears_002_REar_001.png" alt="Alternate Text" />
+                    </div>
+                </div>
+
+                <!-- #endregion -->
+                <!-- #region Bottom Left Cup -->
+
+                <div id="doorbottomleftcup-wrap">
+                    <div class="bottomleftcup-container">
+                        <div class="plate-back">
+                            <img src="~/Content/images/doors/bottomcup/Cup_Back_001.png" alt="" width="107" />
+                        </div>
+                        <div class="cup-body">
+                            <img src="~/Content/images/doors/bottomcup/Cup_Body_001.png" alt="" width="80" />
+                        </div>
+                        <div class="plate-front">
+                            <img src="~/Content/images/doors/bottomcup/Cup_Front_001.png" alt="" width="105" />
+                        </div>
                     </div>
                 </div>
 
@@ -132,9 +113,52 @@
             </div>
         </div>
 
-        <div id="molbert">
-            <img src="~/Content/images/Molbert_001_006.png" alt="" class="molbert-image" />
-            <img src="~/Content/images/Rabit_001_002.png" alt="" class="element rabit-001" />
+        <div id="molbert-wrap">
+            <div class="molbert-container">
+                <img src="~/Content/images/molbert/Molbert_001_006.png" alt="" class="molbert-image" />
+
+                <!-- #region Molbert Rabbit -->
+                <div id="molbert-rabbit-wrap">
+                    <div class="molbert-rabbit-container">
+                        <div class="rabbit-cup-back">
+                            <img src="~/Content/images/molbert/rabbit/Rabbit_Cup_Back_001.png" alt="" width="87" />
+                        </div>
+                        <div class="rabbit-body">
+                            <img src="~/Content/images/molbert/rabbit/Rabbit_Body_001.png" alt="" width="60" />
+                        </div>
+                        <div class="rabbit-cup-front">
+                            <img src="~/Content/images/molbert/rabbit/Rabbit_Cup_Front_001.png" alt="" width="105" />
+                        </div>
+                    </div>
+                </div>
+                <!-- #endregion -->
+            </div>
+        </div>
+    </div>
+
+    <div id="table-wrap">
+        <div class="table-container">
+            <div class="background"><img src="~/Content/images/table/background/Table_002.png" alt="" /></div>
+            <div class="table-top-container">
+
+            </div>
+            <div class="table-bottom-container">
+                <div class="pile-of-cups">
+
+                </div>
+                <div id="table-rabbit-wrap">
+                    <div class="rabbit-head">
+                        <img src="~/Content/images/table/rabbit/Rabbits_Ears_001_Head_001.png" alt="" width="115"/>
+                    </div>
+                    <div class="lear-container">
+                        <img src="~/Content/images/table/rabbit/Rabbits_Ears_001_LEar_001.png" alt="" width="50"/>
+                    </div>
+                    <div class="rear-container">
+                        <img src="~/Content/images/table/rabbit/Rabbits_Ears_001_REar_001.png" alt="" width="46"/>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -145,41 +169,41 @@
 
     <div id="section-wrap" data-html2canvas-ignore="true">
         <div class="section-container">
-            <img src="~/Content/images/Section_Background.png" alt="" class="section-background-image" width="502" height="666" />
+            <img src="~/Content/images/section/Section_Background.png" alt="" class="section-background-image" width="502" height="666" />
             <div class="section-content-wrap">
                 <div class="section-content-container">
                     <div class="main-scene-wrap">
                         <div class="main-scene-container">
-                            <img src="~/Content/images/u/Image 0001.jpg" alt="" class="main-scene-image-container vpos-image" height="260" width="173" />
-                            <img src="~/Content/images/u/Image 0002.jpg" alt="" class="main-scene-image-container hpos-image" height="231" width="346" />
-                            <img src="~/Content/images/u/Image 0003.jpg" alt="" class="main-scene-image-container hpos-image" height="231" width="346" />
-                            <img src="~/Content/images/u/Image 0004.jpg" alt="" class="main-scene-image-container vpos-image" height="260" width="173" />
-                            <img src="~/Content/images/u/Image 0005.jpg" alt="" class="main-scene-image-container hpos-image" height="231" width="346" />
-                            <img src="~/Content/images/u/Image 0006.jpg" alt="" class="main-scene-image-container vpos-image" height="260" width="173" />
+                            <img src="~/Content/images/uploads/Image 0001.jpg" alt="" class="main-scene-image-container vpos-image" height="260" width="173" />
+                            <img src="~/Content/images/uploads/Image 0002.jpg" alt="" class="main-scene-image-container hpos-image" height="231" width="346" />
+                            <img src="~/Content/images/uploads/Image 0003.jpg" alt="" class="main-scene-image-container hpos-image" height="231" width="346" />
+                            <img src="~/Content/images/uploads/Image 0004.jpg" alt="" class="main-scene-image-container vpos-image" height="260" width="173" />
+                            <img src="~/Content/images/uploads/Image 0005.jpg" alt="" class="main-scene-image-container hpos-image" height="231" width="346" />
+                            <img src="~/Content/images/uploads/Image 0006.jpg" alt="" class="main-scene-image-container vpos-image" height="260" width="173" />
                         </div>
                     </div>
                     <div class="thumbnail-scene-wrap">
                         <div class="thumbnail-scene-container">
                             <div class="thumbnail-top-row">
                                 <div class="thumbnail-image-container">
-                                    <img src="~/Content/images/u/Image 0001.jpg" alt="" class="thumbnail-image" width="107" data-mainsceneimageindex="1" />
+                                    <img src="~/Content/images/uploads/Image 0001.jpg" alt="" class="thumbnail-image" width="107" data-mainsceneimageindex="1" />
                                 </div>
                                 <div class="thumbnail-image-container">
-                                    <img src="~/Content/images/u/Image 0002.jpg" alt="" class="thumbnail-image" height="85" data-mainsceneimageindex="2" />
+                                    <img src="~/Content/images/uploads/Image 0002.jpg" alt="" class="thumbnail-image" height="85" data-mainsceneimageindex="2" />
                                 </div>
                                 <div class="thumbnail-image-container">
-                                    <img src="~/Content/images/u/Image 0003.jpg" alt="" class="thumbnail-image" height="85" data-mainsceneimageindex="3" />
+                                    <img src="~/Content/images/uploads/Image 0003.jpg" alt="" class="thumbnail-image" height="85" data-mainsceneimageindex="3" />
                                 </div>
                             </div>
                             <div class="thumbnail-bottom-row">
                                 <div class="thumbnail-image-container">
-                                    <img src="~/Content/images/u/Image 0004.jpg" alt="" class="thumbnail-image" width="107" data-mainsceneimageindex="4" />
+                                    <img src="~/Content/images/uploads/Image 0004.jpg" alt="" class="thumbnail-image" width="107" data-mainsceneimageindex="4" />
                                 </div>
                                 <div class="thumbnail-image-container">
-                                    <img src="~/Content/images/u/Image 0005.jpg" alt="" class="thumbnail-image" height="85" data-mainsceneimageindex="5" />
+                                    <img src="~/Content/images/uploads/Image 0005.jpg" alt="" class="thumbnail-image" height="85" data-mainsceneimageindex="5" />
                                 </div>
                                 <div class="thumbnail-image-container">
-                                    <img src="~/Content/images/u/Image 0006.jpg" alt="" class="thumbnail-image" width="107" data-mainsceneimageindex="6" />
+                                    <img src="~/Content/images/uploads/Image 0006.jpg" alt="" class="thumbnail-image" width="107" data-mainsceneimageindex="6" />
                                 </div>
                             </div>
                         </div>

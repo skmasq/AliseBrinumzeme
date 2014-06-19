@@ -28,52 +28,14 @@ body, html {
     float: left;
     width: 100%;
     height: 100%;
-    background: url(/Content/images/Background_tile_002.png);
+    background: url(/Content/images/background/Background_tile_002.png);
     background-repeat: repeat;
     overflow: hidden;
     /* Minimal zone */
     min-width: 1200px;
     min-height: 700px;
 
-    #molbert {
-        width: 149px;
-        position: absolute;
-        left: 645px;
-        bottom: -13px;
-        height: 430px;
 
-        & .rabit-001{
-            position: absolute;
-            bottom: 3px;
-            left: 63px;
-            width: 91px;
-        }
-
-        & .logo-container {
-            position: absolute;
-            width: 155px;
-            top: 153px;
-            left: -1px;
-            z-index: 2;
-        }
-
-        & .logo-background {
-            position: absolute;
-            width: 161px;
-            top: 89px;
-            left: 2px;
-            height: 225px;
-            -webkit-transform: rotate(90deg);
-            -moz-transform: rotate(90deg);
-            -ms-transform: rotate(90deg);
-            -o-transform: rotate(90deg);
-            transform: rotate(90deg);
-        }
-
-        & .molbert-image {
-            height: 430px;
-        }
-    }
 
     #lamp {
         position: absolute;
@@ -187,6 +149,7 @@ body, html {
         margin: 0 auto;
         #bundle .clearfix();
     }
+    //
     /*#region Zone: Doors*/
     #doors-wrap {
         position: absolute;
@@ -201,7 +164,7 @@ body, html {
             float: left;
             height: 100%;
             width: 100%;
-
+            /*#region Door: Bottom Rabit*/
             #door-rabbit {
                 position: absolute;
                 bottom: 147px;
@@ -232,28 +195,53 @@ body, html {
                     left: 205px;
                 }
             }
-
-            #doorknobBack {
+            /*#endregion*/
+            //
+            /*#region Door: Bottom Left Cup*/
+            #doorbottomleftcup-wrap {
                 position: absolute;
-                top: 246px;
-                right: 24px;
-                width: 30px;
-                -moz-transform: rotate(-4deg);
-                -o-transform: rotate(-4deg);
-                -ms-transform: rotate(-4deg); /* IE 9 */
-                -webkit-transform: rotate(-4deg); /* Opera, Chrome, and Safari */
-                transform: rotate(-4deg);
-            }
+                bottom: 100px;
+                left: -30px;
 
+                & .bottomleftcup-container {
+                    position: relative;
+                    /*
+                        Positioning:
+                            - Plate.back    [z-index: 0]
+                            - Cup.Body      [z-index: 2]
+                            - Plate.Front   [z-index: 5]
+                        */
+                    & .cup-body {
+                        position: absolute;
+                        z-index: 2;
+                        left: 15px;
+                    }
+
+                    & .plate-back {
+                        position: absolute;
+                        z-index: 0;
+                        top: 30px;
+                    }
+
+                    & .plate-front {
+                        position: absolute;
+                        z-index: 5;
+                        top: 45px;
+                        left: 1px;
+                    }
+                }
+            }
+            /*#endregion*/
+            //
+            /*#region Door: Door Knob*/
             #doorknob {
                 position: absolute;
-                top: 268px;
-                right: 24px;
+                top: 280px;
+                right: 26px;
                 width: 30px;
             }
-
-            & .doors-image {
-            }
+            /*#endregion*/
+            //
             /* #region Bubble Bird Positioning*/
             & .bubble-bird-wrap {
                 position: absolute;
@@ -294,6 +282,7 @@ body, html {
                 }
             }
             /* #endregion */
+            //
             /* #region Bubble Text Positioning*/
             & .bubble-text-wrap {
                 position: absolute;
@@ -317,6 +306,7 @@ body, html {
                 }
             }
             /* #endregion */
+            //
             /* #region Hitbox Positioning */
             & .menu-hitbox {
                 position: absolute;
@@ -352,7 +342,111 @@ body, html {
             /* #endregion */
         }
     }
+    /*#endregion*/
+    //
+    /*#region Zone: Molbert*/
+    #molbert-wrap {
+        width: 149px;
+        position: absolute;
+        left: 645px;
+        bottom: -13px;
+        height: 430px;
 
+        & .molbert-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+
+            & .molbert-image {
+                height: 430px;
+            }
+
+            #molbert-rabbit-wrap {
+                position: absolute;
+                bottom: -15px;
+                right: 0;
+
+                & .molbert-rabbit-container {
+                    position: relative;
+
+                    & .rabbit-cup-back {
+                        position: absolute;
+                        bottom: 56px;
+                        right: -1px;
+                    }
+
+                    & .rabbit-body {
+                        position: absolute;
+                        bottom: 45px;
+                        right: 12px;
+                    }
+
+                    & .rabbit-cup-front {
+                        position: absolute;
+                        bottom: 0;
+                        right: 0;
+                    }
+                }
+            }
+        }
+    }
+    /*#endregion*/
+    //
+    /*#region Zone: Table*/
+    #table-wrap {
+        position: absolute;
+        right: -60px;
+        bottom: -70px;
+        width: 399px;
+        height: 272px;
+
+        & .table-container {
+            position: relative;
+            height: 100%;
+            width: 100%;
+
+            & .background {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+            }
+
+            & .table-bottom-container {
+                position: absolute;
+                bottom: 254px;
+                left: 0;
+                width: 100%;
+
+                #table-rabbit-wrap {
+                    position: absolute;
+                    top: 120px;
+                    left: 137px;
+                    width: 115px;
+                    height: 129px;
+
+                    & .rabbit-head {
+                        position: absolute;
+                        z-index: 2;
+                    }
+
+                    & .lear-container {
+                        position: absolute;
+                        z-index: 1;
+                        top: -45px;
+                        left: 6px;
+                    }
+
+                    & .rear-container {
+                        position: absolute;
+                        z-index: 1;
+                        top: -49px;
+                        left: 57px;
+                    }
+                }
+            }
+        }
+    }
+    /*#endregion*/
     .overlaping-blur {
         display: none;
         position: absolute;
