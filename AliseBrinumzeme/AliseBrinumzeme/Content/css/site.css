@@ -46,6 +46,20 @@ html {
   
   
   
+  
+  
+}
+#viewport #startup-logo {
+  display: none;
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -450px;
+  margin-top: -308px;
+}
+#viewport #startup-logo img {
+  width: 900px;
 }
 #viewport #lamp {
   position: absolute;
@@ -142,6 +156,83 @@ html {
   visibility: hidden;
   line-height: 0;
   height: 0;
+}
+#viewport #window-wrap {
+  position: absolute;
+  width: 300px;
+  height: 265px;
+  bottom: 350px;
+  left: -175px;
+}
+#viewport #window-wrap:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+#viewport #window-wrap .window-container {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+#viewport #window-wrap .window-container:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+#viewport #window-wrap .window-container .floating-tags {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+#viewport #window-wrap .window-container .floating-tags:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+#viewport #window-wrap .window-container .floating-tags .string-element {
+  position: absolute;
+}
+#viewport #window-wrap .window-container .floating-tags .string-element.phone-string {
+  z-index: 5;
+  right: 64px;
+  top: 7px;
+}
+#viewport #window-wrap .window-container .floating-tags .string-element.location-string {
+  right: 128px;
+  z-index: 5;
+  top: 4px;
+}
+#viewport #window-wrap .window-container .floating-tags .string-element.mail-string {
+  left: 108px;
+  top: 6px;
+  z-index: 5;
+}
+#viewport #window-wrap .window-container .floating-tags .floating-tag {
+  position: absolute;
+}
+#viewport #window-wrap .window-container .floating-tags .floating-tag.phone-tag {
+  bottom: 50px;
+  right: 45px;
+}
+#viewport #window-wrap .window-container .floating-tags .floating-tag.location-tag {
+  bottom: 140px;
+  left: 140px;
+}
+#viewport #window-wrap .window-container .floating-tags .floating-tag.mail-tag {
+  bottom: 25px;
+  left: 86px;
 }
 #viewport #doors-wrap {
   position: absolute;
@@ -521,8 +612,28 @@ html {
   left: 210px;
 }
 #viewport #table-wrap .table-container .table-top-container .table-top-cup.cup-008 {
-  top: -33px;
-  left: -30px;
+  top: -46px;
+  left: -35px;
+  width: 100px;
+  height: 72px;
+}
+#viewport #table-wrap .table-container .table-top-container .table-top-cup.cup-008 .cup-body {
+  position: absolute;
+  top: 13px;
+  left: 18px;
+  z-index: 2;
+}
+#viewport #table-wrap .table-container .table-top-container .table-top-cup.cup-008 .cup-front {
+  position: absolute;
+  top: 56px;
+  left: 6px;
+  z-index: 3;
+}
+#viewport #table-wrap .table-container .table-top-container .table-top-cup.cup-008 .cup-back {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  z-index: 1;
 }
 #viewport #table-wrap .table-container .table-top-container .table-top-cup.cup-009 {
   top: -45px;
@@ -590,6 +701,7 @@ html {
 }
 #viewport .overlaping-blur {
   display: none;
+  visibility: hidden;
   position: absolute;
   top: 0;
   left: 0;
@@ -614,6 +726,7 @@ html {
   z-index: 520;
 }
 #viewport #section-wrap {
+  display: none;
   position: absolute;
   left: 50%;
   top: 50%;

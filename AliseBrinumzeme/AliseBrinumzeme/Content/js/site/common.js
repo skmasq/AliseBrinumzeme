@@ -16,6 +16,111 @@ function getFrameLenght(__array, __iterations, __delay) {
 }
 //#endregion
 
+
+var SCENE = {
+	//#region Doors
+	Doors: {
+		Base: $("#doors-wrap"),
+		DoorKnob: $("#doorknob"),
+		BubbleBird: {
+			Base: $("#doors-wrap .bubble-bird-wrap"),
+			Legs: $("#doors-wrap .bubble-bird-wrap .bubble-bird-legs"),
+			Beak: {
+				Top: $("#doors-wrap .bubble-bird-wrap .bubble-bird-top-beak"),
+				Bottom: $("#doors-wrap .bubble-bird-wrap .bubble-bird-bottom-beak")
+			}
+		},
+		Rabbit: {
+			Base: $("#door-rabbit"),
+			Head: $("#door-rabbit .rabbit-head"),
+			Ears: {
+				Left: $("#door-rabbit .lear-container"),
+				Right: $("#door-rabbit .rear-container")
+			}
+		},
+		BottomCup: {
+			Base: $("#doorbottomleftcup-wrap"),
+			Body: $("#doorbottomleftcup-wrap .cup-body"),
+			Plate: {
+				Front: $("#doorbottomleftcup-wrap .plate-front"),
+				Back: $("#doorbottomleftcup-wrap .plate-back")
+			}
+		}
+	},
+	//#endregion
+	//#region Table
+	Table: {
+		Base: $("#table-wrap"),
+		TopLayer: {
+			BirdCup: $("#table-wrap .cup-005"),
+			PinkBird: $("#table-wrap .bird-003"),
+			MovingCup: {
+				Base: $("#table-wrap .cup-008"),
+				Body: $("#table-wrap .cup-008 .cup-body"),
+				Plate: {
+					Front: $("#table-wrap .cup-008 .cup-front"),
+					Back: $("#table-wrap .cup-008 .cup-back")
+				}
+			},
+			BrownBirdCup: $("#table-wrap .cup-009")
+		},
+		BottomLayer: {
+			TableRabbit: {
+				Base: $("#table-rabbit-wrap"),
+				Head: $("#table-rabbit-wrap .rabbit-head"),
+				Ears: {
+					Left: $("#table-rabbit-wrap .lear-container"),
+					Right: $("#table-rabbit-wrap .rear-container")
+				}
+			},
+			PiledCups: [
+				$(".pile-of-cups .cup-001"),	// cup-001
+				$(".pile-of-cups .cup-002"),	// cup-002
+				$(".pile-of-cups .cup-003"),	// cup-003
+				$(".pile-of-cups .cup-004"),	// cup-004
+				$(".pile-of-cups .cup-006")		// cup-006
+			]
+		}
+	},
+	//#endregion
+	//#region Lamp
+	Lamp: {
+		Base: $("#lamp")
+	},
+	//#endregion
+	//#region Molbert
+	Molbert: {
+		Base: $("#molbert-wrap"),
+		Rabbit: {
+			Base: $(".molbert-rabbit-container"),
+			Body: $(".molbert-rabbit-container .rabbit-body")
+		}
+	},
+	//#endregion
+	//#region Contact Page
+	ContactPage: {
+		Base: $("#contact-page-wrap")
+	},
+	//#endregion
+	//#region General
+	General: {
+		BlueDove: {
+			Base: $("#bird-with-key"),
+			Body: $("#bird-with-key .bird-element"),
+			String: $("#bird-with-key .string-container"),
+			Key: $("#bird-with-key .key-element")
+		},
+		StartupLogo: {
+			Base: $("#startup-logo")
+		}
+	}
+	//#endregion
+}
+
+function test() {
+
+}
+
 var tween_api = {
 	sections: {
 		thumbnails: {
@@ -53,272 +158,275 @@ var tween_api = {
 		}
 	},
 	start: {
-		bubblebird: function (__bird) {
-			/// <summary>
-			/// Total length: 0.55s
-			/// </summary>
-			/// <param name="__bird"></param>
-			/// <returns type=""></returns>
-			var tl = new TimelineMax({
-				paused: true
-			});
-
-			var bird = __bird,
-				legs = __bird.find(".bubble-bird-legs").eq(0);
-
-			/*
-				Speeds:
-					- Bird comes from top
-					- Bird lays down on doors
-					- Bird gets in original position
-			*/
-			var tlSpeeds = [0.40, 0.2, 0.1];
-
-			// Set Objects
-			tl.add(TweenMax.set(bird, {
-				css: {
-					transformOrigin: "100% -200px",
-					rotation: 30,
-					top: -200
+		//#region doors
+		doors: {
+			base: {
+				set: function () {
+					/// <summary>
+					/// Set Doors initial state
+					/// </summary>
+					TweenMax.set(SCENE.Doors.Base, { css: { bottom: -730 } });
+				},
+				instance: function () {
+					/// <summary>
+					/// Doors instance. Durtaion: 0.35s
+					/// </summary>
+					/// <returns type=""></returns>
+					var tl = new TimelineMax({ paused: false });
+					tl.add(TweenMax.to(SCENE.Doors.Base, 0.35, { css: { bottom: -45 }, ease: Cubic.easeIn }));
+					return tl;
 				}
-			}));
+			},
+			bubblebird: {
+				set: function () {
+					TweenMax.set(SCENE.Doors.BubbleBird.Base, {
+						css: {
+							transformOrigin: "100% -200px",
+							rotation: 30,
+							top: -200,
+							opacity: 0
+						}
+					});
+				},
+				instance: function () {
+					var tl = new TimelineMax({ paused: false });
+					//#region Frameset
+					//#region Frame 1
+					tl.add([
+						TweenMax.to(SCENE.Doors.BubbleBird.Base, 0.1, { css: { opacity: 1 } }),
+						TweenMax.to(SCENE.Doors.BubbleBird.Base, 0.4, { css: { top: -53, rotation: 0 } }),
+						TweenMax.to(SCENE.Doors.BubbleBird.Legs, 0.2, { css: { height: 20 } })
+					]);
+					//#endregion
+					//#region Frame 2
+					tl.add(TweenMax.to(SCENE.Doors.BubbleBird.Legs, 0.2, { css: { height: 8 } }), 0.2);
+					//#endregion
+					//#region Frame 3
+					tl.add([
+						TweenMax.to(SCENE.Doors.BubbleBird.Base, 0.1, { css: { top: -56 } }),
+						TweenMax.to(SCENE.Doors.BubbleBird.Legs, 0.1, { css: { height: 13 } })
+					], 0.4);
+					//#endregion
+					//#endregion
+					return tl;
+				}
+			},
+			rabbitncup: {
+				set: function () {
+					TweenMax.set(SCENE.Doors.BottomCup.Base, { css: { transformOrigin: "57px 52px" } });
+					TweenMax.set(SCENE.Doors.Rabbit.Base, { css: { bottom: 100, left: 70 } });
+				},
+				instance: function () {
+					var tl = new TimelineMax({ paused: false }),
+						rabbitFrameLengths = [0.5],
+						cupFrameLengths = [0.2, 0.2, 0.2, 0.15, 0.1, 0.1],
+						cup_cont = SCENE.Doors.BottomCup.Base,
+						cup_body = SCENE.Doors.BottomCup.Body,
+						rabbit_cont = SCENE.Doors.Rabbit.Base;
 
-			//#region Frame 1
-			tl.add([
-				TweenMax.to(bird, tlSpeeds[0], {
-					css: {
-						top: -53,
-						rotation: 0
-					}
-				}), TweenMax.to(legs, tlSpeeds[0] - 0.2, {
-					css: {
-						height: 20
-					}
-				})
-			]);
-			//#endregion
-
-			//#region Frame 2
-			tl.add(TweenMax.to(legs, 0.2, {
-				css: { height: 8 }
-			}), tlSpeeds[0] - 0.2);
-			//#endregion
-
-			//#region Frame 3
-			tl.add([
-				TweenMax.to(bird, tlSpeeds[2], {
-					css: {
-						top: -56
-					}
-				}), TweenMax.to(legs, tlSpeeds[2], {
-					css: {
-						height: 13
-					}
-				})
-			], tlSpeeds[0]);
-			//#endregion
-
-			return tl;
+					//#region Frameset
+					//#region Frame 1
+					tl.add(TweenMax.to(rabbit_cont, rabbitFrameLengths[0], { css: { bottom: 147, left: -58 }, ease: Back.easeOut }), 0)
+					tl.add(TweenMax.to(cup_body, cupFrameLengths[0], { css: { rotation: 7 } }), getFrameLenght(cupFrameLengths, 0, 0.1));
+					tl.add(TweenMax.to(cup_cont, cupFrameLengths[0], { css: { rotation: -10 } }), getFrameLenght(cupFrameLengths, 0, 0));
+					//#endregion
+					//#region Frame 2
+					tl.add(TweenMax.to(cup_body, cupFrameLengths[1], { css: { rotation: -7 } }), getFrameLenght(cupFrameLengths, 1, 0.1));
+					tl.add(TweenMax.to(cup_cont, cupFrameLengths[1], { css: { rotation: 6 } }), getFrameLenght(cupFrameLengths, 1, 0));
+					//#endregion
+					//#region Frame 3
+					tl.add(TweenMax.to(cup_body, cupFrameLengths[2], { css: { rotation: 4 } }), getFrameLenght(cupFrameLengths, 2, 0.1));
+					tl.add(TweenMax.to(cup_cont, cupFrameLengths[2], { css: { rotation: -5 } }), getFrameLenght(cupFrameLengths, 2, 0));
+					//#endregion
+					//#region Frame 4
+					tl.add(TweenMax.to(cup_body, cupFrameLengths[3], { css: { rotation: -5 } }), getFrameLenght(cupFrameLengths, 3, 0.1));
+					tl.add(TweenMax.to(cup_cont, cupFrameLengths[3], { css: { rotation: 3 } }), getFrameLenght(cupFrameLengths, 3, 0));
+					//#endregion
+					//#region Frame 5
+					tl.add(TweenMax.to(cup_body, cupFrameLengths[4], { css: { rotation: -3 } }), getFrameLenght(cupFrameLengths, 4, 0.1));
+					tl.add(TweenMax.to(cup_cont, cupFrameLengths[4], { css: { rotation: 0 } }), getFrameLenght(cupFrameLengths, 4, 0));
+					//#endregion
+					//#region Frame 6
+					tl.add(TweenMax.to(cup_body, cupFrameLengths[5], { css: { rotation: 0 } }), getFrameLenght(cupFrameLengths, 5, 0));
+					//#endregion
+					//#endregion
+					return tl;
+				}
+			}
 		},
-		doorbottomcup: function (__cup) {
-			/// <summary>
-			/// Total length: 0.95s
-			/// </summary>
-			/// <param name="__cup"></param>
-			/// <returns type=""></returns>
-			var tl = new TimelineMax({
-				paused: true
-			});
+		//#endregion
+		//#region table
+		table: {
+			base: {
+				set: function () {
+					TweenMax.set(SCENE.Table.Base, { css: { right: -430 } });
+				},
+				instance: function () {
+					/// <summary>
+					/// Table instance. Duration: 0.25s
+					/// </summary>
+					/// <returns type=""></returns>
+					var tl = new TimelineMax({ paused: false });
+					tl.add(TweenMax.to(SCENE.Table.Base, 0.25, { css: { right: -130 }, ease: Cubic.easeIn }));
+					return tl;
+				}
+			},
+			rabbitnpile: {
+				set: function () {
+					var cup001 = SCENE.Table.BottomLayer.PiledCups[0],
+						cup002 = SCENE.Table.BottomLayer.PiledCups[1],
+						cup003 = SCENE.Table.BottomLayer.PiledCups[2],
+						cup004 = SCENE.Table.BottomLayer.PiledCups[3],
+						cup006 = SCENE.Table.BottomLayer.PiledCups[4],
+						rabbit = SCENE.Table.BottomLayer.TableRabbit.Base;
 
-			var cupbody = __cup.find(".cup-body").eq(0);
+					TweenMax.set([cup001, cup002, cup004, cup006], { css: { rotation: 0 } });
+					TweenMax.set([cup004, cup006], { css: { transformOrigin: "bottom center" } });
+					TweenMax.set(cup001, { css: { transformOrigin: "bottom right" } });
+					TweenMax.set(cup002, { css: { transformOrigin: "bottom left" } });
+					TweenMax.set(cup003, { css: { bottom: -15 } });
+					TweenMax.set(rabbit, { css: { bottom: -150 } });
 
-			var tlFrameSpeeds = [0.2, 0.2, 0.2, 0.15, 0.1, 0.1]
+				},
+				instance: function () {
+					/// <summary>
+					/// Rabbit'n'Pile instance. Duration 1.5s
+					/// </summary>
+					/// <returns type=""></returns>
+					var tl = new TimelineMax({ paused: false });
+					var tlFrameLength = [1.5];
 
-			// Set objects
+					//#region Frameset
+					//#region Frame 1
+					tl.add([
+						TweenMax.to(SCENE.Table.BottomLayer.PiledCups[0], tlFrameLength[0], { css: { rotation: -15 }, ease: Elastic.easeIn }),
+						TweenMax.to(SCENE.Table.BottomLayer.PiledCups[1], tlFrameLength[0], { css: { rotation: 14 }, ease: Elastic.easeIn }),
+						TweenMax.to(SCENE.Table.BottomLayer.PiledCups[2], tlFrameLength[0], { css: { bottom: -37 }, ease: Elastic.easeIn }),
+						TweenMax.to(SCENE.Table.BottomLayer.PiledCups[3], tlFrameLength[0], { css: { rotation: -13 }, ease: Elastic.easeIn }),
+						TweenMax.to(SCENE.Table.BottomLayer.PiledCups[4], tlFrameLength[0], { css: { rotation: 13 }, ease: Elastic.easeIn }),
+						TweenMax.to(SCENE.Table.BottomLayer.TableRabbit.Base, tlFrameLength[0], { css: { bottom: -34 }, ease: Elastic.easeIn })
+					], 0);
+					//#endregion
+					//#endregion
+					return tl;
+				}
+			},
+			pinkbird: {
+				set: function () {
+					TweenMax.set(SCENE.Table.TopLayer.PinkBird, {
+						css: {
+							rotation: -20,
+							top: -160,
+							left: 250,
+							opacity: 0,
+							transformOrigin: "top right"
+						}
+					})
+				},
+				instance: function () {
+					var tl = new TimelineMax({ paused: false });
+					//#region Frameset
+					//#region Frame 1
+					tl.add(TweenMax.to(SCENE.Table.TopLayer.PinkBird, 0.5, { css: { rotation: 0, top: -125, left: 225, opacity: 1 } }), 0);
+					//#endregion
+					//#endregion
+					return tl;
+				}
+			}
+		},
+		//#endregion
+		//#region lamp
+		lamp: {
+			base: {
+				set: function () {
+					TweenMax.set(SCENE.Lamp.Base, { css: { top: -300 } });
+				},
+				instance: function () {
+					/// <summary>
+					/// Lamp instance. Duration: 0.75s
+					/// </summary>
+					/// <returns type=""></returns>
+					var tl = new TimelineMax({ paused: false });
+					tl.add(TweenMax.to(SCENE.Lamp.Base, 0.75, { css: { top: -30 }, ease: Bounce.easeOut }));
+					return tl;
+				}
+			}
+		},
+		//#endregion
+		//#region molbert
+		molbert: {
+			base: {
+				set: function () {
+					TweenMax.set(SCENE.Molbert.Base, { css: { bottom: -463 } });
+					TweenMax.set(SCENE.ContactPage.Base, { css: { bottom: -350 } });
+				},
+				instance: function () {
+					var tl = new TimelineMax({ paused: false });
 
-			tl.add([
-				TweenMax.set(__cup, {
-					css: {
-						transformOrigin: "57px 52px"
+					//#region Frameset
+					//#region Frame1
+					tl.add([
+						TweenMax.to(SCENE.Molbert.Base, 0.15, { css: { bottom: -13 } }),
+						TweenMax.to(SCENE.ContactPage.Base, 0.15, { css: { bottom: 100 } })
+					], 0);
+					//#endregion
+					//#endregion
+					return tl;
+				}
+			},
+			molbertrabbit: {
+				set: function () {
+					TweenMax.set(SCENE.Molbert.Rabbit.Body, { css: { bottom: -23 } })
+				},
+				instance: function () {
+					var tl = new TimelineMax({ paused: false });
+					//#region Frameset
+					//#region Frame1
+					tl.add(TweenMax.to(SCENE.Molbert.Rabbit.Body, 0.5, { css: { bottom: 45 }, ease: Cubic.easeIn }));
+					//#endregion
+					//#endregion
+					return tl;
+				}
+			}
+		},
+		//#endregion
+		//#region global
+		global: {
+			bluedove: {
+				base: {
+					set: function () {
+						TweenMax.set(SCENE.General.BlueDove.Base, { css: { right: 0 } });
+					},
+					instance: function () {
+						var tl = new TimelineMax({ paused: false });
+						//#region Frameset
+						//#region Frame 1
+						tl.add(TweenMax.to(SCENE.General.BlueDove.Base, 0.5, { css: { right: 100 } }));
+						//#endregion
+						//#endregion
+						return tl;
 					}
-				})
-			]);
-
-			//#region Frame 1
-			tl.add(TweenMax.to(cupbody, tlFrameSpeeds[0], {
-				css: { rotation: 7 }
-			}), getFrameLenght(tlFrameSpeeds, 0, 0.1));
-			tl.add(TweenMax.to(__cup, tlFrameSpeeds[0], {
-				css: { rotation: -10 }
-			}), getFrameLenght(tlFrameSpeeds, 0, 0));
-			//#endregion
-
-			//#region Frame 2
-			tl.add(TweenMax.to(cupbody, tlFrameSpeeds[1], {
-				css: { rotation: -7 }
-			}), getFrameLenght(tlFrameSpeeds, 1, 0.1));
-			tl.add(TweenMax.to(__cup, tlFrameSpeeds[1], {
-				css: { rotation: 6 }
-			}), getFrameLenght(tlFrameSpeeds, 1, 0));
-			//#endregion
-
-			//#region Frame 3
-			tl.add(TweenMax.to(cupbody, tlFrameSpeeds[2], {
-				css: { rotation: 4 }
-			}), getFrameLenght(tlFrameSpeeds, 2, 0.1));
-			tl.add(TweenMax.to(__cup, tlFrameSpeeds[2], {
-				css: { rotation: -5 }
-			}), getFrameLenght(tlFrameSpeeds, 2, 0));
-			//#endregion
-
-			//#region Frame 4
-
-			tl.add(TweenMax.to(cupbody, tlFrameSpeeds[3], {
-				css: { rotation: -5 }
-			}), getFrameLenght(tlFrameSpeeds, 3, 0.1));
-			tl.add(TweenMax.to(__cup, tlFrameSpeeds[3], {
-				css: { rotation: 3 }
-			}), getFrameLenght(tlFrameSpeeds, 3, 0));
-
-			//#endregion
-
-			//#region Frame 5
-
-			tl.add(TweenMax.to(cupbody, tlFrameSpeeds[4], {
-				css: { rotation: -3 }
-			}), getFrameLenght(tlFrameSpeeds, 4, 0.1));
-			tl.add(TweenMax.to(__cup, tlFrameSpeeds[4], {
-				css: { rotation: 0 }
-			}), getFrameLenght(tlFrameSpeeds, 4, 0));
-
-			//#endregion
-
-			//#region Frame 6
-
-			tl.add(TweenMax.to(cupbody, tlFrameSpeeds[5], {
-				css: { rotation: 0 }
-			}), getFrameLenght(tlFrameSpeeds, 5, 0));
-
-			//#endregion
-
-			return tl;
+				}
+			},
+			startuplogo: {
+				set: function () {
+					TweenMax.set(SCENE.General.StartupLogo.Base, { css: { display: "block" } });
+				},
+				instance: function () {
+					var tl = new TimelineMax({ paused: false });
+					//#region Frameset
+					//#region Frame 1
+					tl.add(TweenMax.to(SCENE.General.StartupLogo.Base, 3, { css: { opacity: 0 } }));
+					//#endregion
+					//#endregion
+					return tl;
+				}
+			}
 		},
-		doorrabbit: function (__rabbit) {
-			/// <summary>
-			/// Total length: 0.5s
-			/// </summary>
-			/// <param name="__rabbit"></param>
-			/// <returns type=""></returns>
-			var tl = new TimelineMax({
-				paused: true
-			});
-
-			var tlFrameLength = [0.5]
-
-			// Set object
-			tl.add(TweenMax.set(__rabbit, {
-				css: { bottom: 100, left: 70 }
-			}));
-
-			//#region Frame 1
-			tl.add(TweenMax.to(__rabbit, tlFrameLength[0], {
-				css: { bottom: 147, left: -58 },
-				ease: Back.easeOut
-			}));
-			//#endregion
-
-			return tl;
-		},
-		molbertrabbit: function (__rabbit) {
-			/// <summary>
-			/// Total length: 0.35s
-			/// </summary>
-			/// <param name="__rabbit"></param>
-			/// <returns type=""></returns>
-			var tl = new TimelineMax({
-				paused: true
-			});
-
-			var tlFrameLength = [0.35]
-
-			// Set object
-			tl.add(TweenMax.set(__rabbit, {
-				css: { bottom: -40 }
-			}));
-
-			//#region Frame 1
-			tl.add(TweenMax.to(__rabbit, tlFrameLength[0], {
-				css: { bottom: 45 },
-				ease: Back.easeOut
-			}));
-			//#endregion
-
-			return tl;
-		},
-		tablecuppile: function (__cuppile) {
-			/// <summary>
-			/// Total length: 1.5s
-			/// </summary>
-			/// <param name="__cuppile"></param>
-			/// <returns type=""></returns>
-			var tl = new TimelineMax({
-				paused: true
-			});
-
-			var tlFrameLength = [1.5];
-
-			var cup001 = __cuppile.find(".cup-001").eq(0),
-				cup002 = __cuppile.find(".cup-002").eq(0),
-				cup003 = __cuppile.find(".cup-003").eq(0),
-				cup004 = __cuppile.find(".cup-004").eq(0),
-				cup006 = __cuppile.find(".cup-006").eq(0),
-				rabbit = $("#table-rabbit-wrap");
-
-			//#region Set objects
-			tl.add(TweenMax.set(rabbit, { css: { bottom: -150 } }));
-			tl.add(TweenMax.set([cup004, cup006], {
-				css: {
-					transformOrigin: "bottom center"
-				}
-			}), 0);
-			tl.add(TweenMax.set(cup001, {
-				css: {
-					transformOrigin: "bottom right"
-				}
-			}),0);
-			tl.add(TweenMax.set(cup002, {
-				css: {
-					transformOrigin: "bottom left"
-				}
-			}),0);
-			tl.add(TweenMax.set(cup003, {
-				css: {
-					bottom: -15
-				}
-			}),0);
-			tl.add(TweenMax.set([cup001, cup002, cup004, cup006], {
-				css: { rotation: 0 }
-			}), 0);
-			//#endregion
-
-			//#region Frame 1
-
-			tl.add([
-				TweenMax.to(cup001, tlFrameLength[0], { css: { rotation: -15 }, ease: Elastic.easeIn }),
-				TweenMax.to(cup002, tlFrameLength[0], { css: { rotation: 14 }, ease: Elastic.easeIn }),
-				TweenMax.to(cup003, tlFrameLength[0], { css: { bottom: -37 }, ease: Elastic.easeIn }),
-				TweenMax.to(cup004, tlFrameLength[0], { css: { rotation: -13 }, ease: Elastic.easeIn }),
-				TweenMax.to(cup006, tlFrameLength[0], { css: { rotation: 13 }, ease: Elastic.easeIn }),
-				TweenMax.to(rabbit, tlFrameLength[0], { css: { bottom: -34 }, ease: Elastic.easeIn })
-			],0);
-
-			//#endregion
-
-			return tl;
-		}
+		//#endregion
 	},
 	contacts: {
-		set: function(){
+		set: function () {
 			var contact_page = $("#contact-page-wrap");
 
 			contact_page.find(".content-container").eq(0).hide();
@@ -363,9 +471,9 @@ var tween_api = {
 					marginBottom: -370,
 					marginLeft: -249
 				}
-			}),0);
+			}), 0);
 
-			contact_page.find(".logo-container").eq(0).fadeOut(100,"linear",function () {
+			contact_page.find(".logo-container").eq(0).fadeOut(100, "linear", function () {
 				tl.play();
 			});
 		},
@@ -394,8 +502,81 @@ var tween_api = {
 				tl.play();
 			});
 		}
+	},
+	table: {
+		movingcup: {
+			set: function () {
+				TweenMax.set([
+					SCENE.Table.TopLayer.MovingCup.Base,
+					SCENE.Table.TopLayer.MovingCup.Body
+				], { css: { transformOrigin: "bottom center", rotation: 0 } });
+			},
+			instance: function () {
+				var tl = new TimelineMax({ paused: false, repeat: -1, yoyo: true });
+				//#region Frameset
+				//#region Frame 1
+				tl.add([
+					TweenMax.to(SCENE.Table.TopLayer.MovingCup.Base, 2, { css: { rotation: -8 } }),
+					TweenMax.to(SCENE.Table.TopLayer.MovingCup.Body, 2, { css: { rotation: 7 } })
+				], 0);
+				//#endregion
+				//#endregion
+				return tl;
+			}
+		}
+	},
+	global: {
+		bluedove: {
+			keyswing: {
+				set: function () {
+					TweenMax.set(SCENE.General.BlueDove.String, { transformOrigin: "center top", rotationZ: 15 });
+					TweenMax.set(SCENE.General.BlueDove.Key, { transformOrigin: "center top", rotationZ: 5 });
+				},
+				instance: function () {
+					var tl = new TimelineMax({ paused: false, yoyo: true, repeat: -1, repeatDelay: 0.2 });
+					//#region Frameset
+					//#region Frame 1
+					tl.add(TweenMax.to(SCENE.General.BlueDove.String, 2, { css: { rotationZ: -15 }, ease: Quad.easeInOut }), 0);
+					tl.add(TweenMax.to(SCENE.General.BlueDove.Key, 2, { css: { rotationZ: -10 }, ease: Quad.easeInOut }), 0.5);
+					//#endregion
+					//#endregion
+					return tl;
+				}
+			}
+		},
+		lamp: {
+			swing: {
+				set: function () {
+					TweenMax.set(SCENE.Lamp.Base, { css: { transformOrigin: "center top" } })
+				},
+				instance: function () {
+					var tl = new TimelineMax({ paused: false });
+
+					var swingLampLeft = function () {
+						TweenMax.to(SCENE.Lamp.Base, 4, {
+							rotation: 10,
+							ease: Power2.easeInOut,
+							onComplete: swingLampRight
+						});
+					};
+
+					var swingLampRight = function () {
+						TweenMax.to(SCENE.Lamp.Base, 4, {
+							rotation: -10,
+							ease: Power2.easeInOut,
+							onComplete: swingLampLeft
+						});
+					};
+
+					tl.add(swingLampLeft);
+
+					return tl;
+				}
+			}
+		}
 	}
-}
+};
+
 
 var bubbleBirdBeakAnimation = function () {
 
@@ -439,6 +620,49 @@ var bubbleBirdBeakAnimation = function () {
 
 var test1 = new bubbleBirdBeakAnimation();
 
+function initStartPage() {
+
+	//#region Put all sets here
+	//tween_api.start.global.startuplogo.set();
+	tween_api.start.doors.base.set();
+	tween_api.start.doors.bubblebird.set();
+	tween_api.start.doors.rabbitncup.set();
+	tween_api.global.lamp.swing.set();
+	tween_api.start.lamp.base.set();
+	tween_api.start.molbert.base.set();
+	tween_api.start.molbert.molbertrabbit.set();
+	tween_api.start.table.base.set();
+	tween_api.table.movingcup.set();
+	tween_api.start.table.pinkbird.set();
+	tween_api.start.table.rabbitnpile.set();
+	tween_api.global.bluedove.keyswing.set();
+	tween_api.start.global.bluedove.base.set();
+	//#endregion
+
+	var tl = new TimelineMax({
+		delay: 1
+	});
+
+	tl
+		.add(tween_api.start.doors.base.instance(), "start")
+		.add(tween_api.start.doors.rabbitncup.instance(), "bottomrabitcup")
+		.add(tween_api.start.doors.bubblebird.instance(), "bottomrabitcup+=0.25")
+		.add(tween_api.start.table.base.instance(), "bottomrabitcup+=0.25")
+		.add(tween_api.start.table.rabbitnpile.instance(), "rabbitnpile")
+		.addCallback(tween_api.table.movingcup.instance)
+		.add(tween_api.start.table.pinkbird.instance(), "rabbitnpile+=0.5")
+		//.add(tween_api.start.global.startuplogo.instance(), "bottomrabitcup+=0.25")
+		.add(tween_api.start.lamp.base.instance(), "bottomrabitcup+=0.5")
+		.addCallback(tween_api.global.lamp.swing.instance, "bottomrabitcup+=1")
+		.add(tween_api.start.molbert.base.instance(), "bottomrabitcup+=0.75")
+		.add(tween_api.start.global.bluedove.base.instance(), "bottomrabitcup+=0.95")
+		.addCallback(tween_api.global.bluedove.keyswing.instance, "bottomrabitcup+=1.45")
+		.add(tween_api.start.molbert.molbertrabbit.instance(), "bottomrabitcup+=1.25")
+		.addCallback(function () {
+			$("#section-wrap").show();
+		});
+}
+
 $(document).ready(function () {
 	$('.main-scene-container').find("img").eq(0).show();
 	setSection();
@@ -446,9 +670,9 @@ $(document).ready(function () {
 	initBGSwitch();
 	initThumbnails();
 	bubbleTextInit();
-	//birdInit();
-	//lampInit();
 	tween_api.contacts.set();
+	//initStartPage();
+	$("#section-wrap").show();
 	initLogoClick();
 });
 
@@ -461,109 +685,9 @@ function initLogoClick() {
 	});
 }
 
-function lampInit() {
-	/// <summary>
-	/// Initiate lamp swing
-	/// </summary>
-	var
-		$lamp = $("#lamp"),					// Lamp element
-		$swingAmplitude = 10,				// Lamp swing aplitude
-		$swingInterval = 4,					// Swing Interval
-		$swingEasing = Power2.easeInOut;	// Swing Easing
 
-	// Set initial state
-	/*
-		- Add 15 more degrees at initial state to create impulse effect
-		- Position rotation at center top of lamp image
-	*/
-	TweenLite.set($lamp, { transformOrigin: "center top", rotation: -($swingAmplitude) });
 
-	var swingLampLeft = function () {
-		TweenMax.to($lamp, $swingInterval, {
-			rotation: $swingAmplitude,
-			ease: $swingEasing,
-			onComplete: swingLampRight
-		});
-	};
 
-	var swingLampRight = function () {
-		TweenMax.to($lamp, $swingInterval, {
-			rotation: -$swingAmplitude,
-			ease: $swingEasing,
-			onComplete: swingLampLeft
-		});
-	};
-
-	// Start the swing
-	swingLampLeft();
-}
-
-function birdInit() {
-	/// <summary>
-	/// Initiate lamp swing
-	/// </summary>
-	var
-		$string = $(".string-container"),
-		$key = $(".key-element"),
-		$key_swing = [5, -10],
-		$string_swing = [15, -15],
-		$general_interval = 2,
-		$swingEasing = Quad.easeInOut;	// Swing Easing
-
-	// Set initial state
-	TweenLite.set($key, { transformOrigin: "center top", rotationZ: $key_swing[0] });
-	TweenLite.set($string, { transformOrigin: "center top", rotationZ: $string_swing[0] });
-
-	var animationActive = true;
-
-	// Left swing
-	var leftSwing = new TimelineMax({
-		paused: true,
-		onComplete: function () {
-			if (animationActive) {
-				rightSwing.restart().play();
-			}
-		}
-	});
-
-	leftSwing.add(TweenMax.to($string, $general_interval, {
-		css: {
-			rotationZ: $string_swing[1]
-		},
-		ease: $swingEasing
-	}), 0);
-	leftSwing.add(TweenMax.to($key, $general_interval, {
-		css: {
-			rotationZ: $key_swing[1]
-		},
-		ease: $swingEasing
-	}), 0.5);
-
-	// Right swing
-	var rightSwing = new TimelineMax({
-		paused: true,
-		onComplete: function () {
-			if (animationActive) {
-				leftSwing.restart().play();
-			}
-		}
-	});
-
-	rightSwing.add(TweenMax.to($string, $general_interval, {
-		css: {
-			rotationZ: $string_swing[0]
-		},
-		ease: $swingEasing
-	}), 0);
-	rightSwing.add(TweenMax.to($key, $general_interval, {
-		css: {
-			rotationZ: $key_swing[0]
-		},
-		ease: $swingEasing
-	}), 0.5);
-
-	leftSwing.play();
-}
 
 function setSection() {
 	// Set state
@@ -589,31 +713,37 @@ function openSection() {
 	var self = this;
 	self.__ele_imagebg = $("#section-wrap")
 
+	html2canvas($("#viewport"), {
+		background: "#000",
+		onrendered: function (canvas) {
+			$(".overlaping-blur").show();
+			$("#canvas-container").append(canvas);
+			$("canvas").attr("id", "canvas");
+			stackBlurCanvasRGB(
+				'canvas',
+			0,
+			0,
+			$("canvas").width(),
+			$("canvas").height(), 7);
+		}
+	});
+
 	self.SecondVariant = new TimelineMax({
 		paused: true,
 		onComplete: function () {
 			self.__ele_imagebg.find(".section-content-wrap").eq(0).fadeIn();
-		},
-		onUpdate: function () {
-			if (self.SecondVariant.progress() > 0.8 && self.SecondVariant.progress() < 0.82) {
-				html2canvas($("#viewport"), {
-					background: "#000",
-					onrendered: function (canvas) {
-						$(".overlaping-blur").show();
-						$("#canvas-container").append(canvas);
-						$("canvas").attr("id", "canvas");
-						stackBlurCanvasRGB(
-							'canvas',
-						0,
-						0,
-						$("canvas").width(),
-						$("canvas").height(), 7);
-
-					}
-				});
-			}
 		}
 	});
+	
+	
+	self.SecondVariant.add(TweenMax.set($(".overlaping-blur"), {
+		css: {
+			opacity: 0,
+			visibility: "visible"
+		}
+	}), 0);
+
+	self.SecondVariant.add(TweenMax.to($(".overlaping-blur"), 0.5, { css: { opacity: 1 } }),0.5);
 
 	self.SecondVariant.add(TweenMax.to(self.__ele_imagebg, 1, {
 		css: {

@@ -38,7 +38,19 @@ body, html {
     min-width: 1200px;
     min-height: 700px;
 
+    #startup-logo {
+        display: none;
+        z-index: 1;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -450px;
+        margin-top: -308px;
 
+        & img {
+            width: 900px;
+        }
+    }
 
     #lamp {
         position: absolute;
@@ -152,6 +164,74 @@ body, html {
         margin: 0 auto;
         #bundle .clearfix();
     }
+    /*#region Window*/
+    #window-wrap {
+        position: absolute;
+        width: 300px;
+        height: 265px;
+        bottom: 350px;
+        left: -175px;
+        #bundle .clearfix();
+
+        & .window-container {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 100%;
+            #bundle .clearfix();
+
+            & .floating-tags {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                #bundle .clearfix();
+
+                & .string-element {
+                    position: absolute;
+
+                    &.phone-string {
+                        z-index: 5;
+                        right: 64px;
+                        top: 7px;
+                    }
+
+                    &.location-string {
+                        right: 128px;
+                        z-index: 5;
+                        top: 4px;
+                    }
+
+                    &.mail-string {
+                        left: 108px;
+                        top: 6px;
+                        z-index: 5;
+                    }
+                }
+
+                & .floating-tag {
+                    position: absolute;
+
+                    &.phone-tag {
+                        bottom: 50px;
+                        right: 45px;
+                    }
+
+                    &.location-tag {
+                        bottom: 140px;
+                        left: 140px;
+                    }
+
+                    &.mail-tag {
+                        bottom: 25px;
+                        left: 86px;
+                    }
+                }
+            }
+        }
+    }
+    /*#endregion*/
     //
     /*#region Zone: Doors*/
     #doors-wrap {
@@ -555,8 +635,31 @@ body, html {
                     }
 
                     &.cup-008 {
-                        top: -33px;
-                        left: -30px;
+                        top: -46px;
+                        left: -35px;
+                        width: 100px;
+                        height: 72px;
+
+                        & .cup-body {
+                            position: absolute;
+                            top: 13px;
+                            left: 18px;
+                            z-index: 2;
+                        }
+
+                        & .cup-front {
+                            position: absolute;
+                            top: 56px;
+                            left: 6px;
+                            z-index: 3;
+                        }
+
+                        & .cup-back {
+                            position: absolute;
+                            top: 40px;
+                            left: 0;
+                            z-index: 1;
+                        }
                     }
 
                     &.cup-009 {
@@ -642,6 +745,7 @@ body, html {
     /*#endregion*/
     .overlaping-blur {
         display: none;
+        visibility: hidden;
         position: absolute;
         top: 0;
         left: 0;
@@ -669,6 +773,7 @@ body, html {
     }
     /*#endregion*/
     #section-wrap {
+        display: none;
         position: absolute;
         left: 50%;
         top: 50%;
