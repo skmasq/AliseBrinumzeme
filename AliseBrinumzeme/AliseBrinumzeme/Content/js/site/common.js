@@ -254,6 +254,145 @@ var tween_api = {
 			//#endregion
 
 			return tl;
+		},
+		tablecuppile: function (__cuppile) {
+			/// <summary>
+			/// Total length: 1.5s
+			/// </summary>
+			/// <param name="__cuppile"></param>
+			/// <returns type=""></returns>
+			var tl = new TimelineMax({
+				paused: true
+			});
+
+			var tlFrameLength = [1.5];
+
+			var cup001 = __cuppile.find(".cup-001").eq(0),
+				cup002 = __cuppile.find(".cup-002").eq(0),
+				cup003 = __cuppile.find(".cup-003").eq(0),
+				cup004 = __cuppile.find(".cup-004").eq(0),
+				cup006 = __cuppile.find(".cup-006").eq(0),
+				rabbit = $("#table-rabbit-wrap");
+
+			//#region Set objects
+			tl.add(TweenMax.set(rabbit, { css: { bottom: -150 } }));
+			tl.add(TweenMax.set([cup004, cup006], {
+				css: {
+					transformOrigin: "bottom center"
+				}
+			}), 0);
+			tl.add(TweenMax.set(cup001, {
+				css: {
+					transformOrigin: "bottom right"
+				}
+			}),0);
+			tl.add(TweenMax.set(cup002, {
+				css: {
+					transformOrigin: "bottom left"
+				}
+			}),0);
+			tl.add(TweenMax.set(cup003, {
+				css: {
+					bottom: -15
+				}
+			}),0);
+			tl.add(TweenMax.set([cup001, cup002, cup004, cup006], {
+				css: { rotation: 0 }
+			}), 0);
+			//#endregion
+
+			//#region Frame 1
+
+			tl.add([
+				TweenMax.to(cup001, tlFrameLength[0], { css: { rotation: -15 }, ease: Elastic.easeIn }),
+				TweenMax.to(cup002, tlFrameLength[0], { css: { rotation: 14 }, ease: Elastic.easeIn }),
+				TweenMax.to(cup003, tlFrameLength[0], { css: { bottom: -37 }, ease: Elastic.easeIn }),
+				TweenMax.to(cup004, tlFrameLength[0], { css: { rotation: -13 }, ease: Elastic.easeIn }),
+				TweenMax.to(cup006, tlFrameLength[0], { css: { rotation: 13 }, ease: Elastic.easeIn }),
+				TweenMax.to(rabbit, tlFrameLength[0], { css: { bottom: -34 }, ease: Elastic.easeIn })
+			],0);
+
+			//#endregion
+
+			return tl;
+		}
+	},
+	contacts: {
+		set: function(){
+			var contact_page = $("#contact-page-wrap");
+
+			contact_page.find(".content-container").eq(0).hide();
+			contact_page.find(".logo-container").eq(0).show();
+
+			TweenMax.set(contact_page.find(".logo-container").eq(0), {
+				css: {
+					rotation: -90,
+					top: "50%",
+					left: "5%",
+					marginTop: -48
+				}
+			});
+
+			TweenMax.set(contact_page, {
+				css: {
+					rotation: 93,
+					bottom: 100,
+					height: 225,
+					width: 151,
+					marginBottom: 0,
+					marginLeft: 49
+				}
+			});
+		},
+		open: function () {
+			var contact_page = $("#contact-page-wrap");
+
+			var tl = new TimelineMax({
+				paused: true,
+				onComplete: function () {
+					contact_page.find(".content-container").eq(0).fadeIn(100);
+				}
+			});
+
+			tl.add(TweenMax.to(contact_page, 1, {
+				css: {
+					rotation: 0,
+					bottom: "50%",
+					height: 740,
+					width: 498,
+					marginBottom: -370,
+					marginLeft: -249
+				}
+			}),0);
+
+			contact_page.find(".logo-container").eq(0).fadeOut(100,"linear",function () {
+				tl.play();
+			});
+		},
+		close: function () {
+			var contact_page = $("#contact-page-wrap");
+
+			var tl = new TimelineMax({
+				paused: true,
+				onComplete: function () {
+					contact_page.find(".logo-container").eq(0).fadeIn(100);
+				}
+			});
+
+			tl.add(TweenMax.to(contact_page, 1, {
+				css: {
+					rotation: 93,
+					bottom: 100,
+					height: 225,
+					width: 151,
+					marginBottom: 0,
+					marginLeft: 49
+				}
+			}), 0);
+
+			contact_page.find(".content-container").eq(0).fadeOut(100, "linear", function () {
+				tl.play();
+			});
 		}
 	}
 }
@@ -298,7 +437,6 @@ var bubbleBirdBeakAnimation = function () {
 	return tl;
 }
 
-
 var test1 = new bubbleBirdBeakAnimation();
 
 $(document).ready(function () {
@@ -310,7 +448,18 @@ $(document).ready(function () {
 	bubbleTextInit();
 	//birdInit();
 	//lampInit();
+	tween_api.contacts.set();
+	initLogoClick();
 });
+
+function initLogoClick() {
+	$(document).on("click", "#contact-page-wrap .logo-container", function () {
+		tween_api.contacts.open();
+	});
+	$(document).on("click", "#contact-page-wrap .content-container", function () {
+		tween_api.contacts.close();
+	});
+}
 
 function lampInit() {
 	/// <summary>
@@ -446,7 +595,7 @@ function openSection() {
 			self.__ele_imagebg.find(".section-content-wrap").eq(0).fadeIn();
 		},
 		onUpdate: function () {
-			if (self.SecondVariant.progress() > 0.8) {
+			if (self.SecondVariant.progress() > 0.8 && self.SecondVariant.progress() < 0.82) {
 				html2canvas($("#viewport"), {
 					background: "#000",
 					onrendered: function (canvas) {

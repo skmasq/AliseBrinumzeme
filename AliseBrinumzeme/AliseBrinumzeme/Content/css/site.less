@@ -1,6 +1,10 @@
 ﻿body {
 }
 
+@import '../fonts/fonts.less';
+@import 'variables.less';
+@import 'functions.less';
+
 body, html {
     position: relative;
     float: left;
@@ -13,11 +17,10 @@ body, html {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    font-family: 'Harting Plain';
 }
 
-@import '../fonts/fonts.less';
-@import 'variables.less';
-@import 'functions.less';
+
 
 /*
     #viewport: main layer
@@ -392,10 +395,128 @@ body, html {
     }
     /*#endregion*/
     //
+    /*#region About Contact Page*/
+    #contact-page-wrap {
+        position: absolute;
+        bottom: 100px;
+        left: 50%;
+        height: 225px;
+        width: 151px;
+        margin-bottom: 0;
+        margin-left: 49px;
+        z-index: 550;
+        #bundle .clearfix();
+        box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.40);
+        -moz-transform: rotate(93deg);
+        -ms-transform: rotate(93deg);
+        -o-transform: rotate(93deg);
+        -webkit-transform: rotate(93deg);
+        transform: rotate(93deg);
+
+        & .contact-page-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            #bundle .clearfix();
+
+            & .background {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+
+                & img {
+                    height: 100%;
+                    width: 100%;
+                }
+            }
+
+            & .logo-container {
+                position: absolute;
+                left: 5%;
+                top: 50%;
+                margin-top: -48px;
+                -webkit-transform: rotate(-90deg);
+                -moz-transform: rotate(-90deg);
+                -ms-transform: rotate(-90deg);
+                -o-transform: rotate(-90deg);
+                transform: rotate(-90deg);
+
+                & img {
+                    width: 100%;
+                }
+            }
+
+            & .content-container {
+                position: absolute;
+                height: 500px;
+                width: 326px;
+                //background-color: rgba(0, 0, 255, 0.25);
+                top: 125px;
+                left: 85px;
+
+                & .about-me-container {
+                    & h1.title {
+                        padding: 0;
+                        font-size: 28px;
+                        color: #5A4228;
+                        margin-bottom: 0;
+                    }
+
+                    & p.visible-part {
+                        font-size: 15px;
+                        color: #000;
+                    }
+                }
+
+                & .map-container {
+                    & img {
+                        width: 303px;
+                        margin-left: 10px;
+                        margin-top: -2px;
+                    }
+                }
+
+                & .map-container, & .find-us-container, & .phone-number-container, & .email-container, & .about-me-container {
+                    position: relative;
+                    float: left;
+                    width: 100%;
+                    margin-bottom: 10px;
+                    #bundle .clearfix();
+                }
+
+                & .a-contact-icon {
+                    position: relative;
+                    float: left;
+                    height: 30px;
+
+                    &.email-icon {
+                        margin-left: 2px;
+                    }
+
+                    &.location-icon {
+                        margin-left: 6px;
+                    }
+                }
+
+                & .a-contact-section-title {
+                    line-height: 30px;
+                    margin-left: 50px;
+
+                    &.location-title {
+                        line-height: 15px;
+                    }
+                }
+            }
+        }
+    }
+    /*#endregion*/
+    //
     /*#region Zone: Table*/
     #table-wrap {
         position: absolute;
-        right: -60px;
+        right: -130px;
         bottom: -70px;
         width: 399px;
         height: 272px;
@@ -411,16 +532,88 @@ body, html {
                 right: 0;
             }
 
-            & .table-bottom-container {
+            & .table-top-container {
                 position: absolute;
-                bottom: 254px;
+                height: 10px;
+                //background-color: blue;
+                top: 0;
                 left: 0;
                 width: 100%;
 
+                & .table-top-cup {
+                    position: absolute;
+                    top: 0;
+
+                    &.bird-003 {
+                        top: -125px;
+                        left: 225px;
+                    }
+
+                    &.cup-005 {
+                        top: -65px;
+                        left: 210px;
+                    }
+
+                    &.cup-008 {
+                        top: -33px;
+                        left: -30px;
+                    }
+
+                    &.cup-009 {
+                        top: -45px;
+                        left: 139px;
+                    }
+                }
+            }
+
+            & .table-bottom-container {
+                position: absolute;
+                bottom: 70px;
+                left: 0;
+                width: 100%;
+                height: 10px;
+                //background-color: #00F;
+                & .pile-of-cups {
+                    position: absolute;
+                    bottom: 0;
+                    z-index: 3;
+                    left: -30px;
+
+                    & .cup-in-pile {
+                        position: absolute;
+                        bottom: 0;
+
+                        &.cup-001 {
+                            left: 36px;
+                            bottom: -16px;
+                        }
+
+                        &.cup-002 {
+                            left: 137px;
+                            bottom: -10px;
+                        }
+
+                        &.cup-003 {
+                            bottom: -15px;
+                            left: 91px;
+                        }
+
+                        &.cup-004 {
+                            bottom: -10px;
+                            left: 67px;
+                        }
+
+                        &.cup-006 {
+                            bottom: -15px;
+                            left: 141px;
+                        }
+                    }
+                }
+
                 #table-rabbit-wrap {
                     position: absolute;
-                    top: 120px;
-                    left: 137px;
+                    bottom: -34px;
+                    left: 65px;
                     width: 115px;
                     height: 129px;
 
