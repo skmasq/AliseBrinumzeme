@@ -112,6 +112,14 @@ var SCENE = {
 		},
 		StartupLogo: {
 			Base: $("#startup-logo")
+		},
+		WindowElement: {
+			Base: $("#window-wrap"),
+			Tags: {
+				Phone: $("#window-wrap .phone-tag"),
+				Mail: $("#window-wrap .mail-tag"),
+				Location: $("#window-wrap .location-tag")
+			}
 		}
 	}
 	//#endregion
@@ -573,6 +581,32 @@ var tween_api = {
 					return tl;
 				}
 			}
+		},
+		tags: {
+			swing: {
+				set: function(){
+					TweenMax.set([
+						SCENE.General.WindowElement.Tags.Phone,
+						SCENE.General.WindowElement.Tags.Mail,
+						SCENE.General.WindowElement.Tags.Location
+					], { css: { transformPerspective: 300 } });
+				},
+				instance: function () {
+					var tl = new TimelineMax({repeat: -1, yoyo: true});
+					tl.add([
+						TweenMax.to(SCENE.General.WindowElement.Tags.Phone, 2, { css: { rotationY: 20 } }),
+						TweenMax.to(SCENE.General.WindowElement.Tags.Mail, 1, { css: { rotationY: -30 } }),
+						TweenMax.to(SCENE.General.WindowElement.Tags.Location, 3, { css: { rotationY: 40 } })
+					]);
+
+					tl.add([
+						TweenMax.to(SCENE.General.WindowElement.Tags.Phone, 2, { css: { rotationY: -35 } }),
+						TweenMax.to(SCENE.General.WindowElement.Tags.Mail, 3, { css: { rotationY: 15 } }),
+						TweenMax.to(SCENE.General.WindowElement.Tags.Location, 1, { css: { rotationY: -25 } })
+					]);
+					return tl;
+				}
+			}
 		}
 	}
 };
@@ -660,6 +694,16 @@ function initStartPage() {
 		.add(tween_api.start.molbert.molbertrabbit.instance(), "bottomrabitcup+=1.25")
 		.addCallback(function () {
 			$("#section-wrap").show();
+			$(".empty-bubble").fadeIn();
+			$(".bubble-text-content").fadeIn();
+			setTimeout(function () {
+				test1.play().eventCallback("onStart", function (something) {
+					$(".empty-bubble").fadeIn(200);
+					$(".bubble-text-content").fadeIn(200);
+				}).eventCallback("onComplete", function () {
+					test1.restart().pause();
+				});
+			}, 2000);
 		});
 }
 
@@ -671,23 +715,19 @@ $(document).ready(function () {
 	initThumbnails();
 	bubbleTextInit();
 	tween_api.contacts.set();
-	//initStartPage();
-	$("#section-wrap").show();
+	initStartPage();
+	//$("#section-wrap").show();
 	initLogoClick();
+	// window
+	tween_api.global.tags.swing.set();
+	tween_api.global.tags.swing.instance();
 });
 
 function initLogoClick() {
-	$(document).on("click", "#contact-page-wrap .logo-container", function () {
-		tween_api.contacts.open();
-	});
-	$(document).on("click", "#contact-page-wrap .content-container", function () {
-		tween_api.contacts.close();
-	});
+	$(document).on("click", "#contact-page-wrap .logo-container", tween_api.contacts.open);
+	$(document).on("click", "#contact-page-wrap .content-container", tween_api.contacts.close);
+	$(document).on("click", ".floating-tag", tween_api.contacts.open);
 }
-
-
-
-
 
 function setSection() {
 	// Set state
@@ -706,7 +746,7 @@ function setSection() {
 
 	$(document).on("click", ".menu-hitbox", function () {
 		openSection();
-	})
+	});
 }
 
 function openSection() {
@@ -738,12 +778,12 @@ function openSection() {
 	
 	self.SecondVariant.add(TweenMax.set($(".overlaping-blur"), {
 		css: {
-			opacity: 0,
+			alpha: 0,
 			visibility: "visible"
 		}
 	}), 0);
 
-	self.SecondVariant.add(TweenMax.to($(".overlaping-blur"), 0.5, { css: { opacity: 1 } }),0.5);
+	self.SecondVariant.add(TweenMax.to($(".overlaping-blur"), 0.5, { css: { alpha: 1 } }),0.5);
 
 	self.SecondVariant.add(TweenMax.to(self.__ele_imagebg, 1, {
 		css: {
@@ -790,6 +830,8 @@ function bubbleTextInit() {
 
 function initThumbnails() {
 
+	var prevImage = $(this);
+
 	$("#section-wrap .thumbnail-image-container").each(function () {
 		var hoverTL = new tween_api.sections.thumbnails.hover($(this));
 		$(this).data("hover_tween", hoverTL);
@@ -799,6 +841,16 @@ function initThumbnails() {
 		$(this).data("hover_tween").play();
 	}).on("mouseleave", ".thumbnail-image-container", function () {
 		$(this).data("hover_tween").reverse();
+	});
+
+	//Makes clicked thumbnail less visiable
+	$(document).on("click", ".thumbnail-image", function () {
+		$(this).css("opacity", ".7");
+
+		if (prevImage.attr("src") != $(this).attr("src")) {
+			prevImage.css("opacity", "1");
+		}
+		prevImage = $(this);
 	});
 
 }
