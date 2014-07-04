@@ -183,9 +183,7 @@
     <Content Include="Content\images\molbert\Rabit_001_002.png" />
     <Content Include="Content\images\section\Info_Book_001.png" />
     <Content Include="Content\images\section\Info_Book_002.png" />
-    <Content Include="Content\images\section\left_arrow_001.png" />
     <Content Include="Content\images\section\left_arrow_002.png" />
-    <Content Include="Content\images\section\right_arrow_001.png" />
     <Content Include="Content\images\section\right_arrow_002.png" />
     <Content Include="Content\images\section\Section_Background.png" />
     <Content Include="Content\images\righttopbird\String_001_001.png" />
@@ -250,6 +248,10 @@
     <Content Include="Content\images\window\Window_001.png" />
     <Content Include="Content\images\window\Window_002.png" />
     <Content Include="Content\images\window\Window_003.png" />
+    <Content Include="Content\images\window\Window_004.png" />
+    <Content Include="Content\images\window\window_005_more_blur.png" />
+    <Content Include="Content\images\window\Window_006_lighter.png" />
+    <Content Include="Content\images\window\window_007_lighter_bg.png" />
     <Content Include="Content\js\libraries\CSSRulePlugin.js" />
     <Content Include="Content\js\libraries\html2canvas.js" />
     <Content Include="Content\js\libraries\jquery-1.10.2.js" />
