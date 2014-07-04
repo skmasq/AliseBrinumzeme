@@ -187,8 +187,10 @@
     <Content Include="Content\images\section\Info_Book_002.png" />
     <Content Include="Content\images\section\left_arrow_001.png" />
     <Content Include="Content\images\section\left_arrow_002.png" />
+    <Content Include="Content\images\section\left_arrow_thumb_002.png" />
     <Content Include="Content\images\section\right_arrow_001.png" />
     <Content Include="Content\images\section\right_arrow_002.png" />
+    <Content Include="Content\images\section\right_arrow_thumb_002.png" />
     <Content Include="Content\images\section\Section_Background.png" />
     <Content Include="Content\images\righttopbird\String_001_001.png" />
     <Content Include="Content\images\section\social\facebook.png" />

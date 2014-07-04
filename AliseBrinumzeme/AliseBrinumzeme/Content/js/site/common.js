@@ -1197,23 +1197,6 @@ $(document).ready(function () {
 	tween_api.contacts.set();
 	initStartPage();
 	initLogoClick();
-
-	function initialize() {
-		var myLatlng = new google.maps.LatLng(56.957788, 24.065033);
-		var mapOptions = {
-			zoom: 15,
-			center: myLatlng,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
-		map = new google.maps.Map($("#canvas-mapps").get(0),
-			mapOptions);
-		var marker = new google.maps.Marker({
-			position: myLatlng,
-			map: map,
-			title: 'Hello World!'
-		});
-	}
-	initialize();
 });
 
 function doorKnobDemo() {

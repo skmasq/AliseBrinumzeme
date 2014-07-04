@@ -1116,10 +1116,10 @@ html {
   cursor: pointer;
 }
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .thumbnail-scene-wrap > .arrow.left {
-  left: -60px;
+  left: -46px;
 }
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .thumbnail-scene-wrap > .arrow.right {
-  right: -66px;
+  right: -52px;
 }
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .thumbnail-scene-wrap .thumbnail-scene-container {
   position: relative;
