@@ -72,6 +72,10 @@ var _S = {
 			Body: $("#bird-with-key .bird-element"),
 			String: $("#bird-with-key .string-container"),
 			Key: $("#bird-with-key .key-element")
+		},
+		BGBlur: {
+			OverlapingBlur: $(".overlaping-blur"),
+
 		}
 	},
 	Container: {
@@ -243,8 +247,26 @@ var SCENE = {
 	}
 }
 
+var SectionObject = new sectionControler();
 
-
+var catureScreenshot = _.once(function () {
+	html2canvas($("#viewport"), {
+		background: "#000",
+		onrendered: function (canvas) {
+			$(".overlaping-blur").show();
+			$("#canvas-container").append(canvas);
+			$(canvas).attr("id", "canvas");
+			setTimeout(function () {
+				stackBlurCanvasRGB(
+									'canvas',
+								0,
+								0,
+								$("#canvas").width(),
+								$("#canvas").height(), 7);
+			}, 0);
+		}
+	});
+});
 
 var tween_api = {
 	sections: {
@@ -1081,7 +1103,7 @@ function initStartPage() {
 		.addLabel("bluedove", "molbert+=0.5")
 		.addLabel("bubblebird", "bluedove+=0.25")
 		//.addLabel("ACT_II", "bubblebird+=1.5")
-		.addLabel("ACT_II", "ACT_I+=30")
+		.addLabel("ACT_II", "ACT_I+=10")
 		.addLabel("keydrop", "ACT_II")
 		.addLabel("cupdrop", "keydrop+=3")
 		.addLabel("animalsHide", "cupdrop+=0.6")
@@ -1126,6 +1148,7 @@ function initStartPage() {
 		.add(tween_api.start.table.pinkbird.instance(), "bubblebird+=0.75")
 		.add(tween_api.table.movingcup.instance(), "bubblebird+=1")
 		.addCallback(function () {
+			catureScreenshot();
 			pickFoodInit();
 			doorKnobDemo();
 			setTimeout(doorRabbitEars, 2000);
@@ -1133,7 +1156,7 @@ function initStartPage() {
 		}, "bubblebird+=1.5")
 
 		// ACT II
-		.add(tween_api.global.bluedove.keyswing.drop(),"keydrop")
+		.add(tween_api.global.bluedove.keyswing.drop(), "keydrop")
 		.add(tween_api.table.movingcup.drop(), "cupdrop")
 		.add(tween_api.start.table.rabbitnpile.hide(), "animalsHide")
 		.add(tween_api.start.molbert.molbertrabbit.hide(), "animalsHide+=0.15")
@@ -1143,14 +1166,13 @@ function initStartPage() {
 		.add(tween_api.start.doors.rabbitncup.instance(), "animalsShow")
 		.add(tween_api.start.table.rabbitnpile.instance(), "animalsShow+=0.5")
 		.add(tween_api.start.molbert.molbertrabbit.instance(), "animalsShow+=2")
-		
+
 };
 
 $(document).ready(function () {
 	setWelcomeMessage();
 	$("#shelve-wrap").hide();
 	$("#window-wrap").hide();
-	setSection();
 	bootstarter();
 	prepareImageMargins();
 	initBGSwitch();
@@ -1455,7 +1477,16 @@ function eventhandler() {
 		.on("click", ".shelve-container", tween_api.contacts.open)
 		.on("click", ".info-book-wrap", tween_api.sections.description.show)
 		.on("click", ".thumbs-left-click", tween_api.sections.thumbnails.switchTo.left)
-		.on("click", ".thumbs-right-click", tween_api.sections.thumbnails.switchTo.right);
+		.on("click", ".thumbs-right-click", tween_api.sections.thumbnails.switchTo.right)
+		.on("click", ".menu-hitbox", function () {
+			SectionObject.open();
+		})
+		.on("click", ".overlap-taint", function () {
+			SectionObject.close();
+		})
+		.on("click", ".close-button", function () {
+			SectionObject.close();
+		})
 }
 
 function initLogoClick() {
@@ -1464,47 +1495,80 @@ function initLogoClick() {
 	$(document).on("click", ".floating-tag", tween_api.contacts.open);
 }
 
-function setSection() {
-	// Set state
-	TweenMax.set($("#section-wrap"), {
-		css: {
-			rotationX: 200,
-			rotationY: 65,
-			rotationZ: 30,
-			scale: 0.7,
-			x: "-200px",
-			transformPerspective: 300,
-			transformOrigin: "50% 50% -700",
-			zIndex: 0
-		}
-	});
+function sectionControler() {
+	var self = this;
+	self._section = _S.Container.Section.base;
 
-	var catureScreenshot = _.debounce(function () {
-		html2canvas($("#viewport"), {
-			background: "#000",
-			onrendered: function (canvas) {
-				$(".overlaping-blur").show();
-				$("#canvas-container").append(canvas);
-				$(canvas).attr("id", "canvas");
-				stackBlurCanvasRGB(
-					'canvas',
-				0,
-				0,
-				$("#canvas").width(),
-				$("#canvas").height(), 12);
+	self.openTL = new TimelineMax({ paused: true });
+	self.closeTL = new TimelineMax({ paused: true });
+
+	self.resetSection = function () {
+		// Set state
+		TweenMax.set($("#section-wrap"), {
+			css: {
+				rotationX: 200,
+				rotationY: 65,
+				rotationZ: 30,
+				scale: 0.7,
+				x: "-200px",
+				transformPerspective: 300,
+				transformOrigin: "50% 50% -700",
+				zIndex: 0
 			}
 		});
-	}, 100);
+	}
 
-	$(document).on("mouseenter", ".menu-hitbox", function () {
-		catureScreenshot();
-	});
+	self.resetOverlap = function () {
+		TweenMax.set(_S.Body.BGBlur.OverlapingBlur, { css: { visibility: "hidden", display: "none" } });
+	}
+	
+	self.init = function () {
+		self.resetOverlap();
+		self.resetSection();
+	}
 
-	$(document).on("click", ".menu-hitbox", function ()
-	{
-		openSection();
-	});
-}
+	//#region Open Timeline Frames
+
+	self.openTL
+		.addLabel("OpenStart", 0)
+		.addLabel("BGBlurStart", 0.5)
+		.set(_S.Body.BGBlur.OverlapingBlur, { css: { alpha: 0, visibility: "visible", display: "block" } }, "OpenStart")
+		.to(self._section, 0.25, { css: { alpha: 1 } }, "OpenStart")
+		.to(self._section, 1, { css: { rotationX: 0, rotationY: 0, rotationZ: 0, scale: 1, x: "0px" } }, "OpenStart")
+		.set(self._section, { css: { zIndex: 600 } }, "OpenStart+=0.25")
+		.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 1 } }, "BGBlurStart")
+
+	//#endregion
+
+	//#region Close Timeline Frames
+
+	self.closeTL
+		.to(self._section, 0.5, { css: { alpha: 0, x: "-600px", rotationZ: 45 } }, 0)
+		.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 0 } }, 0)
+
+	//#endregion
+
+
+	self.init();
+
+	return {
+		open: function () {
+			self.openTL.play().eventCallback("onComplete", function () {
+				self._section.find(".section-content-wrap").eq(0).fadeIn(function () {
+					animateThumbs();
+				});
+			});
+		},
+		close: function () {
+			self.closeTL.restart().play().eventCallback("onComplete", function () {
+				self.openTL.restart().pause();
+				self.resetOverlap();
+				self.resetSection();
+			});
+		}
+	}
+};
+
 
 function openSection() {
 	var self = this;

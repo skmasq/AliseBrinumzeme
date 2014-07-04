@@ -721,10 +721,14 @@ body, html {
                         width: 303px;
                         margin-left: 10px;
                         margin-top: -2px;
-                        z-index: 1;
+                        z-index: 3;
+
+                        &#canvas-maps{
+                            z-index: 1;
+                        }
                     }
 
-                    #canvas {
+                    #canvas-maps {
                         position: absolute;
                         top: 0;
                         left: 0;
@@ -932,6 +936,7 @@ body, html {
         z-index: 500;
 
         & .overlap-taint {
+            cursor: pointer;
             position: absolute;
             top: 0;
             left: 0;
@@ -998,6 +1003,14 @@ body, html {
                         cursor: pointer;
                         width: 60px;
                         height: 58px;
+                    }
+
+                    & .close-button {
+                        position: absolute;
+                        top: -80px;
+                        right: -72px;
+                        width: 45px;
+                        cursor: pointer;
                     }
 
                     & .section-description-wrap {

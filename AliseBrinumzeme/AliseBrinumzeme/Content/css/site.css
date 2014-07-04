@@ -1,4 +1,4 @@
-﻿@font-face {
+@font-face {
   font-family: 'hartingplain';
   src: url('../fonts/harting_plain_latvian-webfont.eot');
 }
@@ -687,9 +687,12 @@ html {
   width: 303px;
   margin-left: 10px;
   margin-top: -2px;
+  z-index: 3;
+}
+#viewport #contact-page-wrap .contact-page-container .content-container .map-container img#canvas-maps {
   z-index: 1;
 }
-#viewport #contact-page-wrap .contact-page-container .content-container .map-container #canvas {
+#viewport #contact-page-wrap .contact-page-container .content-container .map-container #canvas-maps {
   position: absolute;
   top: 0;
   left: 0;
@@ -874,6 +877,7 @@ html {
   z-index: 500;
 }
 #viewport .overlaping-blur .overlap-taint {
+  cursor: pointer;
   position: absolute;
   top: 0;
   left: 0;
@@ -936,6 +940,13 @@ html {
   cursor: pointer;
   width: 60px;
   height: 58px;
+}
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .close-button {
+  position: absolute;
+  top: -80px;
+  right: -72px;
+  width: 45px;
+  cursor: pointer;
 }
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .section-description-wrap {
   display: block;
@@ -1082,3 +1093,4 @@ html {
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .thumbnail-scene-wrap .thumbnail-scene-container .thumbnail-bottom-row {
   margin-top: 5px;
 }
+/*# sourceMappingURL=site.css.map */
