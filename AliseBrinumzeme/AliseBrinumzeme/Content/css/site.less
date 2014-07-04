@@ -662,6 +662,8 @@ body, html {
             height: 100%;
             #bundle .clearfix();
 
+
+
             & .background {
                 position: absolute;
                 top: 0;
@@ -685,6 +687,7 @@ body, html {
                 -ms-transform: rotate(-90deg);
                 -o-transform: rotate(-90deg);
                 transform: rotate(-90deg);
+                cursor: pointer;
 
                 & img {
                     width: 100%;
@@ -698,6 +701,14 @@ body, html {
                 //background-color: rgba(0, 0, 255, 0.25);
                 top: 125px;
                 left: 85px;
+
+                & .close-button-contacts {
+                    position: absolute;
+                    top: -90px;
+                    right: -52px;
+                    width: 45px;
+                    cursor: pointer;
+                }
 
                 & .about-me-container {
                     & h1.title {
@@ -724,7 +735,7 @@ body, html {
                         margin-top: -2px;
                         z-index: 3;
 
-                        &#canvas-maps{
+                        &#canvas-maps {
                             z-index: 1;
                         }
                     }
@@ -760,6 +771,12 @@ body, html {
 
                     &.location-icon {
                         margin-left: 6px;
+                    }
+
+                    &.cursor-icon {
+                        height: 18px;
+                        margin-left: -24px;
+                        margin-top: 6px;
                     }
                 }
 
@@ -1073,12 +1090,102 @@ body, html {
                             width: 100%;
                             height: 100%;
 
+
+
                             & .main-scene-image-container {
                                 display: none;
                                 box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.62);
 
                                 &.vpos-image {
                                     margin: 0 auto;
+                                }
+                            }
+                        }
+
+                        & .main-scene-toolbar {
+                            width: 100%;
+                            height: 30px;
+                            position: absolute;
+                            bottom: -50px;
+
+                            & .main-scene-toolbar-container {
+                                position: relative;
+                                float: left;
+                                width: 100%;
+                                height: 100%;
+
+                                & .info-toggle {
+                                    position: absolute;
+                                    right: 72px;
+                                    top: 3px;
+                                    height: 24px;
+                                    font-size: 15px;
+                                    line-height: 28px;
+                                    padding: 0 10px;
+                                    background-color: rgba(128, 128, 128, 0.23);
+                                    cursor: pointer;
+                                    #bundle .fast-transition();
+
+                                    &:hover {
+                                        background-color: rgba(128, 128, 128, 0.4);
+                                    }
+                                }
+
+                                & .social-nets {
+                                    position: absolute;
+                                    right: 0;
+                                    top: 0;
+                                    height: 100%;
+                                    width: 63px;
+
+                                    & .facebook-container, & .twitter-container {
+                                        height: 100%;
+                                        position: relative;
+                                        float: left;
+                                        padding-top: 3px;
+
+                                        & img {
+                                            height: 24px;
+                                        }
+
+                                        & span {
+                                            margin-top: -21px;
+                                            position: relative;
+                                            float: right;
+                                            padding-left: 7px;
+                                        }
+                                    }
+
+                                    & .twitter-container {
+                                        padding-left: 10px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    & .picture-info {
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        height: 193px; //?
+                        z-index: 1;
+                        display: none;
+
+                        & table {
+                            margin-top: 30px;
+                            width: 100%;
+
+                            & tr {
+                                & td {
+                                    font-weight: bold;
+                                    font-size: 16px;
+                                }
+
+                                & td + td {
+                                    font-weight: normal;
+                                    font-size: 18px;
                                 }
                             }
                         }
@@ -1090,6 +1197,7 @@ body, html {
                         bottom: 0;
                         width: 100%;
                         height: 193px; //?
+                        z-index: 2;
                         //background-color: rgba(255, 55, 0, 0.36);
                         & > .arrow {
                             position: absolute;
@@ -1100,11 +1208,11 @@ body, html {
                             cursor: pointer;
 
                             &.left {
-                                left: -60px;
+                                left: -46px;
                             }
 
                             &.right {
-                                right: -66px;
+                                right: -52px;
                             }
                         }
 

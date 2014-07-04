@@ -361,7 +361,18 @@ var tween_api = {
 
 				tl.add(function () {
 					_S.Container.Section.Description.base.show();
+					$(".info-toggle").text("Info");
 				});
+
+				tl.add(
+				TweenMax.to([
+					$(".thumbnail-scene-container"),
+					$(".thumbnail-scene-wrap .arrow")
+				], 0.3, { css: { alpha: 1, rotationX: 0, rotationY: 0, scale: 1 } }),0)
+
+				tl.add(function () {
+					$(".picture-info").fadeOut(100);
+				},0)
 
 				tl.add([
 					TweenMax.to(_S.Container.Section.InfoBook, 0.1, { css: { alpha: 0 } }),
@@ -378,7 +389,7 @@ var tween_api = {
 						}
 					}),
 					TweenMax.to(_S.Container.Section.MainScene.base, 0.5, { css: { alpha: 0 } })
-				]);
+				],0);
 
 				tl.set(_S.Container.Section.MainScene.base, { css: { visibility: "hidden", alpha: 1 } }, 0.5);
 				tl.set(_S.Container.Section.InfoBook, { css: { display: "none", alpha: 1 } }, 0.5);
@@ -768,14 +779,16 @@ var tween_api = {
 		},
 		open: function () {
 			var contact_page = $("#contact-page-wrap");
-
 			var tl = new TimelineMax({
 				paused: true,
 				onComplete: function () {
 					contact_page.find(".content-container").eq(0).fadeIn(100);
+					animateCursor();
+
 				}
 			});
 
+			tl.set(_S.Body.BGBlur.OverlapingBlur, { css: { alpha: 0, visibility: "visible", display: "block" } }, 0)
 			tl.add(TweenMax.to(contact_page, 1, {
 				css: {
 					rotation: 0,
@@ -785,7 +798,8 @@ var tween_api = {
 					marginBottom: -370,
 					marginLeft: -249
 				}
-			}), 0);
+			}), 0)
+			tl.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 1 } }, 0.5);
 
 			contact_page.find(".logo-container").eq(0).fadeOut(100, "linear", function () {
 				tl.play();
@@ -793,7 +807,6 @@ var tween_api = {
 		},
 		close: function () {
 			var contact_page = $("#contact-page-wrap");
-
 			var tl = new TimelineMax({
 				paused: true,
 				onComplete: function () {
@@ -801,6 +814,7 @@ var tween_api = {
 				}
 			});
 
+			tl.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 0 } }, 0)
 			tl.add(TweenMax.to(contact_page, 1, {
 				css: {
 					rotation: 93,
@@ -810,7 +824,9 @@ var tween_api = {
 					marginBottom: 0,
 					marginLeft: 49
 				}
-			}), 0);
+			}), 0)
+			tl.set(_S.Body.BGBlur.OverlapingBlur, { css: { visibility: "hidden", display: "none" } }, 1);
+			
 
 			contact_page.find(".content-container").eq(0).fadeOut(100, "linear", function () {
 				tl.play();
@@ -1151,7 +1167,7 @@ function initStartPage() {
 			catureScreenshot();
 			pickFoodInit();
 			doorKnobDemo();
-			setTimeout(doorRabbitEars, 2000);
+			doorRabbitEars();
 			setTimeout(tableRabbitEars, 3000);
 		}, "bubblebird+=1.5")
 
@@ -1181,23 +1197,6 @@ $(document).ready(function () {
 	tween_api.contacts.set();
 	initStartPage();
 	initLogoClick();
-
-	function initialize() {
-		var myLatlng = new google.maps.LatLng(56.957788, 24.065033);
-		var mapOptions = {
-			zoom: 15,
-			center: myLatlng,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
-		map = new google.maps.Map($("#canvas-mapps").get(0),
-			mapOptions);
-		var marker = new google.maps.Marker({
-			position: myLatlng,
-			map: map,
-			title: 'Hello World!'
-		});
-	}
-	initialize();
 });
 
 function doorKnobDemo() {
@@ -1292,7 +1291,7 @@ function doorKnobDemo() {
 function doorRabbitEars() {
 
 	/* Bird's beak animation*/
-	var tl = new TimelineLite();
+	var tl = new TimelineMax({repeat: -1, repeatDelay: 5, delay: 3.5});
 	var sk = 3;
 	var tVar;
 
@@ -1341,17 +1340,12 @@ function doorRabbitEars() {
 	TweenMax.to(right_ear, 0.25, {
 		css: { rotation: 0 }
 	})]);
-
-	tl.eventCallback("onComplete", function () {
-		tl.restart().pause();
-		setTimeout(tl.play, 4000);
-	})
 }
 
 function tableRabbitEars() {
 
 	/* Bird's beak animation*/
-	var tl = new TimelineLite();
+	var tl = new TimelineMax({ repeat: -1, repeatDelay: 5, delay: 2 });
 	var sk = 3;
 	var tVar;
 
@@ -1402,11 +1396,6 @@ function tableRabbitEars() {
 	TweenMax.to(right_ear, 0.25, {
 		css: { rotation: 0 }
 	})]);
-
-	tl.eventCallback("onComplete", function () {
-		tl.restart().pause();
-		setTimeout(tl.play, 3500);
-	})
 }
 
 function pickFoodInit() {
@@ -1466,6 +1455,7 @@ function eventhandler() {
 		console.log(e);
 	}, 200);
 	var rabbitTO;
+	var infoToggled = false;
 
 	$(document)
 		.on("mouseenter", ".shelve-container", function () {
@@ -1479,14 +1469,40 @@ function eventhandler() {
 		.on("click", ".thumbs-left-click", tween_api.sections.thumbnails.switchTo.left)
 		.on("click", ".thumbs-right-click", tween_api.sections.thumbnails.switchTo.right)
 		.on("click", ".menu-hitbox", function () {
-			SectionObject.open();
+			console.log($(this).data("menutextindex"));
+			if ($(this).data("menutextindex") != "6")
+				SectionObject.open();
+			else
+				tween_api.contacts.open();
 		})
 		.on("click", ".overlap-taint", function () {
 			SectionObject.close();
+			tween_api.contacts.close();
 		})
 		.on("click", ".close-button", function () {
-			SectionObject.close();
+			SectionObject.close()
 		})
+		.on("click", ".close-button-contacts", tween_api.contacts.close)
+		.on("click", ".info-toggle", function () {
+			if (infoToggled) {
+				$(this).text("Info");
+				TweenMax.to([
+					$(".thumbnail-scene-container"),
+					$(".thumbnail-scene-wrap .arrow")
+				], 0.3, { css: { alpha: 1, rotationX: 0, rotationY: 0, scale: 1 } }).eventCallback("onStart", function () {
+					$(".picture-info").fadeOut(100);
+				});
+			} else {
+				$(this).text("Bildes");
+				TweenMax.to([
+					$(".thumbnail-scene-container"),
+					$(".thumbnail-scene-wrap .arrow")
+				], 0.3, { css: { alpha: 0, rotationX: 50, rotationY: 50, scale: 0.5 } }).eventCallback("onComplete", function () {
+					$(".picture-info").fadeIn();
+				});
+			}
+			infoToggled = !infoToggled;
+		});
 }
 
 function initLogoClick() {
@@ -1564,59 +1580,12 @@ function sectionControler() {
 				self.openTL.restart().pause();
 				self.resetOverlap();
 				self.resetSection();
+			}).eventCallback("onStart", function () {
+				self._section.find(".section-content-wrap").eq(0).fadeOut();
 			});
 		}
 	}
 };
-
-
-function openSection() {
-	var self = this;
-	self.__ele_imagebg = $("#section-wrap");
-
-	self.SecondVariant = new TimelineMax({
-		paused: true,
-		onComplete: function () {
-			self.__ele_imagebg.find(".section-content-wrap").eq(0).fadeIn(function () {
-				animateThumbs();
-			});
-		}
-	});
-
-
-	self.SecondVariant.add(TweenMax.set($(".overlaping-blur"), {
-		css: {
-			alpha: 0,
-			visibility: "visible"
-		}
-	}), 0);
-
-	self.SecondVariant.add(TweenMax.to($(".overlaping-blur"), 0.5, { css: { alpha: 1 } }), 0.5);
-
-	self.SecondVariant.add(TweenMax.to(self.__ele_imagebg, 1, {
-		css: {
-			rotationX: 0,
-			rotationY: 0,
-			rotationZ: 0,
-			scale: 1,
-			x: "0px"
-		}
-	}), 0);
-
-	self.SecondVariant.add(TweenMax.to(self.__ele_imagebg, 0.25, {
-		css: {
-			opacity: 1
-		}
-	}), 0);
-
-	self.SecondVariant.set(self.__ele_imagebg, {
-		css: {
-			zIndex: 600
-		}
-	}, 0.25);
-
-	self.SecondVariant.play();
-}
 
 function bubbleTextInit() {
 	var comonTimer;
@@ -1624,6 +1593,7 @@ function bubbleTextInit() {
 		var $ele = $(this);
 		$(".empty-bubble").fadeOut(100);
 		$("[data-bubbletextindex=0]").fadeOut(100);
+		$(".bubble-text-content").fadeOut(100);
 		comonTimer = setTimeout(function () {
 			test1.play().eventCallback("onStart", function (something) {
 				$(".empty-bubble").fadeIn(200);
@@ -1782,11 +1752,17 @@ var rotateThumb = function (_element, _delay) {
 	return tl;
 }
 
-var animateThumbs = function () {
+var animateThumbs = _.once(function () {
 
 	var $thumbnails = $("#section-wrap .thumbnail-image-container div.image-seperate-container img.thumbnail-image");
 
 	for (var i = 0; i < $thumbnails.length; i++) {
 		rotateThumb($thumbnails[i], ran(1, 1.6)).play();
 	}
-};
+});
+
+var animateCursor = _.once(function () {
+	console.log("im heere")
+	TweenMax.to($(".cursor-icon"), 4, { css: { rotationZ: 360 }, ease: Elastic.easeOut,repeat: -1, repeatDelay: 1})
+});
+

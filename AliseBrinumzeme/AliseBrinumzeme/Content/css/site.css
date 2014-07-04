@@ -659,6 +659,7 @@ html {
   -ms-transform: rotate(-90deg);
   -o-transform: rotate(-90deg);
   transform: rotate(-90deg);
+  cursor: pointer;
 }
 #viewport #contact-page-wrap .contact-page-container .logo-container img {
   width: 100%;
@@ -669,6 +670,13 @@ html {
   width: 326px;
   top: 125px;
   left: 85px;
+}
+#viewport #contact-page-wrap .contact-page-container .content-container .close-button-contacts {
+  position: absolute;
+  top: -90px;
+  right: -52px;
+  width: 45px;
+  cursor: pointer;
 }
 #viewport #contact-page-wrap .contact-page-container .content-container .about-me-container h1.title {
   padding: 0;
@@ -734,6 +742,11 @@ html {
 }
 #viewport #contact-page-wrap .contact-page-container .content-container .a-contact-icon.location-icon {
   margin-left: 6px;
+}
+#viewport #contact-page-wrap .contact-page-container .content-container .a-contact-icon.cursor-icon {
+  height: 18px;
+  margin-left: -24px;
+  margin-top: 6px;
 }
 #viewport #contact-page-wrap .contact-page-container .content-container .a-contact-section-title {
   line-height: 30px;
@@ -1007,12 +1020,92 @@ html {
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-container .main-scene-image-container.vpos-image {
   margin: 0 auto;
 }
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-toolbar {
+  width: 100%;
+  height: 30px;
+  position: absolute;
+  bottom: -50px;
+}
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-toolbar .main-scene-toolbar-container {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-toolbar .main-scene-toolbar-container .info-toggle {
+  position: absolute;
+  right: 72px;
+  top: 3px;
+  height: 24px;
+  font-size: 15px;
+  line-height: 28px;
+  padding: 0 10px;
+  background-color: rgba(128, 128, 128, 0.23);
+  cursor: pointer;
+  -moz-transition: all 0.15s ease-out;
+  -o-transition: all 0.15s ease-out;
+  -webkit-transition: all 0.15s ease-out;
+  transition: all 0.15s ease-out;
+}
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-toolbar .main-scene-toolbar-container .info-toggle:hover {
+  background-color: rgba(128, 128, 128, 0.4);
+}
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-toolbar .main-scene-toolbar-container .social-nets {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 63px;
+}
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-toolbar .main-scene-toolbar-container .social-nets .facebook-container,
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-toolbar .main-scene-toolbar-container .social-nets .twitter-container {
+  height: 100%;
+  position: relative;
+  float: left;
+  padding-top: 3px;
+}
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-toolbar .main-scene-toolbar-container .social-nets .facebook-container img,
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-toolbar .main-scene-toolbar-container .social-nets .twitter-container img {
+  height: 24px;
+}
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-toolbar .main-scene-toolbar-container .social-nets .facebook-container span,
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-toolbar .main-scene-toolbar-container .social-nets .twitter-container span {
+  margin-top: -21px;
+  position: relative;
+  float: right;
+  padding-left: 7px;
+}
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-toolbar .main-scene-toolbar-container .social-nets .twitter-container {
+  padding-left: 10px;
+}
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .picture-info {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 193px;
+  z-index: 1;
+  display: none;
+}
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .picture-info table {
+  margin-top: 30px;
+  width: 100%;
+}
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .picture-info table tr td {
+  font-weight: bold;
+  font-size: 16px;
+}
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .picture-info table tr td + td {
+  font-weight: normal;
+  font-size: 18px;
+}
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .thumbnail-scene-wrap {
   position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
   height: 193px;
+  z-index: 2;
 }
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .thumbnail-scene-wrap > .arrow {
   position: absolute;
@@ -1023,10 +1116,10 @@ html {
   cursor: pointer;
 }
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .thumbnail-scene-wrap > .arrow.left {
-  left: -60px;
+  left: -46px;
 }
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .thumbnail-scene-wrap > .arrow.right {
-  right: -66px;
+  right: -52px;
 }
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .thumbnail-scene-wrap .thumbnail-scene-container {
   position: relative;
