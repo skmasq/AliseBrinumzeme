@@ -1167,7 +1167,7 @@ $(document).ready(function () {
 			center: myLatlng,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
-		map = new google.maps.Map($("#canvas").get(0),
+		map = new google.maps.Map($("#canvas-mapps").get(0),
 			mapOptions);
 		var marker = new google.maps.Marker({
 			position: myLatlng,
@@ -1444,19 +1444,6 @@ function eventhandler() {
 		console.log(e);
 	}, 200);
 	var rabbitTO;
-	$(document).on("mouseenter mouseleave", ".animation-hitbox", function (e) {
-		test234(e);
-		switch (e.type) {
-			case "mouseleave":
-				rabbitTO = setTimeout(AnimationHitbox[$(this).data("animationhitbox")].out, 2000);
-				break;
-			case "mouseenter":
-				console.log("wewhe")
-				clearTimeout(rabbitTO);
-				AnimationHitbox[$(this).data("animationhitbox")].over();
-				break;
-		}
-	});
 
 	$(document)
 		.on("mouseenter", ".shelve-container", function () {
@@ -1492,29 +1479,36 @@ function setSection() {
 		}
 	});
 
-	$(document).on("click", ".menu-hitbox", function () {
+	var catureScreenshot = _.debounce(function () {
+		html2canvas($("#viewport"), {
+			background: "#000",
+			onrendered: function (canvas) {
+				$(".overlaping-blur").show();
+				$("#canvas-container").append(canvas);
+				$(canvas).attr("id", "canvas");
+				stackBlurCanvasRGB(
+					'canvas',
+				0,
+				0,
+				$("#canvas").width(),
+				$("#canvas").height(), 12);
+			}
+		});
+	}, 100);
+
+	$(document).on("mouseenter", ".menu-hitbox", function () {
+		catureScreenshot();
+	});
+
+	$(document).on("click", ".menu-hitbox", function ()
+	{
 		openSection();
 	});
 }
 
 function openSection() {
 	var self = this;
-	self.__ele_imagebg = $("#section-wrap")
-
-	html2canvas($("#viewport"), {
-		background: "#000",
-		onrendered: function (canvas) {
-			$(".overlaping-blur").show();
-			$("#canvas-container").append(canvas);
-			$("canvas").attr("id", "canvas");
-			stackBlurCanvasRGB(
-				'canvas',
-			0,
-			0,
-			$("canvas").width(),
-			$("canvas").height(), 7);
-		}
-	});
+	self.__ele_imagebg = $("#section-wrap");
 
 	self.SecondVariant = new TimelineMax({
 		paused: true,
