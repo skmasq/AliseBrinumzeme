@@ -1,4 +1,5 @@
 ﻿body {
+
 }
 
 @import '../fonts/fonts.less';
@@ -31,7 +32,7 @@ body, html {
     float: left;
     width: 100%;
     height: 100%;
-    background: url(/Content/images/background/Background_tile_002.png);
+    background: url(/Content/client/images/background/Background_tile_002.png);
     background-repeat: repeat;
     overflow: hidden;
     /* Minimal zone */
@@ -649,7 +650,8 @@ body, html {
         margin-left: 49px;
         z-index: 550;
         #bundle .clearfix();
-        box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.40);
+        //box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.40);
+        box-shadow: 0 0 15px 1px rbga(0, 0, 0, 0.40);
         -moz-transform: rotate(93deg);
         -ms-transform: rotate(93deg);
         -o-transform: rotate(93deg);
@@ -960,7 +962,7 @@ body, html {
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.36);
+            background-color: rbga(0, 0, 0, 0.36);
             z-index: 550;
         }
 
@@ -1094,7 +1096,7 @@ body, html {
 
                             & .main-scene-image-container {
                                 display: none;
-                                box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.62);
+                                box-shadow: 0 0 5px 1px rbga(0, 0, 0, 0.62);
 
                                 &.vpos-image {
                                     margin: 0 auto;
@@ -1122,12 +1124,12 @@ body, html {
                                     font-size: 15px;
                                     line-height: 28px;
                                     padding: 0 10px;
-                                    background-color: rgba(128, 128, 128, 0.23);
+                                    background-color: rbga(128, 128, 128, 0.23);
                                     cursor: pointer;
                                     #bundle .fast-transition();
 
                                     &:hover {
-                                        background-color: rgba(128, 128, 128, 0.4);
+                                        background-color: rbga(128, 128, 128, 0.4);
                                     }
                                 }
 
@@ -1276,7 +1278,7 @@ body, html {
                                             bottom: 0;
                                             right: 0;
                                             z-index: 1;
-                                            box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.62);
+                                            box-shadow: 0 0 5px 1px rbga(0, 0, 0, 0.62);
                                         }
                                     }
                                 }

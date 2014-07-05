@@ -12,240 +12,240 @@ function getFrameLenght(__array, __iterations, __delay) {
 	resultValue += __delay;
 	//#endregion
 
-	return resultValue
+	return resultValue;
 }
 //#endregion
 
 
 var _S = {
-	Body: {
-		Window: {
-			base: $("#window-wrap"),
-			Tags: {
-				Phone: $("#window-wrap .phone-tag"),
-				Mail: $("#window-wrap .mail-tag"),
-				Location: $("#window-wrap .location-tag")
-			}
-		},
-		Table: {
-			base: $("#table-wrap"),
-			Top: {
-				PinkBird: {
-					Body: $("#table-wrap .bird-003"),
-					Cup: $("#table-wrap .cup-005"),
-				},
-				FallingCup: {
-					Base: $("#table-wrap .cup-008"),
-					Body: $("#table-wrap .cup-008 .cup-body"),
-					Plate: {
-						Front: $("#table-wrap .cup-008 .cup-front"),
-						Back: $("#table-wrap .cup-008 .cup-back")
-					}
-				}
-			},
-			Bottom: {
-				Rabbit: {
-					base: $("#table-rabbit-wrap"),
-					Head: $("#table-rabbit-wrap .rabbit-head"),
-					Ears: {
-						Left: $("#table-rabbit-wrap .lear-container"),
-						Right: $("#table-rabbit-wrap .rear-container")
-					}
-				},
-				PiledCups: {
-					Left: {
-						Front: $("#table-wrap .pile-of-cups .cup-004"),
-						Back: $("#table-wrap .pile-of-cups .cup-001")
-					},
-					Center: {
-						Back: $("#table-wrap .pile-of-cups .cup-003")
-					},
-					Right: {
-						Front: $("#table-wrap .pile-of-cups .cup-006"),
-						Back: $("#table-wrap .pile-of-cups .cup-002")
-					}
-				}
-			}
-		},
-		BlueDove: {
-			base: $("#bird-with-key"),
-			Body: $("#bird-with-key .bird-element"),
-			String: $("#bird-with-key .string-container"),
-			Key: $("#bird-with-key .key-element")
-		},
-		BGBlur: {
-			OverlapingBlur: $(".overlaping-blur"),
+    Body: {
+        Window: {
+            base: $("#window-wrap"),
+            Tags: {
+                Phone: $("#window-wrap .phone-tag"),
+                Mail: $("#window-wrap .mail-tag"),
+                Location: $("#window-wrap .location-tag")
+            }
+        },
+        Table: {
+            base: $("#table-wrap"),
+            Top: {
+                PinkBird: {
+                    Body: $("#table-wrap .bird-003"),
+                    Cup: $("#table-wrap .cup-005"),
+                },
+                FallingCup: {
+                    Base: $("#table-wrap .cup-008"),
+                    Body: $("#table-wrap .cup-008 .cup-body"),
+                    Plate: {
+                        Front: $("#table-wrap .cup-008 .cup-front"),
+                        Back: $("#table-wrap .cup-008 .cup-back")
+                    }
+                }
+            },
+            Bottom: {
+                Rabbit: {
+                    base: $("#table-rabbit-wrap"),
+                    Head: $("#table-rabbit-wrap .rabbit-head"),
+                    Ears: {
+                        Left: $("#table-rabbit-wrap .lear-container"),
+                        Right: $("#table-rabbit-wrap .rear-container")
+                    }
+                },
+                PiledCups: {
+                    Left: {
+                        Front: $("#table-wrap .pile-of-cups .cup-004"),
+                        Back: $("#table-wrap .pile-of-cups .cup-001")
+                    },
+                    Center: {
+                        Back: $("#table-wrap .pile-of-cups .cup-003")
+                    },
+                    Right: {
+                        Front: $("#table-wrap .pile-of-cups .cup-006"),
+                        Back: $("#table-wrap .pile-of-cups .cup-002")
+                    }
+                }
+            }
+        },
+        BlueDove: {
+            base: $("#bird-with-key"),
+            Body: $("#bird-with-key .bird-element"),
+            String: $("#bird-with-key .string-container"),
+            Key: $("#bird-with-key .key-element")
+        },
+        BGBlur: {
+            OverlapingBlur: $(".overlaping-blur"),
 
-		}
-	},
-	Container: {
-		Lamp: {
-			base: $("#lamp")
-		},
-		Molbert: {
-			base: $("#molbert-wrap"),
-			Rabbit: {
-				base: $("#molbert-wrap .molbert-rabbit-container"),
-				Body: $("#molbert-wrap .molbert-rabbit-container .rabbit-body")
-			}
-		},
-		Doors: {
-			base: $("#doors-wrap"),
-			DoorKnob: $("#doorknob"),
-			Bird: {
-				base: $("#doors-wrap .bubble-bird-wrap"),
-				Legs: $("#doors-wrap .bubble-bird-wrap .bubble-bird-legs"),
-				Beak: {
-					Top: $("#doors-wrap .bubble-bird-wrap .bubble-bird-top-beak"),
-					Bottom: $("#doors-wrap .bubble-bird-wrap .bubble-bird-bottom-beak")
-				}
-			},
-			Rabbit: {
-				base: $("#door-rabbit"),
-				Head: $("#door-rabbit .rabbit-head"),
-				Ears: {
-					Left: $("#door-rabbit .lear-container"),
-					Right: $("#door-rabbit .rear-container")
-				},
-				Cup: {
-					base: $("#doorbottomleftcup-wrap"),
-					Body: $("#doorbottomleftcup-wrap .cup-body"),
-					Plate: {
-						Front: $("#doorbottomleftcup-wrap .plate-front"),
-						Back: $("#doorbottomleftcup-wrap .plate-back")
-					}
-				}
-			}
-		},
-		Shelve: {
-			base: $("#shelve-wrap"),
-			Mail: {
-				base: $(".mail-swing-wrap"),
-				Body: $(".mail-swing-wrap .mail-body")
-			},
-			Phone: {
-				base: $(".phone-ring-wrap"),
-				Body: $(".phone-ring-wrap .phone-body"),
-				Ringer: $(".phone-ring-wrap .phone-ringer")
-			}
-		},
-		Section: {
-			base: $("#section-wrap"),
-			Description: {
-				base: $(".section-description-wrap")
-			},
-			Thumbnails: {
-				all: $(".thumbnail-image")
-			},
-			MainScene: {
-				base: $(".main-scene-wrap")
-			},
-			InfoBook: $(".info-book-wrap")
-		},
-		Contacts: {
-			base: $("#contact-page-wrap"),
-			Logo: {
-				base: $("#contact-page-wrap .logo-container")
-			}
-		}
-	}
-}
+        }
+    },
+    Container: {
+        Lamp: {
+            base: $("#lamp")
+        },
+        Molbert: {
+            base: $("#molbert-wrap"),
+            Rabbit: {
+                base: $("#molbert-wrap .molbert-rabbit-container"),
+                Body: $("#molbert-wrap .molbert-rabbit-container .rabbit-body")
+            }
+        },
+        Doors: {
+            base: $("#doors-wrap"),
+            DoorKnob: $("#doorknob"),
+            Bird: {
+                base: $("#doors-wrap .bubble-bird-wrap"),
+                Legs: $("#doors-wrap .bubble-bird-wrap .bubble-bird-legs"),
+                Beak: {
+                    Top: $("#doors-wrap .bubble-bird-wrap .bubble-bird-top-beak"),
+                    Bottom: $("#doors-wrap .bubble-bird-wrap .bubble-bird-bottom-beak")
+                }
+            },
+            Rabbit: {
+                base: $("#door-rabbit"),
+                Head: $("#door-rabbit .rabbit-head"),
+                Ears: {
+                    Left: $("#door-rabbit .lear-container"),
+                    Right: $("#door-rabbit .rear-container")
+                },
+                Cup: {
+                    base: $("#doorbottomleftcup-wrap"),
+                    Body: $("#doorbottomleftcup-wrap .cup-body"),
+                    Plate: {
+                        Front: $("#doorbottomleftcup-wrap .plate-front"),
+                        Back: $("#doorbottomleftcup-wrap .plate-back")
+                    }
+                }
+            }
+        },
+        Shelve: {
+            base: $("#shelve-wrap"),
+            Mail: {
+                base: $(".mail-swing-wrap"),
+                Body: $(".mail-swing-wrap .mail-body")
+            },
+            Phone: {
+                base: $(".phone-ring-wrap"),
+                Body: $(".phone-ring-wrap .phone-body"),
+                Ringer: $(".phone-ring-wrap .phone-ringer")
+            }
+        },
+        Section: {
+            base: $("#section-wrap"),
+            Description: {
+                base: $(".section-description-wrap")
+            },
+            Thumbnails: {
+                all: $(".thumbnail-image")
+            },
+            MainScene: {
+                base: $(".main-scene-wrap")
+            },
+            InfoBook: $(".info-book-wrap")
+        },
+        Contacts: {
+            base: $("#contact-page-wrap"),
+            Logo: {
+                base: $("#contact-page-wrap .logo-container")
+            }
+        }
+    }
+};
 
 var SCENE = {
-	Doors: {
-		Base: $("#doors-wrap"),
-		DoorKnob: $("#doorknob"),
-		BubbleBird: {
-			Base: $("#doors-wrap .bubble-bird-wrap"),
-			Legs: $("#doors-wrap .bubble-bird-wrap .bubble-bird-legs"),
-			Beak: {
-				Top: $("#doors-wrap .bubble-bird-wrap .bubble-bird-top-beak"),
-				Bottom: $("#doors-wrap .bubble-bird-wrap .bubble-bird-bottom-beak")
-			}
-		},
-		Rabbit: {
-			Base: $("#door-rabbit"),
-			Head: $("#door-rabbit .rabbit-head"),
-			Ears: {
-				Left: $("#door-rabbit .lear-container"),
-				Right: $("#door-rabbit .rear-container")
-			}
-		},
-		BottomCup: {
-			Base: $("#doorbottomleftcup-wrap"),
-			Body: $("#doorbottomleftcup-wrap .cup-body"),
-			Plate: {
-				Front: $("#doorbottomleftcup-wrap .plate-front"),
-				Back: $("#doorbottomleftcup-wrap .plate-back")
-			}
-		}
-	},
-	Table: {
-		Base: $("#table-wrap"),
-		TopLayer: {
-			BirdCup: $("#table-wrap .cup-005"),
-			PinkBird: $("#table-wrap .bird-003"),
-			MovingCup: {
-				Base: $("#table-wrap .cup-008"),
-				Body: $("#table-wrap .cup-008 .cup-body"),
-				Plate: {
-					Front: $("#table-wrap .cup-008 .cup-front"),
-					Back: $("#table-wrap .cup-008 .cup-back")
-				}
-			},
-			BrownBirdCup: $("#table-wrap .cup-009")
-		},
-		BottomLayer: {
-			TableRabbit: {
-				Base: $("#table-rabbit-wrap"),
-				Head: $("#table-rabbit-wrap .rabbit-head"),
-				Ears: {
-					Left: $("#table-rabbit-wrap .lear-container"),
-					Right: $("#table-rabbit-wrap .rear-container")
-				}
-			},
-			PiledCups: [
+    Doors: {
+        Base: $("#doors-wrap"),
+        DoorKnob: $("#doorknob"),
+        BubbleBird: {
+            Base: $("#doors-wrap .bubble-bird-wrap"),
+            Legs: $("#doors-wrap .bubble-bird-wrap .bubble-bird-legs"),
+            Beak: {
+                Top: $("#doors-wrap .bubble-bird-wrap .bubble-bird-top-beak"),
+                Bottom: $("#doors-wrap .bubble-bird-wrap .bubble-bird-bottom-beak")
+            }
+        },
+        Rabbit: {
+            Base: $("#door-rabbit"),
+            Head: $("#door-rabbit .rabbit-head"),
+            Ears: {
+                Left: $("#door-rabbit .lear-container"),
+                Right: $("#door-rabbit .rear-container")
+            }
+        },
+        BottomCup: {
+            Base: $("#doorbottomleftcup-wrap"),
+            Body: $("#doorbottomleftcup-wrap .cup-body"),
+            Plate: {
+                Front: $("#doorbottomleftcup-wrap .plate-front"),
+                Back: $("#doorbottomleftcup-wrap .plate-back")
+            }
+        }
+    },
+    Table: {
+        Base: $("#table-wrap"),
+        TopLayer: {
+            BirdCup: $("#table-wrap .cup-005"),
+            PinkBird: $("#table-wrap .bird-003"),
+            MovingCup: {
+                Base: $("#table-wrap .cup-008"),
+                Body: $("#table-wrap .cup-008 .cup-body"),
+                Plate: {
+                    Front: $("#table-wrap .cup-008 .cup-front"),
+                    Back: $("#table-wrap .cup-008 .cup-back")
+                }
+            },
+            BrownBirdCup: $("#table-wrap .cup-009")
+        },
+        BottomLayer: {
+            TableRabbit: {
+                Base: $("#table-rabbit-wrap"),
+                Head: $("#table-rabbit-wrap .rabbit-head"),
+                Ears: {
+                    Left: $("#table-rabbit-wrap .lear-container"),
+                    Right: $("#table-rabbit-wrap .rear-container")
+                }
+            },
+            PiledCups: [
 				$(".pile-of-cups .cup-001"),	// cup-001
 				$(".pile-of-cups .cup-002"),	// cup-002
 				$(".pile-of-cups .cup-003"),	// cup-003
 				$(".pile-of-cups .cup-004"),	// cup-004
 				$(".pile-of-cups .cup-006")		// cup-006
-			]
-		}
-	},
-	Lamp: {
-		Base: $("#lamp")
-	},
-	Molbert: {
-		Base: $("#molbert-wrap"),
-		Rabbit: {
-			Base: $(".molbert-rabbit-container"),
-			Body: $(".molbert-rabbit-container .rabbit-body")
-		}
-	},
-	ContactPage: {
-		Base: $("#contact-page-wrap")
-	},
-	General: {
-		BlueDove: {
-			Base: $("#bird-with-key"),
-			Body: $("#bird-with-key .bird-element"),
-			String: $("#bird-with-key .string-container"),
-			Key: $("#bird-with-key .key-element")
-		},
-		StartupLogo: {
-			Base: $("#startup-logo")
-		},
-		WindowElement: {
-			Base: $("#window-wrap"),
-			Tags: {
-				Phone: $("#window-wrap .phone-tag"),
-				Mail: $("#window-wrap .mail-tag"),
-				Location: $("#window-wrap .location-tag")
-			}
-		}
-	}
-}
+            ]
+        }
+    },
+    Lamp: {
+        Base: $("#lamp")
+    },
+    Molbert: {
+        Base: $("#molbert-wrap"),
+        Rabbit: {
+            Base: $(".molbert-rabbit-container"),
+            Body: $(".molbert-rabbit-container .rabbit-body")
+        }
+    },
+    ContactPage: {
+        Base: $("#contact-page-wrap")
+    },
+    General: {
+        BlueDove: {
+            Base: $("#bird-with-key"),
+            Body: $("#bird-with-key .bird-element"),
+            String: $("#bird-with-key .string-container"),
+            Key: $("#bird-with-key .key-element")
+        },
+        StartupLogo: {
+            Base: $("#startup-logo")
+        },
+        WindowElement: {
+            Base: $("#window-wrap"),
+            Tags: {
+                Phone: $("#window-wrap .phone-tag"),
+                Mail: $("#window-wrap .mail-tag"),
+                Location: $("#window-wrap .location-tag")
+            }
+        }
+    }
+};
 
 var SectionObject = new sectionControler();
 
@@ -368,11 +368,11 @@ var tween_api = {
 				TweenMax.to([
 					$(".thumbnail-scene-container"),
 					$(".thumbnail-scene-wrap .arrow")
-				], 0.3, { css: { alpha: 1, rotationX: 0, rotationY: 0, scale: 1 } }),0)
+				], 0.3, { css: { alpha: 1, rotationX: 0, rotationY: 0, scale: 1 } }), 0);
 
 				tl.add(function () {
-					$(".picture-info").fadeOut(100);
-				},0)
+				    $(".picture-info").fadeOut(100);
+				}, 0);
 
 				tl.add([
 					TweenMax.to(_S.Container.Section.InfoBook, 0.1, { css: { alpha: 0 } }),
@@ -466,7 +466,7 @@ var tween_api = {
 
 					//#region Frameset
 					//#region Frame 1
-					tl.add(TweenMax.to(rabbit_cont, rabbitFrameLengths[0], { css: { bottom: 147, left: -58 }, ease: Back.easeOut }), 0)
+					tl.add(TweenMax.to(rabbit_cont, rabbitFrameLengths[0], { css: { bottom: 147, left: -58 }, ease: Back.easeOut }), 0);
 					tl.add(TweenMax.to(cup_body, cupFrameLengths[0], { css: { rotation: 7 } }), getFrameLenght(cupFrameLengths, 0, 0.1));
 					tl.add(TweenMax.to(cup_cont, cupFrameLengths[0], { css: { rotation: -10 } }), getFrameLenght(cupFrameLengths, 0, 0));
 					//#endregion
@@ -501,7 +501,7 @@ var tween_api = {
 						rabbit_cont = _S.Container.Doors.Rabbit.base;
 					//#region Frameset
 					//#region Frame 1
-					tl.add(TweenMax.to(rabbit_cont, rabbitFrameLengths[0], { css: { bottom: 100, left: 70 } }), 0)
+					tl.add(TweenMax.to(rabbit_cont, rabbitFrameLengths[0], { css: { bottom: 100, left: 70 } }), 0);
 					tl.add(TweenMax.to(cup_body, cupFrameLengths[0], { css: { rotation: 7 } }), getFrameLenght(cupFrameLengths, 0, 0.1));
 					tl.add(TweenMax.to(cup_cont, cupFrameLengths[0], { css: { rotation: -10 } }), getFrameLenght(cupFrameLengths, 0, 0));
 					//#endregion
@@ -610,15 +610,15 @@ var tween_api = {
 			},
 			pinkbird: {
 				set: function () {
-					TweenMax.set(SCENE.Table.TopLayer.PinkBird, {
-						css: {
-							rotation: -20,
-							top: -160,
-							left: 250,
-							opacity: 0,
-							transformOrigin: "top right"
-						}
-					})
+				    TweenMax.set(SCENE.Table.TopLayer.PinkBird, {
+				        css: {
+				            rotation: -20,
+				            top: -160,
+				            left: 250,
+				            opacity: 0,
+				            transformOrigin: "top right"
+				        }
+				    });
 				},
 				instance: function () {
 					var tl = new TimelineMax({ paused: false });
@@ -683,7 +683,7 @@ var tween_api = {
 			},
 			molbertrabbit: {
 				set: function () {
-					TweenMax.set(SCENE.Molbert.Rabbit.Body, { css: { bottom: -23 } })
+				    TweenMax.set(SCENE.Molbert.Rabbit.Body, { css: { bottom: -23 } });
 				},
 				instance: function () {
 					var tl = new TimelineMax({ paused: false });
@@ -788,17 +788,17 @@ var tween_api = {
 				}
 			});
 
-			tl.set(_S.Body.BGBlur.OverlapingBlur, { css: { alpha: 0, visibility: "visible", display: "block" } }, 0)
+			tl.set(_S.Body.BGBlur.OverlapingBlur, { css: { alpha: 0, visibility: "visible", display: "block" } }, 0);
 			tl.add(TweenMax.to(contact_page, 1, {
-				css: {
-					rotation: 0,
-					bottom: "50%",
-					height: 740,
-					width: 498,
-					marginBottom: -370,
-					marginLeft: -249
-				}
-			}), 0)
+			    css: {
+			        rotation: 0,
+			        bottom: "50%",
+			        height: 740,
+			        width: 498,
+			        marginBottom: -370,
+			        marginLeft: -249
+			    }
+			}), 0);
 			tl.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 1 } }, 0.5);
 
 			contact_page.find(".logo-container").eq(0).fadeOut(100, "linear", function () {
@@ -814,17 +814,17 @@ var tween_api = {
 				}
 			});
 
-			tl.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 0 } }, 0)
+			tl.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 0 } }, 0);
 			tl.add(TweenMax.to(contact_page, 1, {
-				css: {
-					rotation: 93,
-					bottom: 100,
-					height: 225,
-					width: 151,
-					marginBottom: 0,
-					marginLeft: 49
-				}
-			}), 0)
+			    css: {
+			        rotation: 93,
+			        bottom: 100,
+			        height: 225,
+			        width: 151,
+			        marginBottom: 0,
+			        marginLeft: 49
+			    }
+			}), 0);
 			tl.set(_S.Body.BGBlur.OverlapingBlur, { css: { visibility: "hidden", display: "none" } }, 1);
 			
 
@@ -907,7 +907,7 @@ var tween_api = {
 		lamp: {
 			swing: {
 				set: function () {
-					TweenMax.set(SCENE.Lamp.Base, { css: { transformOrigin: "center top" } })
+				    TweenMax.set(SCENE.Lamp.Base, { css: { transformOrigin: "center top" } });
 				},
 				instance: function () {
 					var tl = new TimelineMax({ paused: false });
@@ -987,7 +987,7 @@ var tween_api = {
 		mail: {
 			swing: {
 				set: function () {
-					TweenMax.set(_S.Container.Shelve.Mail.Body, { css: { transformOrigin: "20px 10px" } })
+				    TweenMax.set(_S.Container.Shelve.Mail.Body, { css: { transformOrigin: "20px 10px" } });
 				},
 				instance: function () {
 					var tl = new TimelineMax({ paused: false });
@@ -1045,71 +1045,71 @@ var tween_api = {
 
 var bubbleBirdBeakAnimation = function () {
 
-	/* Bird's beak animation*/
-	var tl = new TimelineLite({ paused: true });
-	var sk = 3;
-	var tVar;
+    /* Bird's beak animation*/
+    var tl = new TimelineLite({ paused: true });
+    var sk = 3;
+    var tVar;
 
-	var topBeak = $(".bubble-bird-top-beak"),
+    var topBeak = $(".bubble-bird-top-beak"),
 		bottomBeak = $(".bubble-bird-bottom-beak");
 
-	tl.add([
+    tl.add([
 		TweenMax.set([topBeak, bottomBeak], {
-			css: {
-				transformOrigin: "left 0",
-				rotation: 0
-			}
+		    css: {
+		        transformOrigin: "left 0",
+		        rotation: 0
+		    }
 		})
-	]);
+    ]);
 
-	tl.add([
+    tl.add([
 		TweenMax.to(topBeak, 0.2, {
-			css: {
-				rotation: -15
-			},
-			repeat: sk,
-			ease: Power2.easeInOut
+		    css: {
+		        rotation: -15
+		    },
+		    repeat: sk,
+		    ease: Power2.easeInOut
 		}),
 		TweenMax.to(bottomBeak, 0.2, {
-			css: {
-				rotation: 15
-			},
-			repeat: sk,
-			ease: Power2.easeInOut
+		    css: {
+		        rotation: 15
+		    },
+		    repeat: sk,
+		    ease: Power2.easeInOut
 		})
-	]);
+    ]);
 
 
-	return tl;
-}
+    return tl;
+};
 
 var test1 = new bubbleBirdBeakAnimation();
 
 function initStartPage() {
 
-	//#region Put all sets here
-	//tween_api.start.global.startuplogo.set();
-	tween_api.start.doors.base.set();
-	tween_api.start.doors.bubblebird.set();
-	tween_api.start.doors.rabbitncup.set();
-	tween_api.global.lamp.swing.set();
-	tween_api.global.mail.swing.set();
-	tween_api.start.lamp.base.set();
-	tween_api.start.molbert.base.set();
-	tween_api.start.molbert.molbertrabbit.set();
-	tween_api.start.table.base.set();
-	tween_api.table.movingcup.set();
-	tween_api.start.table.pinkbird.set();
-	tween_api.start.table.rabbitnpile.set();
-	tween_api.global.bluedove.keyswing.set();
-	tween_api.start.global.bluedove.base.set();
-	//#endregion
+    //#region Put all sets here
+    //tween_api.start.global.startuplogo.set();
+    tween_api.start.doors.base.set();
+    tween_api.start.doors.bubblebird.set();
+    tween_api.start.doors.rabbitncup.set();
+    tween_api.global.lamp.swing.set();
+    tween_api.global.mail.swing.set();
+    tween_api.start.lamp.base.set();
+    tween_api.start.molbert.base.set();
+    tween_api.start.molbert.molbertrabbit.set();
+    tween_api.start.table.base.set();
+    tween_api.table.movingcup.set();
+    tween_api.start.table.pinkbird.set();
+    tween_api.start.table.rabbitnpile.set();
+    tween_api.global.bluedove.keyswing.set();
+    tween_api.start.global.bluedove.base.set();
+    //#endregion
 
-	var tl = new TimelineMax({
-		delay: 1
-	});
+    var tl = new TimelineMax({
+        delay: 1
+    });
 
-	tl
+    tl
 		// Labels delegation
 		.addLabel("ACT_I", 0)
 		.addLabel("lampdrop", 0)
@@ -1134,14 +1134,14 @@ function initStartPage() {
 		.add(tween_api.start.doors.base.instance(), "doors")
 		.add(tween_api.start.doors.rabbitncup.instance(), "doors+=0.5")
 		.addCallback(function () {
-			$("#section-wrap").show();
+		    $("#section-wrap").show();
 		}, "doors+=1")
 		.addCallback(function () {
-			$("#shelve-wrap").fadeIn(function () {
-				tween_api.global.mail.swing.instance();
-				setTimeout(phoneRingInit, 1500);
-			});
-			$("#window-wrap").fadeIn();
+		    $("#shelve-wrap").fadeIn(function () {
+		        tween_api.global.mail.swing.instance();
+		        setTimeout(phoneRingInit, 1500);
+		    });
+		    $("#window-wrap").fadeIn();
 		}, "doors")
 		.add(tween_api.start.molbert.base.instance(), "molbert")
 		.add(tween_api.start.molbert.molbertrabbit.instance(), "molbert+=0.25")
@@ -1149,26 +1149,26 @@ function initStartPage() {
 		.addCallback(tween_api.global.bluedove.keyswing.instance, "bluedove+=0.25")
 		.add(tween_api.start.doors.bubblebird.instance(), "bubblebird")
 		.addCallback(function () {
-			test1.play().eventCallback("onStart", function (something) {
-				$(".empty-bubble").fadeIn(200);
-				$(".bubble-text-content.start").fadeIn(200);
+		    test1.play().eventCallback("onStart", function (something) {
+		        $(".empty-bubble").fadeIn(200);
+		        $(".bubble-text-content.start").fadeIn(200);
 
-				setTimeout(function () {
-					$(".empty-bubble").fadeOut(300);
-					$(".bubble-text-content.start").fadeOut(300);
-				}, 4000);
-			}).eventCallback("onComplete", function () {
-				test1.restart().pause();
-			});
+		        setTimeout(function () {
+		            $(".empty-bubble").fadeOut(300);
+		            $(".bubble-text-content.start").fadeOut(300);
+		        }, 4000);
+		    }).eventCallback("onComplete", function () {
+		        test1.restart().pause();
+		    });
 		}, "bubblebird+=0.5")
 		.add(tween_api.start.table.pinkbird.instance(), "bubblebird+=0.75")
 		.add(tween_api.table.movingcup.instance(), "bubblebird+=1")
 		.addCallback(function () {
-			catureScreenshot();
-			pickFoodInit();
-			doorKnobDemo();
-			doorRabbitEars();
-			setTimeout(tableRabbitEars, 3000);
+		    catureScreenshot();
+		    pickFoodInit();
+		    doorKnobDemo();
+		    doorRabbitEars();
+		    setTimeout(tableRabbitEars, 3000);
 		}, "bubblebird+=1.5")
 
 		// ACT II
@@ -1181,9 +1181,9 @@ function initStartPage() {
 		// ACT III
 		.add(tween_api.start.doors.rabbitncup.instance(), "animalsShow")
 		.add(tween_api.start.table.rabbitnpile.instance(), "animalsShow+=0.5")
-		.add(tween_api.start.molbert.molbertrabbit.instance(), "animalsShow+=2")
+		.add(tween_api.start.molbert.molbertrabbit.instance(), "animalsShow+=2");
 
-};
+}
 
 $(document).ready(function () {
 	setWelcomeMessage();
@@ -1299,7 +1299,7 @@ function doorRabbitEars() {
 		right_ear = $("#doors-wrap .rear-container");
 
 	var left_pos = [-5, 2],
-		right_pos = [5, -5]
+		right_pos = [5, -5];
 
 	tl.set(left_ear, {
 		css: {
@@ -1355,7 +1355,7 @@ function tableRabbitEars() {
 		right_ear = $("#table-wrap .rear-container");
 
 	var left_pos = [-5, 2],
-		right_pos = [5, -5]
+		right_pos = [5, -5];
 
 	tl.set(left_ear, {
 		css: {
@@ -1399,11 +1399,11 @@ function tableRabbitEars() {
 }
 
 function pickFoodInit() {
-	var pikcFood = function () {
-		tween_api.start.table.pinkbird.pickfood().eventCallback("onComplete", function () {
-			setTimeout(pikcFood, 8000);
-		});
-	}
+    var pikcFood = function () {
+        tween_api.start.table.pinkbird.pickfood().eventCallback("onComplete", function () {
+            setTimeout(pikcFood, 8000);
+        });
+    };
 
 	pikcFood();
 }
@@ -1412,14 +1412,14 @@ function phoneRingInit() {
 	tween_api.global.phone.ring.set();
 
 	var phoneRing = function () {
-		tween_api.global.phone.ring.instance().eventCallback("onComplete", function () {
-			setTimeout(function () {
-				tween_api.global.phone.ring.instance().eventCallback("onComplete", function () {
-					setTimeout(phoneRing, 3000);
-				})
-			}, 300);
-		})
-	}
+	    tween_api.global.phone.ring.instance().eventCallback("onComplete", function () {
+	        setTimeout(function () {
+	            tween_api.global.phone.ring.instance().eventCallback("onComplete", function () {
+	                setTimeout(phoneRing, 3000);
+	            });
+	        }, 300);
+	    });
+	};
 
 	phoneRing();
 }
@@ -1459,10 +1459,10 @@ function eventhandler() {
 
 	$(document)
 		.on("mouseenter", ".shelve-container", function () {
-			$(".shelve-hover-state").stop().fadeIn()
+		    $(".shelve-hover-state").stop().fadeIn();
 		})
 		.on("mouseleave", ".shelve-container", function () {
-			$(".shelve-hover-state").stop().fadeOut()
+		    $(".shelve-hover-state").stop().fadeOut();
 		})
 		.on("click", ".shelve-container", tween_api.contacts.open)
 		.on("click", ".info-book-wrap", tween_api.sections.description.show)
@@ -1470,7 +1470,7 @@ function eventhandler() {
 		.on("click", ".thumbs-right-click", tween_api.sections.thumbnails.switchTo.right)
 		.on("click", ".menu-hitbox", function () {
 			console.log($(this).data("menutextindex"));
-			if ($(this).data("menutextindex") != "6")
+			if ($(this).data("menutextindex") !== "6")
 				SectionObject.open();
 			else
 				tween_api.contacts.open();
@@ -1480,7 +1480,7 @@ function eventhandler() {
 			tween_api.contacts.close();
 		})
 		.on("click", ".close-button", function () {
-			SectionObject.close()
+		    SectionObject.close();
 		})
 		.on("click", ".close-button-contacts", tween_api.contacts.close)
 		.on("click", ".info-toggle", function () {
@@ -1519,29 +1519,29 @@ function sectionControler() {
 	self.closeTL = new TimelineMax({ paused: true });
 
 	self.resetSection = function () {
-		// Set state
-		TweenMax.set($("#section-wrap"), {
-			css: {
-				rotationX: 200,
-				rotationY: 65,
-				rotationZ: 30,
-				scale: 0.7,
-				x: "-200px",
-				transformPerspective: 300,
-				transformOrigin: "50% 50% -700",
-				zIndex: 0
-			}
-		});
-	}
+	    // Set state
+	    TweenMax.set($("#section-wrap"), {
+	        css: {
+	            rotationX: 200,
+	            rotationY: 65,
+	            rotationZ: 30,
+	            scale: 0.7,
+	            x: "-200px",
+	            transformPerspective: 300,
+	            transformOrigin: "50% 50% -700",
+	            zIndex: 0
+	        }
+	    });
+	};
 
 	self.resetOverlap = function () {
-		TweenMax.set(_S.Body.BGBlur.OverlapingBlur, { css: { visibility: "hidden", display: "none" } });
-	}
+	    TweenMax.set(_S.Body.BGBlur.OverlapingBlur, { css: { visibility: "hidden", display: "none" } });
+	};
 	
 	self.init = function () {
-		self.resetOverlap();
-		self.resetSection();
-	}
+	    self.resetOverlap();
+	    self.resetSection();
+	};
 
 	//#region Open Timeline Frames
 
@@ -1552,7 +1552,7 @@ function sectionControler() {
 		.to(self._section, 0.25, { css: { alpha: 1 } }, "OpenStart")
 		.to(self._section, 1, { css: { rotationX: 0, rotationY: 0, rotationZ: 0, scale: 1, x: "0px" } }, "OpenStart")
 		.set(self._section, { css: { zIndex: 600 } }, "OpenStart+=0.25")
-		.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 1 } }, "BGBlurStart")
+		.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 1 } }, "BGBlurStart");
 
 	//#endregion
 
@@ -1560,7 +1560,7 @@ function sectionControler() {
 
 	self.closeTL
 		.to(self._section, 0.5, { css: { alpha: 0, x: "-600px", rotationZ: 45 } }, 0)
-		.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 0 } }, 0)
+		.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 0 } }, 0);
 
 	//#endregion
 
@@ -1568,24 +1568,24 @@ function sectionControler() {
 	self.init();
 
 	return {
-		open: function () {
-			self.openTL.play().eventCallback("onComplete", function () {
-				self._section.find(".section-content-wrap").eq(0).fadeIn(function () {
-					animateThumbs();
-				});
-			});
-		},
-		close: function () {
-			self.closeTL.restart().play().eventCallback("onComplete", function () {
-				self.openTL.restart().pause();
-				self.resetOverlap();
-				self.resetSection();
-			}).eventCallback("onStart", function () {
-				self._section.find(".section-content-wrap").eq(0).fadeOut();
-			});
-		}
-	}
-};
+	    open: function () {
+	        self.openTL.play().eventCallback("onComplete", function () {
+	            self._section.find(".section-content-wrap").eq(0).fadeIn(function () {
+	                animateThumbs();
+	            });
+	        });
+	    },
+	    close: function () {
+	        self.closeTL.restart().play().eventCallback("onComplete", function () {
+	            self.openTL.restart().pause();
+	            self.resetOverlap();
+	            self.resetSection();
+	        }).eventCallback("onStart", function () {
+	            self._section.find(".section-content-wrap").eq(0).fadeOut();
+	        });
+	    }
+	};
+}
 
 function bubbleTextInit() {
 	var comonTimer;
@@ -1629,7 +1629,7 @@ function initThumbnails() {
 	$(document).on("click", ".thumbnail-image", function () {
 		$(this).css("opacity", ".7");
 
-		if (prevImage.attr("src") != $(this).attr("src")) {
+		if (prevImage.attr("src") !== $(this).attr("src")) {
 			prevImage.css("opacity", "1");
 		}
 		prevImage = $(this);
@@ -1641,13 +1641,13 @@ function prepareImageMargins() {
 
 	$('.main-scene-container').find("img").each(function (index) {
 		if ($(this).hasClass("hpos-image")) {
-			$(this).css({
-				"margin-top": ((260 - $(this).height()) / 2) + "px"
-			})
+		    $(this).css({
+		        "margin-top": ((260 - $(this).height()) / 2) + "px"
+		    });
 		} else {
-			$(this).css({
-				"margin-left": ((346 - $(this).width()) / 2) + "px"
-			})
+		    $(this).css({
+		        "margin-left": ((346 - $(this).width()) / 2) + "px"
+		    });
 		}
 	});
 
@@ -1693,9 +1693,9 @@ function initBGSwitch() {
 		});
 
 		tl.append(function () {
-			$currImg.hide();
-			$images.eq(index).show();
-		})
+		    $currImg.hide();
+		    $images.eq(index).show();
+		});
 
 		tl.fromTo($images.eq(index), flipDur / 2,
 			// We need to flip the number sign fo rotationX, so we do -randomVal instead of randomVal
@@ -1727,30 +1727,30 @@ function ran(min, max) {
 }
 
 var rotateThumb = function (_element, _delay) {
-	var tl = new TimelineMax({ paused: true, repeat: -1 });
+    var tl = new TimelineMax({ paused: true, repeat: -1 });
 
-	tl.add(TweenMax.to(_element, 0.4, {
-		rotationX: 7,
-		rotationY: -7,
-		delay: _delay
-	}))
+    tl.add(TweenMax.to(_element, 0.4, {
+        rotationX: 7,
+        rotationY: -7,
+        delay: _delay
+    }))
         .add(TweenMax.to(_element, 0.4, {
-        	rotationX: -7,
-        	rotationY: -7,
-        	delay: _delay
+            rotationX: -7,
+            rotationY: -7,
+            delay: _delay
         }))
     .add(TweenMax.to(_element, 0.4, {
-    	rotationX: -7,
-    	rotationY: 7,
-    	delay: _delay
+        rotationX: -7,
+        rotationY: 7,
+        delay: _delay
     }))
     .add(TweenMax.to(_element, 0.4, {
-    	rotationX: 7,
-    	rotationY: 7,
-    	delay: _delay
+        rotationX: 7,
+        rotationY: 7,
+        delay: _delay
     }));
-	return tl;
-}
+    return tl;
+};
 
 var animateThumbs = _.once(function () {
 
@@ -1762,7 +1762,7 @@ var animateThumbs = _.once(function () {
 });
 
 var animateCursor = _.once(function () {
-	console.log("im heere")
-	TweenMax.to($(".cursor-icon"), 4, { css: { rotationZ: 360 }, ease: Elastic.easeOut,repeat: -1, repeatDelay: 1})
+    console.log("im heere");
+    TweenMax.to($(".cursor-icon"), 4, { css: { rotationZ: 360 }, ease: Elastic.easeOut, repeat: -1, repeatDelay: 1 });
 });
 

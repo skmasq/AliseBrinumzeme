@@ -5,36 +5,47 @@ namespace AliseBrinumzeme
 {
     public class BundleConfig
     {
-        // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            #region Script Bundles
-
-            // Include all individual scripts here
             string[] SingleScriptInclude = new string[] { };
 
-            // Include script directories here
-            Bundle ScriptBundle = new ScriptBundle("~/Scripts")
-                .Include(SingleScriptInclude)
-                .IncludeDirectory("~/Content/js/libraries", "*.js", false)
-                .IncludeDirectory("~/Content/js/site", "*.js", false);
+            #region Client
 
-            bundles.Add(ScriptBundle);
+            Bundle ClientStyleBundle = new StyleBundle("~/Client/css")
+                .Include(SingleScriptInclude)
+                .IncludeDirectory("~/Content/plugins/css/", "*.css", false)
+                .IncludeDirectory("~/Content/client/css/", "*.css", false);
+            bundles.Add(ClientStyleBundle);
+
+            Bundle ClientScriptBundle = new ScriptBundle("~/Client/js")
+                .Include(SingleScriptInclude)
+                .IncludeDirectory("~/Content/client/js/libraries", "*.js", false)
+                .IncludeDirectory("~/Content/client/js/site", "*.js", false);
+            bundles.Add(ClientScriptBundle);
 
             #endregion
 
-            #region Style Bundles
+            #region Admin
 
-            // Include individual styles here
-            string[] SingleStyleInclude = new string[] {
-                "~/Content/css/site.css",
-            };
+            Bundle AdminStyleBundle = new StyleBundle("~/Admin/css")
+                .Include(SingleScriptInclude)
+                .IncludeDirectory("~/Content/plugins/css/", "*.css", false)
+                .IncludeDirectory("~/Content/admin/css/", "*.css", false);
+            bundles.Add(AdminStyleBundle);
 
-            // Include style directories here
-            Bundle StyleBundle = new StyleBundle("~/Styles")
-                .Include(SingleStyleInclude);
+            Bundle AdminScriptBundle = new ScriptBundle("~/Admin/js")
+                .Include(SingleScriptInclude)
+                .IncludeDirectory("~/Content/admin/js/", "*.js", false);
+            bundles.Add(AdminScriptBundle);
 
-            bundles.Add(StyleBundle);
+            #endregion
+
+            #region Plugins
+
+            Bundle PluginsScriptBundle = new ScriptBundle("~/Plugins/js")
+              .Include(SingleScriptInclude)
+              .IncludeDirectory("~/Content/plugins/js/", "*.js", false);
+            bundles.Add(PluginsScriptBundle);
 
             #endregion
 

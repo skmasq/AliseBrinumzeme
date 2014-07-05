@@ -1,0 +1,19 @@
+﻿@{
+    var currentPage = Request.RawUrl.ToString().Replace("/", "");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Admin/css")
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/Plugins/js")
+    @Scripts.Render("~/Admin/js")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
