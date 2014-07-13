@@ -1,0 +1,18 @@
+{
+    // Image Array
+	"i": [{
+        // Image URL
+		"u": "/Content/u/i/image001.jpg", 
+        // Image Order
+		"o": 1,
+        // Image title slug
+		"ts": "jaunais-zaku-kostims",
+        // Image ID
+		"id": 1
+	}],
+    // Thumbnail image
+	"t": {
+        // Thubmnail URL
+		"u": "/Content/u/t/s_1_abc30092fdeec.jpg"
+	}
+}
