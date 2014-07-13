@@ -1,5 +1,7 @@
 ﻿/// <reference path="~/Scripts/_references.js" />
 
+var AB_DEBUG = true;
+
 //#region Utils
 function getFrameLenght(__array, __iterations, __delay) {
 	var resultValue = 0;
@@ -13,6 +15,12 @@ function getFrameLenght(__array, __iterations, __delay) {
 	//#endregion
 
 	return resultValue
+}
+
+var log = function (object) {
+	if (typeof window.console !== "undefined")
+		if (AB_DEBUG)
+			console.log(object);
 }
 //#endregion
 
@@ -122,25 +130,51 @@ ApplicationStore = function () {
 		_sectionstore.Images = [];
 		_sectionstore.ImageData = [];
 		_sectionstore.Thumbnail = "";
-		
+		_sectionstore.ImagesLoaded = null;
+
 		// Fetch data and return a Promise
 		_sectionstore.Loaded = new function () {
-			$.Deferred(function () {
+			return $.Deferred(function (def) {
+				var returnedData = {};
 
+				$.ajax({
+					success: function (data) {
+						log("Section [" + _sectionstore.ID + "][" + Date.now() + "]: Images loaded from server");
+						// Mock up data
+						returnedData = dataReceived;
 
-				setTimeout(def.resolve, 500);
+						// Set data
+						_sectionstore.ImageData = returnedData.i;
+						_sectionstore.Thumbnail = returnedData.t.u;
+
+						// Set Image array
+						_.each(returnedData.i, function (item) {
+							_sectionstore.Images.push(item.u);
+						});
+						setTimeout(def.resolve, 20000);
+					},
+					error: function () {
+						log("Section [" + _sectionstore.ID + "][" + Date.now() + "]: Error loading Images from server");
+						log(arguments);
+						def.resolve();
+					}
+				});
 			}).promise();
 		};
 
 		// Initiate Image Load to start after Loaded finished and return a Promise
-		_sectionstore.LoadImages = new function () {
-			$.Deferred(function (def) {
-
+		_sectionstore.LoadImages = function () {
+			return $.Deferred(function (def) {
+				// Wait for Image data
 				$.when(_sectionstore.Loaded).done(function () {
 					var cacheImageCount = _sectionstore.Images.length;
-					$.cacheImage(_sectionstore.Images, {
+					var counter = 0;
+					$.cacheImage(_sectionstore.Images.concat(_sectionstore.Thumbnail), {
 						complete: function () {
-
+							if (++counter === cacheImageCount) {
+								log("Section [" + _sectionstore.ID + "][" + Date.now() + "]: All Images have been cached");
+								def.resolve();
+							}
 						}
 					});
 				});
@@ -148,25 +182,53 @@ ApplicationStore = function () {
 			}).promise();
 		};
 
+		// Get Single Image data
+		_sectionstore.GetImageData = function (ImageID) {
+			if (typeof ImageID === "undefined")
+				return "";
+			if (isNaN(Number(ImageID)))
+				return "";
+			return _.find(_sectionstore.ImageData, function (item) {
+				return item.id === ImageID;
+			});
+		}
 
 		return {
-			GetImages: null,
-			GetImageData: null,
-			GetThumbnail: null,
-			Loaded: null,
-			LoadImages: null,
-			ImagesLoaded: null
+			GetImages: _sectionstore.ImageData,
+			GetImageData: _sectionstore.GetImageData,
+			GetThumbnail: _sectionstore.Thumbnail,
+			Loaded: _sectionstore.Loaded,
+			LoadImages: _sectionstore.LoadImages,
+			ID: _sectionstore.ID
 		}
 	}
 
 	_self.Store = [];
 
+	_self.Add = function (SectionID) {
+		if (typeof SectionID === "undefined")
+			return 0;
+		if (isNaN(Number(SectionID)))
+			return 0;
+		if (_.find(_self.Store, function (item) { return item.ID === SectionID }))
+			return 1;
 
+		// Add new Store to list
+		_self.Store.push(new _self.SectionStore(SectionID));
+		return 1;
+	};
 
+	_self.Get = function (SectionID) {
+		if (typeof SectionID === "undefined")
+			return 0;
+		if (isNaN(Number(SectionID)))
+			return 0;
+		return _.find(_self.Store, function (item) { return item.ID === SectionID }) || 0;
+	}
 
 	return {
-		Get: null,
-		Add: null
+		Get: _self.Get,
+		Add: _self.Add
 	}
 }
 
@@ -248,7 +310,7 @@ function SectionFactory() {
 		/// <summary>Navigate to Section/Image</summary>
 		/// <param name="SectionID" type="Int">Section ID</param>
 		/// <param name="ImageID" type="Int">(optional) Image ID</param>
-		
+
 		var _navigator = this;
 
 		//	Block: Get Section ID
@@ -268,7 +330,7 @@ function SectionFactory() {
 				? GLOBAL.IMAGE_NOT_SPECIFIED = true
 					: ImageID
 				: GLOBAL.IMAGE_NOT_SPECIFIED = true;
-		
+
 
 
 	}
