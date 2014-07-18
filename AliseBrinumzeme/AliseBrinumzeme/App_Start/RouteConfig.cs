@@ -20,6 +20,7 @@ namespace AliseBrinumzeme
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                 namespaces: new[] { "AliseBrinumzeme.Controllers" }
             );
+
         }
     }
 }

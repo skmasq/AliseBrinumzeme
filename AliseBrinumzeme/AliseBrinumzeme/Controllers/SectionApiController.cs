@@ -14,17 +14,33 @@ namespace AliseBrinumzeme.Controllers
 
         public string Get(int? id)
         {
-            var returnObject = new
-            {
-                i = new List<object>(),
-                t = ""
-            };
+            
 
-            if (id == null) { return Infrastructure.Helpers.SerializeObject(returnObject, false); }
+            if (id == null)
+            {
+                return Infrastructure.Helpers.SerializeObject(new
+                {
+                    Message = "Section ID is not specified"
+                }, false);
+            }
 
             SectionModel section = _db.Sections.Single(x => x.ID == id);
 
-            if (section == null) { return Infrastructure.Helpers.SerializeObject(returnObject, false); }
+            if (section == null)
+            {
+                return Infrastructure.Helpers.SerializeObject(new
+                {
+                    Message = "No section found"
+                }, false);
+            }
+
+            var returnObject = new
+            {
+                i = new List<object>(),
+                t = section.ThumbnailPath,
+                id = section.ID,
+                ts = section.TitleSlug
+            };
 
             foreach (var image in section.Images)
             {
@@ -37,7 +53,7 @@ namespace AliseBrinumzeme.Controllers
                 });
             }
 
-            return "value";
+            return Infrastructure.Helpers.SerializeObject(returnObject, false);
         }
     }
 }
