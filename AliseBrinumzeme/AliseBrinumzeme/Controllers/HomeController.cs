@@ -26,5 +26,7 @@ namespace AliseBrinumzeme.Controllers
 
             return View();
         }
+
+
     }
 }
