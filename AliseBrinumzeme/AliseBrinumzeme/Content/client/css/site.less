@@ -50,24 +50,10 @@ body, html {
         }
     }
 
-    #startup-logo {
-        display: none;
-        z-index: 1;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-left: -450px;
-        margin-top: -308px;
-
-        & img {
-            width: 900px;
-        }
-    }
-
     #lamp {
         position: absolute;
         top: -30px;
-        left: 510px;
+        left: 546px;
         z-index: 2;
 
         & > img {
@@ -181,8 +167,8 @@ body, html {
         position: absolute;
         width: 300px !important;
         height: 265px;
-        bottom: 350px;
-        left: -181px !important;
+        bottom: 300px;
+        left: -124px !important;
         #bundle .clearfix();
 
         & .window-container {
@@ -248,9 +234,14 @@ body, html {
     //
     /*#region Shelve*/
     #shelve-wrap {
+        -webkit-transform: rotate(-2deg);
+        -moz-transform: rotate(-2deg);
+        -ms-transform: rotate(-2deg);
+        -o-transform: rotate(-2deg);
+        transform: rotate(-2deg);
         position: absolute;
-        bottom: 400px;
-        right: 200px;
+        bottom: 271px;
+        left: -64px;
         width: 200px;
         height: 71px;
         #bundle .clearfix();
@@ -346,7 +337,7 @@ body, html {
         z-index: 400;
         width: 324px;
         height: 724px;
-        left: 155px;
+        left: 218px;
         bottom: -45px;
 
         & .doors-container {
@@ -593,7 +584,7 @@ body, html {
     #molbert-wrap {
         width: 149px;
         position: absolute;
-        left: 645px;
+        left: 722px;
         bottom: -13px;
         height: 430px;
 
@@ -1237,7 +1228,6 @@ body, html {
                                     height: 89px;
                                     //overflow: hidden;
                                     cursor: pointer;
-
                                     &:first-child {
                                         margin-left: 0;
                                     }
@@ -1265,9 +1255,13 @@ body, html {
                                         height: 100%;
                                         float: left;
                                         z-index: 1;
+                                        box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.62);
+                                        
 
-
-                                        & img.thumbnail-image {
+                                        &.no-image {
+                                            box-shadow: none;
+                                        }
+                                        /*& img.thumbnail-image {
                                             //display: none;
                                             position: absolute;
                                             top: 0;
@@ -1275,8 +1269,8 @@ body, html {
                                             bottom: 0;
                                             right: 0;
                                             z-index: 1;
-                                            box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.62);
-                                        }
+                                            
+                                        }*/
                                     }
                                 }
                             }

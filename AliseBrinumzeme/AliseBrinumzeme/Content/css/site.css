@@ -173,7 +173,7 @@ html {
   position: absolute;
   width: 300px !important;
   height: 265px;
-  bottom: 350px;
+  bottom: 300px;
   left: -181px !important;
 }
 #viewport #window-wrap:after {
@@ -249,8 +249,8 @@ html {
 }
 #viewport #shelve-wrap {
   position: absolute;
-  bottom: 400px;
-  right: 200px;
+  bottom: 200px;
+  left: -181px !important;
   width: 200px;
   height: 71px;
 }
