@@ -122,6 +122,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -129,8 +130,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\client\css\functions.css" />
-    <Content Include="Content\client\css\site.css" />
+    <Content Include="Content\client\css\functions.css">
+      <DependentUpon>functions.less</DependentUpon>
+    </Content>
+    <Content Include="Content\client\css\site.css">
+      <DependentUpon>site.less</DependentUpon>
+    </Content>
+    <Content Include="Content\client\css\variables.css">
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
     <Content Include="Content\client\fonts\fonts.css" />
     <Content Include="Content\client\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\client\images\background\Background_tile_001.png" />
@@ -187,7 +195,9 @@
     <Content Include="Content\client\images\section\right_arrow_thumb_002.png" />
     <Content Include="Content\client\images\section\Section_Background.png" />
     <Content Include="Content\client\images\section\social\facebook.png" />
+    <Content Include="Content\client\images\section\social\facebook_small_logo.png" />
     <Content Include="Content\client\images\section\social\Twitter_alt.png" />
+    <Content Include="Content\client\images\section\social\twitter_small_logo.png" />
     <Content Include="Content\client\images\shelve\backgrounds\Shelve_Hover_001.png" />
     <Content Include="Content\client\images\shelve\backgrounds\Shelve_Hover_002.png" />
     <Content Include="Content\client\images\shelve\backgrounds\Shelve_Normal_001.png" />
@@ -237,6 +247,7 @@
     <Content Include="Content\client\images\uploads\Image 0006.png" />
     <Content Include="Content\client\images\uploads\Image 0007.jpg" />
     <Content Include="Content\client\images\uploads\Image 0007.png" />
+    <Content Include="Content\images\uploads\t\thubmnails_extended_003.jpg" />
     <Content Include="Content\client\images\uploads\t\image_thumb_001.png" />
     <Content Include="Content\client\images\uploads\t\image_thumb_002.png" />
     <Content Include="Content\client\images\uploads\t\image_thumb_003.png" />
@@ -388,6 +399,7 @@
     <Content Include="Content\images\uploads\t\image_thumb_006.png" />
     <Content Include="Content\images\uploads\t\image_thumb_007.png" />
     <Content Include="Content\images\uploads\t\thubmnails_extended_001.jpg" />
+    <Content Include="Content\images\uploads\t\thubmnails_extended_002.jpg" />
     <Content Include="Content\images\window\tagstrings\Tag_String_001.png" />
     <Content Include="Content\images\window\tagstrings\Tag_String_002.png" />
     <Content Include="Content\images\window\tags\Window_Tag_Location_001.png" />
@@ -405,7 +417,6 @@
     <Content Include="Content\js\libraries\StackBlur.js" />
     <Content Include="Content\js\libraries\TweenMax.js" />
     <Content Include="Content\js\site\common.js" />
-    <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\fonts\fonts.less" />
@@ -431,6 +442,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Content\client\images\uploads\n\" />
     <Folder Include="Content\images\uploads\n\" />
     <Folder Include="Models\" />
@@ -453,6 +467,7 @@
     <Content Include="Content\client\images\section\test_arrow" />
     <Content Include="Content\client\images\section\test_arrow_2" />
     <Content Include="Content\client\js\response object.json" />
+    <Content Include="Areas\Admin\Views\web.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <PropertyGroup>
@@ -469,7 +484,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52405</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

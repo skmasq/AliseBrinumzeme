@@ -1,6 +1,9 @@
 ﻿/// <reference path="~/Scripts/_references.js" />
 
+
+
 var AB_DEBUG = true;
+var SectionControler;
 
 //#region Utils
 function getFrameLenght(__array, __iterations, __delay) {
@@ -35,7 +38,7 @@ var dataReceived = {
 		id: 1,
 		o: 1,
 		ts: "kaklarotu-turetaja",
-		u: "/Content/images/uploads/Image 0007.jpg",
+		u: "/Content/images/uploads/Image 0007.png",
 		p: {
 			Foto: "Juris Visvaris",
 			Vieta: "Mellužu 78. Sieviešu Internāta skola"
@@ -44,7 +47,7 @@ var dataReceived = {
 		id: 2,
 		o: 2,
 		ts: "dama-stav-salikusi-rokas-kopa",
-		u: "/Content/images/uploads/Image 0006.jpg",
+		u: "/Content/images/uploads/Image 0006.png",
 		p: {
 			Foto: "Juris Visvaris",
 			Vieta: "Mellužu 78. Sieviešu Internāta skola"
@@ -53,7 +56,7 @@ var dataReceived = {
 		id: 3,
 		o: 3,
 		ts: "dama-sez-jogas-poza",
-		u: "/Content/images/uploads/Image 0005.jpg",
+		u: "/Content/images/uploads/Image 0005.png",
 		p: {
 			Foto: "Juris Visvaris",
 			Vieta: "Mellužu 78. Sieviešu Internāta skola"
@@ -96,30 +99,36 @@ var dataReceived = {
 		}
 	}],
 	t: {
-		u: "/Content/images/uploads/t/thubmnails_extended_001.jpg"
+		u: "/Content/images/uploads/t/thubmnails_extended_003.jpg"
 	}
 };
 
 //#endregion
 
 var GLOBAL = {
-	SECTION_OPEN: false,
-	WEBSITE_LOADED: false,
+	IMAGE_NOT_SPECIFIED: true,
 	OVERLAY_LOADED: false,
 	SECTION_ANIMATION_ACTIVE: false,
-	IMAGE_NOT_SPECIFIED: true
+	SECTION_OPEN: false,
+	THUMBS_ANIMATION_ACTIVE: false,
+	THUMB_POSITION: 0,
+	THUMB_LEFT_DISABLED: true,
+	THUMB_RIGHT_DISABLED: false,
+	WEBSITE_LOADED: false,
 }
 
 var CONST = {
-	THUMBNAIL_STEP: 110,
-	THUMBNAIL_H: 83,
+	THUMBNAIL_STEP: 111,
+	THUMBNAIL_H: 89,
+	MAIN_IMG_MAX_H: 358,
+	MAIN_IMG_MAX_W: 260,
 	SECTIONS: {
 		SINFO_1: "Svaigs, gaisīgs, spilgts, teatrāls...jāveido tā, lai justos skaisti, lai būtu atbilstošs vietai un notikumam!",
 		STITLE_1: "Grims"
 	}
 }
 
-ApplicationStore = function () {
+function ApplicationStore() {
 	var _self = this;
 
 	_self.SectionStore = function (SectionID) {
@@ -136,7 +145,6 @@ ApplicationStore = function () {
 		_sectionstore.Loaded = new function () {
 			return $.Deferred(function (def) {
 				var returnedData = {};
-
 				$.ajax({
 					success: function (data) {
 						log("Section [" + _sectionstore.ID + "][" + Date.now() + "]: Images loaded from server");
@@ -146,12 +154,14 @@ ApplicationStore = function () {
 						// Set data
 						_sectionstore.ImageData = returnedData.i;
 						_sectionstore.Thumbnail = returnedData.t.u;
+						console.log(_sectionstore.Thumbnail);
+
 
 						// Set Image array
 						_.each(returnedData.i, function (item) {
 							_sectionstore.Images.push(item.u);
 						});
-						setTimeout(def.resolve, 20000);
+						setTimeout(def.resolve, 0);
 					},
 					error: function () {
 						log("Section [" + _sectionstore.ID + "][" + Date.now() + "]: Error loading Images from server");
@@ -170,7 +180,7 @@ ApplicationStore = function () {
 					var cacheImageCount = _sectionstore.Images.length;
 					var counter = 0;
 					$.cacheImage(_sectionstore.Images.concat(_sectionstore.Thumbnail), {
-						complete: function () {
+						complete: function (e) {
 							if (++counter === cacheImageCount) {
 								log("Section [" + _sectionstore.ID + "][" + Date.now() + "]: All Images have been cached");
 								def.resolve();
@@ -194,9 +204,10 @@ ApplicationStore = function () {
 		}
 
 		return {
-			GetImages: _sectionstore.ImageData,
+			GetImages: function () { return _sectionstore.Images },
+			GetImagesData: function () { return _sectionstore.ImageData },
 			GetImageData: _sectionstore.GetImageData,
-			GetThumbnail: _sectionstore.Thumbnail,
+			GetThumbnail: function () { return _sectionstore.Thumbnail },
 			Loaded: _sectionstore.Loaded,
 			LoadImages: _sectionstore.LoadImages,
 			ID: _sectionstore.ID
@@ -232,8 +243,9 @@ ApplicationStore = function () {
 	}
 }
 
-function SectionFactory() {
+function SectionFactory(AppStore) {
 	var _self = this;
+	_self.AppStore = AppStore;
 
 	//#region Namespaces
 
@@ -246,7 +258,7 @@ function SectionFactory() {
 	//#region Presentation Layer
 
 	// Open Section Container
-	_self.PL.Section.Open = function () {
+	_self.PL.Section.Open = new function () {
 		var tl = new TimelineMax({ paused: true });
 
 		// Add Labels
@@ -265,7 +277,7 @@ function SectionFactory() {
 	}
 
 	// Close Section Container
-	_self.PL.Section.Close = function () {
+	_self.PL.Section.Close = new function () {
 		var tl = new TimelineMax({ paused: true });
 
 		// Add Labels
@@ -306,6 +318,221 @@ function SectionFactory() {
 
 	//#region Controlers
 
+	_self.Controlers.loadevents = function () {
+		$(document)
+				.on("click.sectionfactory", ".thumbs-left-click", _self.Controlers.ThumbsPrevPage)
+				.on("click.sectionfactory", ".thumbs-right-click", _self.Controlers.ThumbsNextPage)
+	}
+
+	_self.Controlers.unloadevents = function () {
+		$(document).off(".sectionfactory");
+	}
+
+	_self.Controlers.GetImage_WH = function (ImageElement) {
+
+		var _image_self = {};
+		_image_self.Width = ImageElement.width;
+		_image_self.Height = ImageElement.height,
+		_image_self.NewWidth = null;
+		_image_self.NewHeight = null;
+		_image_self.Direction = "";
+
+		// Get Image Ratio depending on which side is longer
+		_image_self.Ratio =
+				(_image_self.Height > _image_self.Width)
+				? _image_self.Width / _image_self.Height
+					: (_image_self.Width > _image_self.Height)
+					? _image_self.Height / _image_self.Width
+						: 1;
+
+		// Calculate new lengths
+		if (_image_self.Height > _image_self.Width) {
+			_image_self.NewWidth = CONST.MAIN_IMG_MAX_H * _image_self.Ratio;
+			_image_self.NewHeight = CONST.MAIN_IMG_MAX_H;
+			_image_self.Direction = "vpos-image";
+		} else if (_image_self.Width >= _image_self.Height) {
+			_image_self.NewWidth = CONST.MAIN_IMG_MAX_W;
+			_image_self.NewHeight = _image_self.Ratio * CONST.MAIN_IMG_MAX_W;
+			_image_self.Direction = "hspos-image";
+		}
+
+		return {
+			Width: _image_self.NewWidth,
+			Height: _image_self.NewHeight,
+			Direction: _image_self.Direction
+		}
+	}
+
+	_self.Controlers.InjectImages = function (ImageList) {
+		return $.Deferred(function (def) {
+			var ImageListLength = ImageList.length;
+			var counter = 0;
+			var ImageInjectList = [];
+
+			$.cacheImage(ImageList, {
+				complete: function (e) {
+
+					var NewDimensions = _self.Controlers.GetImage_WH(e.target);
+
+					ImageInjectList.push(
+						$(e.target)
+							.attr("width", NewDimensions.Width)
+							.attr("height", NewDimensions.Height)
+							.addClass(NewDimensions.Direction)
+							.addClass("main-scene-image-container")
+					);
+
+					if (++counter === ImageListLength) {
+						_S.Container.Section.MainScene.Container.append(ImageInjectList);
+						def.resolve();
+					}
+				}
+			});
+		}).promise();
+	}
+
+	_self.Controlers.ThumbsPrevPage = function () {
+		if (GLOBAL.THUMB_POSITION > 5 && !GLOBAL.THUMB_LEFT_DISABLED) {
+			_self.Controlers.SetThumbnails(_self.SectionStore.GetThumbnail(), GLOBAL.THUMB_POSITION - 6, _self.SectionStore.GetImagesData());
+		}
+	}
+
+	_self.Controlers.ThumbsNextPage = function () {
+		if (!GLOBAL.THUMB_RIGHT_DISABLED) {
+			_self.Controlers.SetThumbnails(_self.SectionStore.GetThumbnail(), GLOBAL.THUMB_POSITION + 6, _self.SectionStore.GetImagesData());
+		}
+	}
+
+	_self.Controlers.SetThumbnails = function (thumb, position, ImagesData) {
+		if (!GLOBAL.THUMBS_ANIMATION_ACTIVE) {
+			if (_.find(ImagesData, function (item) { return item.o === position })) {
+
+				GLOBAL.THUMBS_ANIMATION_ACTIVE = true;
+				// Initialize next thumb State
+				var elementCounter = 0;
+				var positionCounter = position;
+				var nextStateContainer = [];
+				var DisabledRight = false;
+				var Direction = (position > GLOBAL.THUMB_POSITION) ? "right" : "left";
+
+				//#region State changes
+				_.each(_.sortBy(ImagesData, function (item) { return +item.o; }), function (item) {
+					if (item.o === positionCounter && (positionCounter < position + 6)) {
+						var elementToAnimate = _S.Container.Section.Thumbnails.list[elementCounter];
+						var currentPos = positionCounter;
+						nextStateContainer.push(function () {
+							TweenMax.to(elementToAnimate, 0.2,
+								{
+									css: {
+										scale: 0
+									},
+									onComplete: function () {
+										elementToAnimate
+											.css("background", "url(" + thumb + ") -" + ((currentPos - 1) * CONST.THUMBNAIL_STEP) + "px 0px no-repeat")
+											.removeClass("no-image")
+									}
+								});
+						});
+
+						elementCounter++;
+						positionCounter++;
+					}
+				});
+				//#endregion
+
+				//#region Add remaining state changes
+				var leftoverCounter = elementCounter;
+				_.each([0, 1, 2, 3, 4, 5], function (item) {
+					if (leftoverCounter < 6) {
+						DisabledRight = true;
+						var elementToAnimate = _S.Container.Section.Thumbnails.list[leftoverCounter];
+						nextStateContainer.push(function () {
+							TweenMax.to(elementToAnimate, 0.2,
+								{
+									css: {
+										scale: 0
+									},
+									onComplete: function () {
+										elementToAnimate
+											.css("background", "")
+											.addClass("no-image")
+									}
+								});
+						});
+					}
+					leftoverCounter++;
+				});
+				//#endregion
+
+
+				GLOBAL.THUMB_POSITION = position;
+
+				var tl = new TimelineMax({
+					onComplete: function () {
+						GLOBAL.THUMBS_ANIMATION_ACTIVE = false;
+					}
+				});
+
+				tl.add((Direction === "left")
+					? nextStateContainer.reverse()
+						: nextStateContainer, 0, "sequence", 0.05);
+
+				tl.add(TweenMax.staggerTo((Direction === "left")
+					? _S.Container.Section.Thumbnails.all.get().reverse()
+						: _S.Container.Section.Thumbnails.all, 0.2, { scale: 1 }, 0.05), 0.3);
+
+				if (position === 1) {
+					GLOBAL.THUMB_LEFT_DISABLED = true;
+				} else {
+					GLOBAL.THUMB_LEFT_DISABLED = false;
+				}
+				if (DisabledRight) {
+					GLOBAL.THUMB_RIGHT_DISABLED = true;
+				} else {
+					GLOBAL.THUMB_RIGHT_DISABLED = false;
+				}
+			}
+		}
+	}
+
+	_self.Controlers.LoadOpenAnimation = function () {
+		return $.Deferred(function (def) {
+			_self.PL.Section.Open.eventCallback("onStart", function () {
+				log("Global[" + Date.now() + "]: Section Open Animation Started");
+				GLOBAL.SECTION_ANIMATION_ACTIVE = true;
+			}).eventCallback("onComplete", function () {
+				log("Global[" + Date.now() + "]: Section Open Animation Ended");
+				GLOBAL.SECTION_ANIMATION_ACTIVE = false;
+				def.resolve();
+			}).play();
+		}).promise();
+	};
+
+	_self.Controlers.LoadCloseAnimation = function () {
+		return $.Deferred(function (def) {
+			_self.PL.Section.Close.eventCallback("onStart", function () {
+				log("Global[" + Date.now() + "]: Section Close Animation Started");
+				GLOBAL.SECTION_ANIMATION_ACTIVE = true;
+			}).eventCallback("onComplete", function () {
+				log("Global[" + Date.now() + "]: Section Close Animation Ended");
+				_self.PL.Section.Open.restart().pause();
+				_self.PL.Section.ResetOverlap();
+				_self.PL.Section.ResetSection();
+				GLOBAL.SECTION_ANIMATION_ACTIVE = false;
+				def.resolve();
+			}).play();
+		}).promise();
+	}
+
+	_self.Controlers.LoadSectionData = function (SectionStore) {
+		return $.Deferred(function (def) {
+			$.when(SectionStore.Loaded, SectionStore.LoadImages()).done(function () {
+				log("Navigate.Section[" + SectionStore.ID + "][" + Date.now() + "]: Section Data and Images have been loaded");
+				def.resolve();
+			});
+		}).promise();
+	}
+
 	_self.Controlers.Navigate = function (SectionID, ImageID) {
 		/// <summary>Navigate to Section/Image</summary>
 		/// <param name="SectionID" type="Int">Section ID</param>
@@ -314,9 +541,13 @@ function SectionFactory() {
 		var _navigator = this;
 
 		//	Block: Get Section ID
-		//	Description: If Section ID not supplied return the function and cancel routing
+		//	Description:
+		//		IF
+		//			- Section ID is not supplied
+		//			- or Section is allready Open
+		//			- or Section Currently is animating
 		try {
-			if (isNaN(Number(SectionID)))
+			if (isNaN(Number(SectionID)) || GLOBAL.SECTION_OPEN || GLOBAL.SECTION_ANIMATION_ACTIVE)
 				return;
 			else
 				_navigator.SectionID = SectionID;
@@ -333,6 +564,23 @@ function SectionFactory() {
 
 
 
+		// Add Section to Application Store
+		AppStore.Add(SectionID);
+
+		// TODO: Instead loading all Images, load only images for thumbnail set
+
+		$.when(_self.Controlers.LoadOpenAnimation(), _self.Controlers.LoadSectionData(AppStore.Get(SectionID))).done(function () {
+			// TODO[1]: Check if Image is supplied
+			// TODO[2]: Set thumbnail images
+			_self.Controlers.loadevents();
+			_self.SectionStore = AppStore.Get(SectionID);
+			$.when(_self.Controlers.InjectImages(_self.SectionStore.GetImages())).done(function () {
+				animateThumbs();
+				_self.Controlers.SetThumbnails(_self.SectionStore.GetThumbnail(), 7, _self.SectionStore.GetImagesData());
+				_S.Container.Section.Content.fadeIn();
+			});
+		});
+
 	}
 
 	//#endregion
@@ -344,7 +592,7 @@ function SectionFactory() {
 	//#endregion
 
 	return {
-		Navigate: null
+		Navigate: _self.Controlers.Navigate
 	}
 }
 
@@ -466,12 +714,22 @@ var _S = {
 				base: $(".section-description-wrap")
 			},
 			Thumbnails: {
-				all: $(".thumbnail-image")
+				all: $(".image-seperate-container"),
+				list: [
+					$(".image-seperate-container[data-thumbnailposition=1]"),
+					$(".image-seperate-container[data-thumbnailposition=2]"),
+					$(".image-seperate-container[data-thumbnailposition=3]"),
+					$(".image-seperate-container[data-thumbnailposition=4]"),
+					$(".image-seperate-container[data-thumbnailposition=5]"),
+					$(".image-seperate-container[data-thumbnailposition=6]")
+				]
 			},
 			MainScene: {
-				base: $(".main-scene-wrap")
+				base: $(".main-scene-wrap"),
+				Container: $(".main-scene-container")
 			},
-			InfoBook: $(".info-book-wrap")
+			InfoBook: $(".info-book-wrap"),
+			Content: $(".section-content-wrap")
 		},
 		Contacts: {
 			base: $("#contact-page-wrap"),
@@ -1104,7 +1362,7 @@ var tween_api = {
 					height: 225,
 					width: 151,
 					marginBottom: 0,
-					marginLeft: 49
+					marginLeft: 125
 				}
 			});
 		},
@@ -1226,8 +1484,10 @@ var tween_api = {
 					//#region Frame 2
 					tl.add([
 							TweenMax.to(_S.Body.BlueDove.base, 1.5, { css: { right: "-=100px" } }),
-							TweenMax.to(_S.Body.BlueDove.Key, 1.5, { css: { left: "-=100px", bottom: -700, alpha: 0 } })
+							TweenMax.to(_S.Body.BlueDove.Key, 1.5, { css: { left: "-=100px", bottom: -700, } })
 					]);
+
+					tl.add(TweenMax.to(_S.Body.BlueDove.Key, 0.3, { css: { alpha: 0 } }), 3.7);
 					//#endregion
 
 					//#endregion
@@ -1517,6 +1777,7 @@ function initStartPage() {
 };
 
 $(document).ready(function () {
+	SectionControler = new SectionFactory(new ApplicationStore());
 	setWelcomeMessage();
 	$("#shelve-wrap").hide();
 	$("#window-wrap").hide();
@@ -1797,12 +2058,10 @@ function eventhandler() {
 		})
 		.on("click", ".shelve-container", tween_api.contacts.open)
 		.on("click", ".info-book-wrap", tween_api.sections.description.show)
-		.on("click", ".thumbs-left-click", tween_api.sections.thumbnails.switchTo.left)
-		.on("click", ".thumbs-right-click", tween_api.sections.thumbnails.switchTo.right)
 		.on("click", ".menu-hitbox", function () {
 			console.log($(this).data("menutextindex"));
 			if ($(this).data("menutextindex") != "6")
-				SectionObject.open();
+				SectionControler.Navigate($(this).data("menutextindex"));
 			else
 				tween_api.contacts.open();
 		})
