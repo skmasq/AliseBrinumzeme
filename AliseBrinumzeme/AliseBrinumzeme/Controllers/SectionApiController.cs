@@ -14,8 +14,6 @@ namespace AliseBrinumzeme.Controllers
 
         public string Get(int? id)
         {
-            
-
             if (id == null)
             {
                 return Infrastructure.Helpers.SerializeObject(new

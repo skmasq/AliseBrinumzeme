@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Image List";
+    ViewBag.CurrentPage = "images";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<div class="log-index">
+    <div class="page-header">
+        <h1>Images <a href="/admin/image/create" class="btn btn-small">Add a new Image</a></h1>
+    </div>
+    <table class="table table-striped table-bordered table-hover dataTable table-image-list"></table>
+</div>

@@ -1,0 +1,49 @@
+﻿@{
+    string currentPage = ViewBag.CurrentPage.ToLower();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>AliseBrinumzeme</title>
+    @Styles.Render("~/cssadmin")
+</head>
+
+<body class="admin">
+    <div class="wrap">
+        <div class="wrap-inner">
+            <div class="header no-print">
+                <div class="navbar navbar-fixed-top">
+                    <div class="navbar-inner">
+                        <div class="container">
+                            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                                <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                            </a><a class="brand" href="/admin">AliseBrinumzeme</a>
+                            <div class="nav-collapse clearfix">
+                                <ul class="nav">
+                                    <li @{ if (currentPage == "sections") { <text> class="active" </text>     } }><a href="/admin/section">Sections</a></li>
+                                    <li @{ if (currentPage == "images") { <text> class="active" </text>   } }><a href="/admin/image">Images</a></li>                                    
+                                </ul>
+
+                                <ul class="nav pull-right">
+                                    <li><a href="/admin/home/logout">Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="container">
+                    @RenderBody()
+                </div>
+            </div>
+            <div class="push"></div>
+        </div>
+        <div class="footer no-print">
+        </div>
+    </div>
+    @Scripts.Render("~/jsadmin")
+</body>
+</html>
