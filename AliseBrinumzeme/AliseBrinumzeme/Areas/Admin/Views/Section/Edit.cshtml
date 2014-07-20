@@ -1,0 +1,37 @@
+﻿@model AliseBrinumzeme.Models.SectionModel
+@{
+    ViewBag.Title = "Edit - Section";
+    ViewBag.CurrentPage = "sections";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<div class="item-create clearfix">
+    <div class="page-header">
+        <h1>Section - Edit</h1>
+    </div>
+
+    @using (Html.BeginForm("edit", "section", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+
+        <div class="row">
+            <div class="span12">
+                @Html.LabelFor(x => x.Title, "Section Title")
+                @Html.TextBoxFor(x => x.Title, new { @class = "input-block-level" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                @Html.LabelFor(x => x.Description, "Section Description")
+                @Html.TextAreaFor(x => x.Description, new { @class = "input-block-level" })
+            </div>
+        </div>
+
+        <br/>
+        
+        <input type="submit" class="btn btn-primary pull-right" value="Edit" />
+         <a href="/admin/section" class="btn btn-default pull-right">Go back to Section List</a>
+    }
+</div>

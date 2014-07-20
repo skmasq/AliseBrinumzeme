@@ -1,0 +1,68 @@
+﻿@model AliseBrinumzeme.Models.AdministratorModel
+@{
+    Layout = null;
+    bool loginTooManyAttempts = Convert.ToBoolean(TempData["loginTooManyAttempts"]);
+    bool loginFailed = Convert.ToBoolean(TempData["loginFailed"]);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="author" content="Steve">
+    <link rel="shortcut icon" href="../assets/ico/favicon.png">
+    @Styles.Render("~/cssadmin")
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="wrap">
+        <div class="container">
+            <div class="content">
+                <div class="home-authorize">
+                    <div class="row">
+                        <div class="span6 offset3">
+                            <div class="well clearfix authorize">
+                                @if (loginTooManyAttempts)
+                                {
+                                    <div class="alert alert-error">
+                                        <p>Too many incorrect login attempts, please wait 5 minutes...</p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <h1>Who you be?</h1>
+                                    if (loginFailed)
+                                    {
+                                        <div class="alert alert-error">
+                                            <p>Wrong username and/or password...</p>
+                                        </div>
+                                    }
+                                    using (Html.BeginForm("authorize", "home"))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary()
+
+                                        @Html.LabelFor(x => x.Username)
+                                        @Html.TextBoxFor(x => x.Username, new { @class = "input-block-level" })
+
+                                        @Html.LabelFor(x => x.Password)
+                                        @Html.PasswordFor(x => x.Password, new { @class = "input-block-level" })
+
+                                        <input type="submit" value="Authorize" class="btn btn-large btn-primary pull-right" />
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="push"></div>
+        </div>
+    </div>
+    @Scripts.Render("~/jsadmin")
+</body>
+</html>

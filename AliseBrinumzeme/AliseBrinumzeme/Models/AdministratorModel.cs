@@ -7,7 +7,7 @@ using System.Web;
 
 namespace AliseBrinumzeme.Models
 {
-     [Validator(typeof(AdministratorValidator))]
+    [Validator(typeof(AdministratorValidator))]
     public class AdministratorModel
     {
         public virtual int ID { get; set; }

@@ -1,0 +1,48 @@
+﻿@model AliseBrinumzeme.Models.ImageModel
+@{
+    ViewBag.Title = "Edit - Image";
+    ViewBag.CurrentPage = "images";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<div class="item-create clearfix">
+    <div class="page-header">
+        <h1>Image - Edit</h1>
+    </div>
+
+    @using (Html.BeginForm("edit", "image", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+
+        <div class="row">
+            <div class="span12">
+                @Html.LabelFor(x => x.Title, "Image Title")
+                @Html.TextBoxFor(x => x.Title, new { @class = "input-block-level" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                <label for="Section">Section</label>
+                <select class="input-block-level" name="SectionID">
+                    @foreach (var sections in ViewBag.Section)
+                    {
+                        if(sections.ID == Model.Section.ID)
+                        { 
+                            <option selected="selected" value="@sections.ID">@sections.Title</option> 
+                        }
+                        else { 
+                            <option value="@sections.ID">@sections.Title</option> 
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        
+        <label for="Image">Picture</label>
+        <input type="file" name="ImageModel.Image" id="Image" class="input-block-level" />
+        <input type="submit" class="btn btn-primary pull-right" value="Edit" />
+        <a href="/admin/image" class="btn btn-default pull-right">Go back to Image List</a>
+    }
+</div>

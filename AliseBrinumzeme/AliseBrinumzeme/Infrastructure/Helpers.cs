@@ -17,7 +17,12 @@ namespace AliseBrinumzeme.Infrastructure
         /// <returns>JSON string</returns>
         public static string SerializeObject(Object input, bool debug = true)
         {
-            string json = JsonConvert.SerializeObject(input, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, MaxDepth = 2 });
+            string json = JsonConvert.SerializeObject(input, Formatting.Indented, new JsonSerializerSettings() 
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore, 
+                MaxDepth = 2 
+            });
+
             if (debug)
             {
                 return "<pre style='font-family: Consolas;'>" + json + "</pre>"; // In order to preview in browser
@@ -55,16 +60,12 @@ namespace AliseBrinumzeme.Infrastructure
             // Remove accent
             byte[] bytes = System.Text.Encoding.GetEncoding("Cyrillic").GetBytes(input);
             string str = System.Text.Encoding.ASCII.GetString(bytes).ToLower();
-
             // Remove all invalid chars
             str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
-
             // Convert multiple spaces to one space
             str = Regex.Replace(str, @"\s+", " ").Trim();
-
             // Cut and trim
             str = str.Substring(0, str.Length <= 45 ? str.Length : 45).Trim();
-
             // Replace spaces with line
             str = Regex.Replace(str, @"\s", "-");
             return str;

@@ -29,6 +29,7 @@
             context.Administrators.AddOrUpdate(x => x.Username, admin);
 
             #region Sections
+
             context.Sections.AddOrUpdate(x => x.Title, new SectionModel()
             {
                 DateCreated = DateTime.Now,
