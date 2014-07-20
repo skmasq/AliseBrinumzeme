@@ -70,6 +70,7 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
         {
             Image.DateCreated = DateTime.Now;
             Image.DateModified = DateTime.Now;
+            Image.Section = _db.Sections.Where(x => x.ID == SectionID).FirstOrDefault();
             Image.Section.ID = SectionID;
 
             if (imageFile != null)
