@@ -144,7 +144,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Helpers.cs" />
-    <Compile Include="Infrastructure\Upload.cs" />
+    <Compile Include="Infrastructure\Interfaces\IImageRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\ImageRepository.cs" />
+    <Compile Include="Infrastructure\Upload.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdministratorModel.cs" />
     <Compile Include="Models\ImageModel.cs" />
