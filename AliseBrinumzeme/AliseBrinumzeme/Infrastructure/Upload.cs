@@ -12,18 +12,13 @@ namespace AliseBrinumzeme.Infrastructure
     public static class Upload
     {
         /// <summary>
-        /// Is true if image 
-        /// </summary>
-        private static bool IsHorizontalImage = false;
-
-        /// <summary>
         /// Uploads image to server
         /// </summary>
         /// <param name="file">Image file</param>
         /// <param name="height">Height to resize</param>
         /// <param name="width">Width to resize</param>
         /// <returns>Returns file name on success, null on failure</returns>
-        public static string Image(HttpPostedFileBase file, int width, int height, int quality = 3000, string fileName = "")
+        public static string Image(HttpPostedFileBase file, int width, int height, long quality = 100L, string fileName = "")
         {
             if (string.IsNullOrEmpty(fileName))
             {
@@ -32,74 +27,108 @@ namespace AliseBrinumzeme.Infrastructure
 
             var fileExtension = Path.GetExtension(file.FileName);
             var currentServerPath = HttpContext.Current.Server.MapPath("~/content/u/");
-
+            string filePath = Path.Combine(currentServerPath, fileName + fileExtension.ToLower());
             System.Drawing.Image img = System.Drawing.Image.FromStream(file.InputStream);
-            System.Drawing.Image img2 = resizeImage(img, new Size(111, 89));
-            Bitmap b = new Bitmap(img2);
-            img2.Dispose();
-
-            string filePath = Path.Combine( currentServerPath, fileName + fileExtension.ToLower());
-            
+            Bitmap b = new Bitmap(img);
+            SaveCroppedImage(img, 111, 89, filePath);
+            img.Dispose();
             saveJpeg(filePath, b, quality);
-            CropImage(new Rectangle() { Width = 111, Height = 89 }, filePath);
-            b.Dispose();
-
             JoinAllImagesToOne(currentServerPath, fileName);
 
             return fileName.ToLower() + fileExtension.ToLower();
         }
 
         /// <summary>
-        /// Crops the image thumbnail
-        /// </summary>
-        /// <param name="rectangle"></param>
-        /// <param name="filePath"></param>
-        public static void CropImage(Rectangle rectangle, string filePath)
-        {
-            if (IsHorizontalImage)
-            {
-                rectangle.X = rectangle.Width / 4;
-                rectangle.Y = 5;
-            }
-            else
-            {
-                rectangle.X = rectangle.Width / 4;
-                rectangle.Y = rectangle.Height / 4;
-            }
-
-            Bitmap src = System.Drawing.Image.FromFile(filePath) as Bitmap;
-            Bitmap target = src.Clone(rectangle, src.PixelFormat);
-            string ext = Path.GetExtension(filePath);
-            string name = Path.GetFileNameWithoutExtension(filePath);
-
-            saveJpeg(
-                path: HttpContext.Current.Server.MapPath("~/content/u/") + name + "_cropped" + ext,
-                img:target,
-                quality:100
-                );
-        }
-
-        /// <summary>
-        /// 
+        /// Resize, cropp and save modified image
         /// </summary>
         /// <param name="image"></param>
         /// <param name="maxWidth"></param>
         /// <param name="maxHeight"></param>
+        /// <param name="filePath"></param>
         /// <returns></returns>
-        public static Bitmap ScaleImage(Image image, int maxWidth, int maxHeight)
+        public static bool SaveCroppedImage(Image image, int maxWidth, int maxHeight, string filePath)
         {
-            var ratioX = (double)maxWidth / image.Width;
-            var ratioY = (double)maxHeight / image.Height;
-            var ratio = Math.Min(ratioX, ratioY);
-            var newWidth = (int)(image.Width * ratio);
-            var newHeight = (int)(image.Height * ratio);
-            var newImage = new Bitmap(newWidth, newHeight);
+            ImageCodecInfo jpgInfo = ImageCodecInfo.GetImageEncoders()
+                                     .Where(codecInfo =>
+                                     codecInfo.MimeType == "image/jpeg").First();
 
-            Graphics.FromImage(newImage).DrawImage(image, 0, 0, newWidth, newHeight);
-            Bitmap bmp = new Bitmap(newImage);
+            string ext = Path.GetExtension(filePath);
+            string name = Path.GetFileNameWithoutExtension(filePath);
 
-            return bmp;
-        }
+            Image finalImage = image;
+            System.Drawing.Bitmap bitmap = null;
+            try
+            {
+                int left = 0, top = 0,
+                    srcWidth = maxWidth,
+                    srcHeight = maxHeight;
+
+                bitmap = new System.Drawing.Bitmap(maxWidth, maxHeight);
+                double croppedHeightToWidth = (double)maxHeight / maxWidth;
+                double croppedWidthToHeight = (double)maxWidth / maxHeight;
+
+                if (image.Width > image.Height)
+                {
+                    srcWidth = (int)(Math.Round(image.Height * croppedWidthToHeight));
+                    if (srcWidth < image.Width)
+                    {
+                        srcHeight = image.Height;
+                        left = (image.Width - srcWidth) / 2;
+                    }
+                    else
+                    {
+                        srcHeight = (int)Math.Round(image.Height * ((double)image.Width / srcWidth));
+                        srcWidth = image.Width;
+                        top = (image.Height - srcHeight) / 2;
+                    }
+                }
+                else
+                {
+                    srcHeight = (int)(Math.Round(image.Width * croppedHeightToWidth));
+                    if (srcHeight < image.Height)
+                    {
+                        srcWidth = image.Width;
+                        top = (image.Height - srcHeight) / 2;
+                    }
+                    else
+                    {
+                        srcWidth = (int)Math.Round(image.Width * ((double)image.Height / srcHeight));
+                        srcHeight = image.Height;
+                        left = (image.Width - srcWidth) / 2;
+                    }
+                }
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    g.SmoothingMode = SmoothingMode.HighQuality;
+                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    g.CompositingQuality = CompositingQuality.HighQuality;
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.DrawImage(image, new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                    new Rectangle(left, top, srcWidth, srcHeight), GraphicsUnit.Pixel);
+                }
+                finalImage = bitmap;
+            }
+            catch { }
+            try
+            {
+                using (EncoderParameters encParams = new EncoderParameters(1))
+                {
+                    encParams.Param[0] = new EncoderParameter(Encoder.Quality, (long)100);
+                    saveJpeg(
+                        path: HttpContext.Current.Server.MapPath("~/content/u/") + name + "_cropped" + ext,
+                        img: finalImage as Bitmap,
+                        quality: 1000
+                    );                  
+                    return true;
+                }
+            }
+            catch { }
+            if (bitmap != null)
+            {
+                bitmap.Dispose();
+            }
+            return false;
+        }  
 
         /// <summary>
         /// Joins all thumbnails into one image
@@ -165,30 +194,6 @@ namespace AliseBrinumzeme.Infrastructure
                     image.Dispose();
                 }
             }
-        }
-
-        /// <summary>
-        /// resize image so it will take less space
-        /// </summary>
-        /// <param name="imgToResize"></param>
-        /// <param name="size"></param>
-        /// <returns></returns>
-        private static Image resizeImage(Image imgToResize, Size size)
-        {
-            var bitmap = new Bitmap(imgToResize);
-
-            if (imgToResize.Width > imgToResize.Height)
-            {
-                bitmap = ScaleImage(imgToResize, imgToResize.Width / 2, imgToResize.Height);
-                IsHorizontalImage = true;
-            }
-            else
-            {
-                bitmap = ScaleImage(imgToResize, imgToResize.Width, imgToResize.Height / 2);
-                IsHorizontalImage = false;
-            }
-
-            return (Image)bitmap;
         }
 
         /// <summary>
