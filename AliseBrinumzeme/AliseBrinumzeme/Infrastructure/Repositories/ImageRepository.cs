@@ -7,11 +7,14 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using AliseBrinumzeme.Models;
 
 namespace AliseBrinumzeme.Infrastructure.Repositories
 {
     public class ImageRepository : IImageRepository
     {
+        MainDataContext _db = new MainDataContext();
+
         //Singleton
         private static ImageRepository _imageRepository;
 
@@ -27,9 +30,43 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
             }
         }
 
-        public void RemoveOldImagesFromFolder(int id)
+        /// <summary>
+        /// Deletes old images from folder
+        /// </summary>
+        /// <param name="sectionID">Section ID</param>
+        /// <param name="imageID">Image ID</param>
+        /// <param name="deleteThumbnail">To enable thumbnail deletion set true</param>
+        /// <param name="deleteLargeImage">To enable large image deletion set true</param>
+        /// <param name="deleteCroppedImg">To enable cropped image deletion set true</param>
+        public void RemoveOldImagesFromFolder(int sectionID, int imageID, bool deleteThumbnail, bool deleteLargeImage, bool deleteCroppedImg)
         {
+            string curServerPath = HttpContext.Current.Server.MapPath("~/content/u/");
+            var thumbnail = (from s in _db.Sections where s.ID == sectionID select s).FirstOrDefault();
+            var image = (from i in _db.Images where i.ID == imageID select i).FirstOrDefault();
 
+            if (thumbnail != null)
+            {
+                if (System.IO.File.Exists(curServerPath + thumbnail.ThumbnailPath) && deleteThumbnail)
+                {
+                    //Delete previous Thumbnail
+                    System.IO.File.Delete(curServerPath + thumbnail.ThumbnailPath);
+                }
+
+                if (image != null)
+                {
+                    if (System.IO.File.Exists(curServerPath + image.ImagePath) && deleteLargeImage)
+                    {
+                        //Delete previous Image
+                        System.IO.File.Delete(curServerPath + image.ImagePath);
+                    }
+
+                    if (System.IO.File.Exists(curServerPath + image.ImagePath + "_cropped.jpg") && deleteCroppedImg)
+                    {
+                        //Delete previous _cropped image
+                        System.IO.File.Delete(curServerPath + image.ImagePath + "_cropped.jpg");
+                    }
+                }
+            }        
         }
 
         public void Edit(int id)
@@ -39,27 +76,28 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
 
         public FileParameters GetFileParameters(HttpPostedFileBase file, string fileName = "")
         {
-            string fExtension = Path.GetExtension(file.FileName);
+           // string fExtension = Path.GetExtension(file.FileName);
+            string fExtension = ".jpg";
             string curServerPath = HttpContext.Current.Server.MapPath("~/content/u/");
-            string fPath = Path.Combine(curServerPath, fileName + fExtension.ToLower());
+            string fPath = Path.Combine(curServerPath, fileName);
+            string fName = fileName.Replace(fExtension, "");
 
             var fileParameters = new FileParameters()
             {
                 FileExtension = fExtension,
                 CurrentServerPath = curServerPath,
-                FilePath = fPath
+                FilePath = fPath,
+                FileName = fName
             };
 
             return fileParameters;
         }
 
-        public void AddNewImage(HttpPostedFileBase file, Size size, long quality = 100L, string filePath = "")
+        public void AddNewImage(HttpPostedFileBase file, Size size, long quality = 1000L, string filePath = "")
         {
             Image img = System.Drawing.Image.FromStream(file.InputStream);
             Bitmap b = new Bitmap(img);
-
             CroppResize(img, size.Width = 111, size.Height = 89, filePath);
-
             img.Dispose();
             SaveImage(filePath, b, quality);
         }
@@ -216,7 +254,7 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
 
         public void SaveImage(string path, Bitmap img, long quality)
         {
-            EncoderParameter qualityParam = new EncoderParameter(Encoder.Quality, 100L);
+            EncoderParameter qualityParam = new EncoderParameter(Encoder.Quality, 1000L);
             ImageCodecInfo jpegCodec = getEncoderInfo("image/jpeg");
 
             if (jpegCodec == null) return;
@@ -253,5 +291,6 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
         public string FileExtension { get; set; }
         public string CurrentServerPath { get; set; }
         public string FilePath { get; set; }
+        public string FileName { get; set; }
     }
 }

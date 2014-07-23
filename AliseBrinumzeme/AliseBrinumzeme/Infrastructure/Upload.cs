@@ -19,17 +19,19 @@ namespace AliseBrinumzeme.Infrastructure
         /// <param name="height">Height to resize</param>
         /// <param name="width">Width to resize</param>
         /// <returns>Returns file name on success, null on failure</returns>
-        public static string Image(HttpPostedFileBase file, int width, int height, long quality, string fileName = "")
+        public static string ImageAdd(HttpPostedFileBase file, int width, int height, long quality, string fileName = "")
         {
             fileName = ImageRepository.Instance.RandomFileName(fileName);
-
             var fileParameters = ImageRepository.Instance.GetFileParameters(file,fileName);
-
-            ImageRepository.Instance.AddNewImage(file, new Size(width, height),quality,fileParameters.FilePath);
-
+            ImageRepository.Instance.AddNewImage(file, new Size(width, height), quality, fileParameters.FilePath + fileParameters.FileExtension);
             CombineAllImages(fileParameters.CurrentServerPath, fileName);
-
             return fileName + fileParameters.FileExtension;
+        }
+
+        public static string ImageEdit()
+        {
+
+            return null;
         }
 
         /// <summary>

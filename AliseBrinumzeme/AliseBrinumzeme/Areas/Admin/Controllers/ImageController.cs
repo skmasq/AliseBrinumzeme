@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AliseBrinumzeme.Models;
+using AliseBrinumzeme.Infrastructure.Repositories;
+using System.IO;
 
 namespace AliseBrinumzeme.Areas.Admin.Controllers
 {
@@ -43,7 +45,6 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.Section = _db.Sections.ToList();
-
             return View();
         }
 
@@ -75,7 +76,12 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
 
             if (imageFile != null)
             {
-                Image.ImagePath = Infrastructure.Upload.Image(imageFile, 665, 1000, 60);
+                //Deleting old images
+                Image.ImagePath = Infrastructure.Upload.ImageAdd(imageFile, 665, 1000, 60);
+                var fileParameters = ImageRepository.Instance.GetFileParameters(imageFile, Image.ImagePath);
+                Image.Section.ThumbnailPath = null;
+                Image.Section.ThumbnailPath = fileParameters.FileName + "_thumbnail" + fileParameters.FileExtension;
+                ImageRepository.Instance.RemoveOldImagesFromFolder(SectionID, Image.ID, true, false, false);
             }
 
             if (TryValidateModel(Image))
