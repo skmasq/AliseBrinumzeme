@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using AliseBrinumzeme.Models;
 using AliseBrinumzeme.Infrastructure.Repositories;
 using System.IO;
+using AliseBrinumzeme.Infrastructure;
 
 namespace AliseBrinumzeme.Areas.Admin.Controllers
 {
@@ -24,7 +25,10 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
             {
                 ID = x.ID,
                 ImageTitle = x.Title,
-                Date = x.DateCreated
+                Date = x.DateCreated,
+                SectionTitle = x.Section.Title,
+                Order = x.Order
+
             });
 
             var returnItems = new List<object>();
@@ -35,7 +39,9 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
                 {
                     ID = item.ID,
                     ImageTitle = item.ImageTitle,
-                    Date = Convert.ToDateTime(item.Date).ToString("yyyy-MM-dd")
+                    Date = Convert.ToDateTime(item.Date).ToString("yyyy-MM-dd"),
+                    SectionTitle = item.SectionTitle,
+                    Order = item.Order
                 });
             }
 
@@ -45,6 +51,7 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.Section = _db.Sections.ToList();
+
             return View();
         }
 
@@ -60,8 +67,20 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
         public ActionResult Delete(int id)
         {
             var image = _db.Images.Single(x => x.ID == id);
+            
+            //Removes only previous thumbnail from folder
+            Upload.RemoveOldImagesFromFolder(image.SectionID, id, true, false, true);
+
             _db.Images.Remove(image);
+
+            //Resets the images order so each value vould inc by one
+            Upload.ResetOrder(image.SectionID);
+
+            //Creates thumbnail for all images for this section
+            Upload.CombineAllImages(image.SectionID);
+
             _db.SaveChanges();
+
             return RedirectToAction("index", "image");
         }
 
@@ -69,25 +88,38 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(int SectionID, ImageModel Image, HttpPostedFileBase imageFile)
         {
-            Image.DateCreated = DateTime.Now;
-            Image.DateModified = DateTime.Now;
-            Image.Section = _db.Sections.Where(x => x.ID == SectionID).FirstOrDefault();
-            Image.Section.ID = SectionID;
-
+            var image = _db.Images.Create();
+            image.Section = _db.Sections.Where(x => x.ID == SectionID).FirstOrDefault();
+            image.DateCreated = DateTime.Now;
+            image.DateModified = DateTime.Now;
+            image.Section.ID = SectionID;
+            image.Title = Image.Title;
+            
             if (imageFile != null)
             {
-                //Deleting old images
-                Image.ImagePath = Infrastructure.Upload.ImageAdd(imageFile, 665, 1000, 60);
-                var fileParameters = ImageRepository.Instance.GetFileParameters(imageFile, Image.ImagePath);
-                Image.Section.ThumbnailPath = null;
-                Image.Section.ThumbnailPath = fileParameters.FileName + "_thumbnail" + fileParameters.FileExtension;
-                ImageRepository.Instance.RemoveOldImagesFromFolder(SectionID, Image.ID, true, false, false);
-            }
+                //Removes only previous thumbnail from folder
+                Upload.RemoveOldImagesFromFolder(SectionID, Image.ID, true, false, false);
+                //Creates instance of file parameters class
+                var fileParams = ImageRepository.Instance.FileParameters;
+                //Adding new image to folder
+                Upload.ImageAdd(SectionID, imageFile, 665, 1000, 60);
+                //Adds image name to 'ImageModel'
+                image.ImagePath = fileParams.Name;
+               
+                if (TryValidateModel(image))
+                {
+                    _db.Images.Add(image);
+                    //Saves model to database so when combining images, current added image also would be added
+                    _db.SaveChanges();
+                    int imagesCount = (from img in _db.Images where img.SectionID == SectionID select img).Count();
+                    image.Order = imagesCount++;
+                    //Creates thumbnail for all images for this section
+                    Upload.CombineAllImages(SectionID);
+                    //Adds thumbnail name to 'ImageModel'
+                    image.Section.ThumbnailPath = fileParams.NoExtensionName + "_thumbnail" + fileParams.FileExtension;
+                    _db.SaveChanges();
+                }
 
-            if (TryValidateModel(Image))
-            {
-                _db.Images.Add(Image);
-                _db.SaveChanges();
                 return RedirectToAction("index", "image");
             }
 
@@ -96,20 +128,67 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int SectionID, ImageModel Image)
+        public ActionResult Edit(int SectionID, ImageModel Image, HttpPostedFileBase imageFile)
         {
             var image = _db.Images.Single(x => x.ID == Image.ID);
             image.Section = _db.Sections.Where(x => x.ID == SectionID).FirstOrDefault();
             image.Section.ID = SectionID;
             image.DateCreated = DateTime.Now;
+            image.Title = Image.Title;
+            image.Order = Image.Order;
 
-            if (TryUpdateModel(image))
+            if (imageFile != null)
             {
-                _db.SaveChanges();
+                //Removes only previous thumbnail from folder
+                Upload.RemoveOldImagesFromFolder(SectionID, Image.ID, true, true, true);
+                //Creates instance of file parameters class
+                var fileParams = ImageRepository.Instance.FileParameters;
+                //Adding new image to folder
+                Upload.ImageAdd(SectionID, imageFile, 665, 1000, 60);
+                //Adds image name to 'ImageModel'
+                image.ImagePath = fileParams.Name;
+
+                if (TryValidateModel(image))
+                {
+                    //Saves model to database so when combining images, current added image also would be added
+                    _db.SaveChanges();
+                    //Creates thumbnail for all images for this section
+                    Upload.CombineAllImages(SectionID);
+                    //Adds thumbnail name to 'ImageModel'
+                    image.Section.ThumbnailPath = fileParams.NoExtensionName + "_thumbnail" + fileParams.FileExtension;
+                    _db.SaveChanges();
+                }
+
                 return RedirectToAction("index", "image");
             }
 
             return View(Image);
+        }
+
+        public ActionResult IncreaseOrder(int id)
+        {
+            int sectionID = (from img in _db.Images where img.ID == id select img.SectionID).FirstOrDefault();
+            //changes the image order 'increasing'
+            ImageRepository.Instance.IncreasingOrder(id);
+            //Removes only previous thumbnail from folder
+            Upload.RemoveOldImagesFromFolder(sectionID, id, true, false, false);
+            //Creates thumbnail for all images for this section
+            Upload.CombineAllImages(sectionID);
+
+            return RedirectToAction("index", "image");
+        }
+
+        public ActionResult DecreaseOrder(int id)
+        {
+            int sectionID = (from img in _db.Images where img.ID == id select img.SectionID).FirstOrDefault();
+            //changes the image order 'decreasing'
+            ImageRepository.Instance.DecreasingOrder(id);
+            //Removes only previous thumbnail from folder
+            Upload.RemoveOldImagesFromFolder(sectionID, id, true, false, false);
+            //Creates thumbnail for all images for this section
+            Upload.CombineAllImages(sectionID);
+
+            return RedirectToAction("index", "image");
         }
 	}
 }

@@ -25,12 +25,16 @@
         <div class="row">
             <div class="span12">
                 <label for="Section">Section</label>
+
                 <select class="input-block-level" name="SectionID">
-                    @foreach (var sections in ViewBag.Section)
-                    {
-                        <option value="@sections.ID">@sections.Title</option>  
-                    }
+
+                        @foreach (var sections in ViewBag.Section)
+                        {
+                            <option value="@sections.ID">@sections.Title</option>
+                        }
+                    
                 </select>
+
             </div>
         </div>
 

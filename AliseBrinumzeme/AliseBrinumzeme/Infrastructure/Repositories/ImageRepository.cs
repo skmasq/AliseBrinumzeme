@@ -11,13 +11,21 @@ using AliseBrinumzeme.Models;
 
 namespace AliseBrinumzeme.Infrastructure.Repositories
 {
+    /// <summary>
+    /// Responsible for image operations like saving, creating, deleting etc.
+    /// </summary>
     public class ImageRepository : IImageRepository
     {
-        MainDataContext _db = new MainDataContext();
+        public MainDataContext _db = new MainDataContext();
 
-        //Singleton
+        private FileParameters _getFileParameters;
+        public FileParameters FileParameters
+        {
+            get { return _getFileParameters; }
+            set { _getFileParameters = value; }
+        }
+
         private static ImageRepository _imageRepository;
-
         public static ImageRepository Instance
         {
             get 
@@ -28,106 +36,80 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
                 }
                 return _imageRepository;
             }
+        }   
+        
+        /// <summary>
+        /// Initializes base file parameters like- generating random file name, getting file path etc.
+        /// </summary>
+        /// <param name="file"></param>
+        public void InitializeFileParameters()
+        {
+            string randomfileName = RandomFileName();
+            string fExtension = ".jpg";
+            string path = HttpContext.Current.Server.MapPath("~/content/u/");
+            string noExtName = randomfileName.Replace(fExtension, "");
+            string fullPath = Path.Combine(path, noExtName + fExtension);
+           
+            _getFileParameters = new FileParameters
+            {
+                FileExtension = fExtension,
+                Name = randomfileName + fExtension,         
+                FullPath = fullPath,
+                Path = path,
+                NoExtensionName = noExtName
+            };
         }
 
         /// <summary>
-        /// Deletes old images from folder
+        /// Addming image to the folder
         /// </summary>
-        /// <param name="sectionID">Section ID</param>
-        /// <param name="imageID">Image ID</param>
-        /// <param name="deleteThumbnail">To enable thumbnail deletion set true</param>
-        /// <param name="deleteLargeImage">To enable large image deletion set true</param>
-        /// <param name="deleteCroppedImg">To enable cropped image deletion set true</param>
-        public void RemoveOldImagesFromFolder(int sectionID, int imageID, bool deleteThumbnail, bool deleteLargeImage, bool deleteCroppedImg)
-        {
-            string curServerPath = HttpContext.Current.Server.MapPath("~/content/u/");
-            var thumbnail = (from s in _db.Sections where s.ID == sectionID select s).FirstOrDefault();
-            var image = (from i in _db.Images where i.ID == imageID select i).FirstOrDefault();
-
-            if (thumbnail != null)
-            {
-                if (System.IO.File.Exists(curServerPath + thumbnail.ThumbnailPath) && deleteThumbnail)
-                {
-                    //Delete previous Thumbnail
-                    System.IO.File.Delete(curServerPath + thumbnail.ThumbnailPath);
-                }
-
-                if (image != null)
-                {
-                    if (System.IO.File.Exists(curServerPath + image.ImagePath) && deleteLargeImage)
-                    {
-                        //Delete previous Image
-                        System.IO.File.Delete(curServerPath + image.ImagePath);
-                    }
-
-                    if (System.IO.File.Exists(curServerPath + image.ImagePath + "_cropped.jpg") && deleteCroppedImg)
-                    {
-                        //Delete previous _cropped image
-                        System.IO.File.Delete(curServerPath + image.ImagePath + "_cropped.jpg");
-                    }
-                }
-            }        
-        }
-
-        public void Edit(int id)
-        {       
-
-        }
-
-        public FileParameters GetFileParameters(HttpPostedFileBase file, string fileName = "")
-        {
-           // string fExtension = Path.GetExtension(file.FileName);
-            string fExtension = ".jpg";
-            string curServerPath = HttpContext.Current.Server.MapPath("~/content/u/");
-            string fPath = Path.Combine(curServerPath, fileName);
-            string fName = fileName.Replace(fExtension, "");
-
-            var fileParameters = new FileParameters()
-            {
-                FileExtension = fExtension,
-                CurrentServerPath = curServerPath,
-                FilePath = fPath,
-                FileName = fName
-            };
-
-            return fileParameters;
-        }
-
+        /// <param name="file"></param>
+        /// <param name="size"></param>
+        /// <param name="quality"></param>
+        /// <param name="filePath"></param>
         public void AddNewImage(HttpPostedFileBase file, Size size, long quality = 1000L, string filePath = "")
         {
+            //Gets the uploaded image
             Image img = System.Drawing.Image.FromStream(file.InputStream);
+            //Creating bitmap from image
             Bitmap b = new Bitmap(img);
-            CroppResize(img, size.Width = 111, size.Height = 89, filePath);
+            //Cropps and resizes the image
+            CroppResize(img, size.Width = 111, size.Height = 89);
+            //disposing the image
             img.Dispose();
+            //save image to folder
             SaveImage(filePath, b, quality);
         }
 
-        public String RandomFileName(string name)
+        /// <summary>
+        /// Generates random name
+        /// </summary>
+        /// <returns></returns>
+        public String RandomFileName()
         {
-            if (String.IsNullOrEmpty(name))
-            {
-                name = DateTime.Now.ToString("ddMMyyyy") + DateTime.Now.Ticks.ToString();
-            }
-            return name;
+            return DateTime.Now.ToString("ddMMyyyy") + DateTime.Now.Ticks.ToString();
         }
 
-        public Boolean CroppResize(Image image, int maxWidth, int maxHeight, string filePath)
+        /// <summary>
+        /// Crops and resizes the specified image
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public Boolean CroppResize(Image image, int maxWidth, int maxHeight)
         {
             ImageCodecInfo jpgInfo = ImageCodecInfo.GetImageEncoders()
                                      .Where(codecInfo =>
                                      codecInfo.MimeType == "image/jpeg").First();
 
-            string ext = Path.GetExtension(filePath);
-            string name = Path.GetFileNameWithoutExtension(filePath);
-
             Image finalImage = image;
             System.Drawing.Bitmap bitmap = null;
+
             try
             {
-                int left = 0, top = 0,
-                    srcWidth = maxWidth,
-                    srcHeight = maxHeight;
-
+                int left = 0, top = 0, srcWidth = maxWidth, srcHeight = maxHeight;
                 bitmap = new System.Drawing.Bitmap(maxWidth, maxHeight);
                 double croppedHeightToWidth = (double)maxHeight / maxWidth;
                 double croppedWidthToHeight = (double)maxWidth / maxHeight;
@@ -162,6 +144,7 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
                         left = (image.Width - srcWidth) / 2;
                     }
                 }
+
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
                     g.SmoothingMode = SmoothingMode.HighQuality;
@@ -171,23 +154,36 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
                     g.DrawImage(image, new Rectangle(0, 0, bitmap.Width, bitmap.Height),
                     new Rectangle(left, top, srcWidth, srcHeight), GraphicsUnit.Pixel);
                 }
+
                 finalImage = bitmap;
             }
-            catch { }
+            catch 
+            { }
+
             try
             {
                 using (EncoderParameters encParams = new EncoderParameters(1))
                 {
                     encParams.Param[0] = new EncoderParameter(Encoder.Quality, (long)100);
+
                     SaveImage(
-                        path: HttpContext.Current.Server.MapPath("~/content/u/") + name + "_cropped" + ext,
+                        path: FileParameters.Path + FileParameters.NoExtensionName + "_cropped" + FileParameters.FileExtension,
                         img: finalImage as Bitmap,
                         quality: 1000
                     );
+
+                    SaveImage(
+                        path: FileParameters.Path + FileParameters.Name,
+                        img: image as Bitmap,
+                        quality: 1000
+                    );
+
                     return true;
                 }
             }
-            catch { }
+            catch 
+            { }
+
             if (bitmap != null)
             {
                 bitmap.Dispose();
@@ -195,6 +191,11 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
             return false;
         }
 
+        /// <summary>
+        /// Combine all specified images togeather horizontaly
+        /// </summary>
+        /// <param name="files"></param>
+        /// <returns></returns>
         public Bitmap Combine(string[] files)
         {
             //read all images into memory
@@ -252,6 +253,12 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
             }
         }
 
+        /// <summary>
+        /// Saves the image to the folder
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="img"></param>
+        /// <param name="quality"></param>
         public void SaveImage(string path, Bitmap img, long quality)
         {
             EncoderParameter qualityParam = new EncoderParameter(Encoder.Quality, 1000L);
@@ -274,6 +281,75 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
             fs.Close();
         }
 
+        /// <summary>
+        /// Increasing image order nr. for specified section
+        /// </summary>
+        /// <param name="imageId"></param>
+        public void IncreasingOrder(int id)
+        {
+            var image = (from img in _db.Images where img.ID == id select img).FirstOrDefault();
+            var sectionId = image.SectionID;
+            var imagesList = _db.Images.OrderBy(x => x.Order).Where(x => x.SectionID == sectionId).ToList();
+
+            for(int i = 0; i < imagesList.Count(); i++)
+            {
+               if (imagesList[i].ID == image.ID)
+                {
+                    if (imagesList.Count() > 1 && (i + 1) < imagesList.Count() && imagesList[i].Order < imagesList.Count())
+                    {
+                        imagesList[i].Order = imagesList[i].Order + 1;
+                        imagesList[i + 1].Order = imagesList[i + 1].Order - 1;
+                    }
+                }
+            }
+            _db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Decreasing image order nr. for specified section
+        /// </summary>
+        /// <param name="imageId"></param>
+        public void DecreasingOrder(int id)
+        {
+            var image = (from img in _db.Images where img.ID == id select img).FirstOrDefault();
+            var sectionId = image.SectionID;
+            var imagesList = _db.Images.OrderBy(x => x.Order).Where(x => x.SectionID == sectionId).ToList();
+
+            for (int i = 0; i < imagesList.Count(); i++)
+            {
+                if (imagesList[i].ID == image.ID)
+                {
+                    if (imagesList.Count() > 1 && i != 0 && imagesList[i].Order > 1)
+                    {
+                        imagesList[i].Order = imagesList[i].Order - 1;
+                        imagesList[i - 1].Order = imagesList[i - 1].Order + 1;
+                    }
+                }
+            }
+            _db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Resets the Order nr. so each value would differ from other by 1
+        /// </summary>
+        /// <param name="sectionId"></param>
+        public void ResetImageOrder(int sectionId)
+        {
+            var imagesList = _db.Images.OrderBy(x => x.Order).Where(x => x.SectionID == sectionId).ToList();
+
+            for (int i = 0; i < imagesList.Count(); i++)
+            {
+                imagesList[i].Order = i + 1;
+            }
+
+            _db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Well no idea what this method is doing, just use it
+        /// </summary>
+        /// <param name="mimeType"></param>
+        /// <returns></returns>
         private static ImageCodecInfo getEncoderInfo(string mimeType)
         {
             ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
@@ -283,14 +359,17 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
                     return codecs[i];
             return null;
         }
-
     }
 
-    public struct FileParameters
+    /// <summary>
+    /// Class that just holds basic file information like path, name etc.
+    /// </summary>
+    public class FileParameters
     {
         public string FileExtension { get; set; }
-        public string CurrentServerPath { get; set; }
-        public string FilePath { get; set; }
-        public string FileName { get; set; }
+        public string FullPath { get; set; }
+        public string Path { get; set; }
+        public string Name { get; set; }
+        public string NoExtensionName { get; set; }
     }
 }

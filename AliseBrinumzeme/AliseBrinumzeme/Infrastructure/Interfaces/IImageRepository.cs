@@ -11,12 +11,13 @@ namespace AliseBrinumzeme.Infrastructure.Interfaces
 {
     public interface IImageRepository
     {
-        void Edit(int id);
         void SaveImage(string s, Bitmap b, long l);
-        void RemoveOldImagesFromFolder(int sectionID, int imageID, bool deleteThumbnail, bool deleteLargeImage, bool deleteCroppedImg);
-        void AddNewImage(HttpPostedFileBase file, Size size, long quality = 1000L, string fileName = "");
-        String RandomFileName(string name);
-        Boolean CroppResize(Image image, int maxWidth, int maxHeight, string filePath);
+        void InitializeFileParameters();
+        void AddNewImage(HttpPostedFileBase file, Size size, long quality = 1000L, string filePath = "");
+        void IncreasingOrder(int imageId);
+        void DecreasingOrder(int imageId);
+        String RandomFileName();
+        Boolean CroppResize(Image image, int maxWidth, int maxHeight);
         Bitmap Combine(string[] files);
     }
 }

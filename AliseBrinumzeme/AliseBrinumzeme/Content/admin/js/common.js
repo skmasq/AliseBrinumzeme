@@ -87,10 +87,22 @@
                 'sTitle': 'Date Created'
             },
             {
+                'mData': 'SectionTitle',
+                'sTitle': 'Section Title'
+            },
+            {
+                'mData': 'Order',
+                'sTitle': 'Order'
+            },
+            {
                 'mData': 'ID',
                 'sWidth': '87px',
                 'mRender': function (data, type, full) {
-                    return '<a class="confirm" href="/admin/image/delete/' + data + '" data-msg="Are you sure you want to delete this Image?"><button class="btn btn-mini btn-danger">Delete</button></a> ' + '<a href="/admin/image/edit/' + data + '"><button class="btn btn-mini btn-primary">Edit</button></a>';
+                    return '<a class="confirm" href="/admin/image/delete/'
+                        + data + '" data-msg="Are you sure you want to delete this Image?"><button class="btn btn-mini btn-danger" style="width:42px;">Delete</button></a>'
+                        + '<a href="/admin/image/edit/' + data + '"><button class="btn btn-mini btn-primary" style="width:42px;">Edit</button></a>'
+                        + '<a href="/admin/image/IncreaseOrder/' + data + '"><button class="btn btn-mini btn-default" style="width:42px;">down</button></a>'
+                        + '<a href="/admin/image/DecreaseOrder/' + data + '"><button class="btn btn-mini btn-default" style="width:42px;">up</button></a>';
                 },
                 'bSortable': false
             }]

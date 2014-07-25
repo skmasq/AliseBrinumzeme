@@ -11,6 +11,7 @@ namespace AliseBrinumzeme.Models
     public class ImageModel
     {
         public int ID { get; set; }
+        public int SectionID { get; set; }
         public int Order { get; set; }
         public string Title { get; set; }
         public string TitleSlug
