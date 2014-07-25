@@ -35,7 +35,7 @@ namespace AliseBrinumzeme.Infrastructure
         /// <param name="deleteLargeImage">To enable large image deletion set true</param>
         /// <param name="deleteCroppedImg">To enable cropped image deletion set true</param>
         public static void RemoveOldImagesFromFolder(int sectionID, int imageID, bool delThumb, bool delLargeImage, bool delCroppedImg)
-        {
+         {
             //Initialize file parameters
             ImageRepository.Instance.InitializeFileParameters();
 
@@ -47,8 +47,8 @@ namespace AliseBrinumzeme.Infrastructure
 
                 if (thumbnail != null)
                 {
-                    if (System.IO.File.Exists(fileParams.Path + thumbnail.ThumbnailPath.Replace(fileParams.FileExtension, "") 
-                        +"_thumbnail"+ fileParams.FileExtension ) && delThumb
+                    string testThumbnail = fileParams.Path + thumbnail.ThumbnailPath;
+                    if (System.IO.File.Exists(testThumbnail) && delThumb
                         )
                     {
                         //deletes previous '_thumbnail' for current section
@@ -107,8 +107,14 @@ namespace AliseBrinumzeme.Infrastructure
                 //removing null values
                 files = files.Where(x => !string.IsNullOrEmpty(x)).ToArray();
 
+                if (files.Count() == 0)
+                    return;
+
                 //combine them into one image
                 Bitmap stitchedImage = ImageRepository.Instance.Combine(files);
+
+                if (stitchedImage == null)
+                    return;
 
                 //save the new image
                 stitchedImage.Save(

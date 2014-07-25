@@ -288,14 +288,13 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
         public void IncreasingOrder(int id)
         {
             var image = (from img in _db.Images where img.ID == id select img).FirstOrDefault();
-            var sectionId = image.SectionID;
-            var imagesList = _db.Images.OrderBy(x => x.Order).Where(x => x.SectionID == sectionId).ToList();
+            var imagesList = _db.Images.OrderBy(x => x.Order).Where(x => x.SectionID == image.SectionID).ToList();
 
-            for(int i = 0; i < imagesList.Count(); i++)
+            if (imagesList.Count() > 1 && image.Order != imagesList.Count())
             {
-               if (imagesList[i].ID == image.ID)
+                for (int i = 0; i < imagesList.Count(); i++)
                 {
-                    if (imagesList.Count() > 1 && (i + 1) < imagesList.Count() && imagesList[i].Order < imagesList.Count())
+                    if (imagesList[i].ID == image.ID)
                     {
                         imagesList[i].Order = imagesList[i].Order + 1;
                         imagesList[i + 1].Order = imagesList[i + 1].Order - 1;
@@ -312,14 +311,13 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
         public void DecreasingOrder(int id)
         {
             var image = (from img in _db.Images where img.ID == id select img).FirstOrDefault();
-            var sectionId = image.SectionID;
-            var imagesList = _db.Images.OrderBy(x => x.Order).Where(x => x.SectionID == sectionId).ToList();
+            var imagesList = _db.Images.OrderBy(x => x.Order).Where(x => x.SectionID == image.SectionID).ToList();
 
-            for (int i = 0; i < imagesList.Count(); i++)
+            if (imagesList.Count() > 1 && image.Order != 1)
             {
-                if (imagesList[i].ID == image.ID)
+                for (int i = 0; i < imagesList.Count(); i++)
                 {
-                    if (imagesList.Count() > 1 && i != 0 && imagesList[i].Order > 1)
+                    if (imagesList[i].ID == image.ID)
                     {
                         imagesList[i].Order = imagesList[i].Order - 1;
                         imagesList[i - 1].Order = imagesList[i - 1].Order + 1;

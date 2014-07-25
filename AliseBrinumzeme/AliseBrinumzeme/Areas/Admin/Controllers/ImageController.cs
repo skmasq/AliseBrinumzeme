@@ -51,7 +51,6 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.Section = _db.Sections.ToList();
-
             return View();
         }
 
@@ -67,18 +66,20 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
         public ActionResult Delete(int id)
         {
             var image = _db.Images.Single(x => x.ID == id);
+            image.Section = _db.Sections.Where(x => x.ID == image.SectionID).FirstOrDefault();
             
             //Removes only previous thumbnail from folder
-            Upload.RemoveOldImagesFromFolder(image.SectionID, id, true, false, true);
-
+            Upload.RemoveOldImagesFromFolder(image.SectionID, id, true, true, true);
             _db.Images.Remove(image);
-
+            _db.SaveChanges();
+            //Creates instance of file parameters class
+            var fileParams = ImageRepository.Instance.FileParameters;
             //Resets the images order so each value vould inc by one
             Upload.ResetOrder(image.SectionID);
-
             //Creates thumbnail for all images for this section
             Upload.CombineAllImages(image.SectionID);
-
+            //Adds thumbnail's name to db
+            image.Section.ThumbnailPath = fileParams.NoExtensionName + "_thumbnail" + fileParams.FileExtension;
             _db.SaveChanges();
 
             return RedirectToAction("index", "image");
@@ -93,6 +94,7 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
             image.DateCreated = DateTime.Now;
             image.DateModified = DateTime.Now;
             image.Section.ID = SectionID;
+            image.SectionID = SectionID;
             image.Title = Image.Title;
             
             if (imageFile != null)
@@ -109,10 +111,10 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
                 if (TryValidateModel(image))
                 {
                     _db.Images.Add(image);
-                    //Saves model to database so when combining images, current added image also would be added
-                    _db.SaveChanges();
+                    //Saves model to database so when combining images, current added image also would be added                
                     int imagesCount = (from img in _db.Images where img.SectionID == SectionID select img).Count();
-                    image.Order = imagesCount++;
+                    image.Order = imagesCount;
+                    _db.SaveChanges();
                     //Creates thumbnail for all images for this section
                     Upload.CombineAllImages(SectionID);
                     //Adds thumbnail name to 'ImageModel'
@@ -135,7 +137,7 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
             image.Section.ID = SectionID;
             image.DateCreated = DateTime.Now;
             image.Title = Image.Title;
-            image.Order = Image.Order;
+            image.SectionID = SectionID;
 
             if (imageFile != null)
             {
@@ -167,26 +169,48 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
 
         public ActionResult IncreaseOrder(int id)
         {
-            int sectionID = (from img in _db.Images where img.ID == id select img.SectionID).FirstOrDefault();
+            var image = _db.Images.Single(x => x.ID == id);
+            image.Section = _db.Sections.Where(x => x.ID == image.SectionID).FirstOrDefault();
+
             //changes the image order 'increasing'
             ImageRepository.Instance.IncreasingOrder(id);
+
             //Removes only previous thumbnail from folder
-            Upload.RemoveOldImagesFromFolder(sectionID, id, true, false, false);
+            Upload.RemoveOldImagesFromFolder(image.SectionID, id, true, false, false);
+
+            //Creates instance of file parameters class
+            var fileParams = ImageRepository.Instance.FileParameters;
+
             //Creates thumbnail for all images for this section
-            Upload.CombineAllImages(sectionID);
+            Upload.CombineAllImages(image.SectionID);
+
+            //Adds thumbnail name to 'ImageModel'
+            image.Section.ThumbnailPath = fileParams.NoExtensionName + "_thumbnail" + fileParams.FileExtension;
+            _db.SaveChanges();
 
             return RedirectToAction("index", "image");
         }
 
         public ActionResult DecreaseOrder(int id)
         {
-            int sectionID = (from img in _db.Images where img.ID == id select img.SectionID).FirstOrDefault();
-            //changes the image order 'decreasing'
+            var image = _db.Images.Single(x => x.ID == id);
+            image.Section = _db.Sections.Where(x => x.ID == image.SectionID).FirstOrDefault();
+
+            //changes the image order 'increasing'
             ImageRepository.Instance.DecreasingOrder(id);
+
             //Removes only previous thumbnail from folder
-            Upload.RemoveOldImagesFromFolder(sectionID, id, true, false, false);
+            Upload.RemoveOldImagesFromFolder(image.SectionID, id, true, false, false);
+
+            //Creates instance of file parameters class
+            var fileParams = ImageRepository.Instance.FileParameters;
+
             //Creates thumbnail for all images for this section
-            Upload.CombineAllImages(sectionID);
+            Upload.CombineAllImages(image.SectionID);
+
+            //Adds thumbnail name to 'ImageModel'
+            image.Section.ThumbnailPath = fileParams.NoExtensionName + "_thumbnail" + fileParams.FileExtension;
+            _db.SaveChanges();
 
             return RedirectToAction("index", "image");
         }
