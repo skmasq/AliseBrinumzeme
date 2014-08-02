@@ -123,8 +123,10 @@ var CONST = {
 	MAIN_IMG_MAX_H: 358,
 	MAIN_IMG_MAX_W: 260,
 	SECTIONS: {
-		SINFO_1: "Svaigs, gaisīgs, spilgts, teatrāls...jāveido tā, lai justos skaisti, lai būtu atbilstošs vietai un notikumam!",
-		STITLE_1: "Grims"
+		GRIMS: {
+			description: "Svaigs, gaisīgs, spilgts, teatrāls...jāveido tā, lai justos skaisti, lai būtu atbilstošs vietai un notikumam!",
+			title: "Grims"
+		}
 	}
 }
 
