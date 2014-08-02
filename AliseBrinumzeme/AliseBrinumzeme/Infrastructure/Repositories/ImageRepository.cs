@@ -77,8 +77,6 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
             CroppResize(img, size.Width = 111, size.Height = 89);
             //disposing the image
             img.Dispose();
-            //save image to folder
-            SaveImage(filePath, b, quality);
         }
 
         /// <summary>
@@ -270,6 +268,7 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
             encoderParams.Param[0] = qualityParam;
 
             System.IO.MemoryStream mss = new System.IO.MemoryStream();
+            
             System.IO.FileStream fs = new System.IO.FileStream(
                 path, System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite);
 
