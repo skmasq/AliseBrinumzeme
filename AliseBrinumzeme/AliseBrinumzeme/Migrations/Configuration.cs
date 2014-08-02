@@ -35,7 +35,7 @@
                 DateCreated = DateTime.Now,
                 DateModified = DateTime.Now,
                 Description = "",
-                Title = "Pasākumu Organizēšana",
+                Title = "Dekorācijas",
             });
 
             context.Sections.AddOrUpdate(x => x.Title, new SectionModel()
@@ -44,6 +44,14 @@
                 DateModified = DateTime.Now,
                 Description = "",
                 Title = "Grimms",
+            });
+
+            context.Sections.AddOrUpdate(x => x.Title, new SectionModel()
+            {
+                DateCreated = DateTime.Now,
+                DateModified = DateTime.Now,
+                Description = "",
+                Title = "Pasākumu Organizēšana",
             });
 
             context.Sections.AddOrUpdate(x => x.Title, new SectionModel()
