@@ -146,6 +146,7 @@
     <Compile Include="Infrastructure\Helpers.cs" />
     <Compile Include="Infrastructure\Interfaces\IImageRepository.cs" />
     <Compile Include="Infrastructure\Repositories\ImageRepository.cs" />
+    <Compile Include="Infrastructure\RequireAuthorization\RequireAuthorization.cs" />
     <Compile Include="Infrastructure\Upload.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -153,6 +154,7 @@
     <Compile Include="Models\AdministratorModel.cs" />
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\MainDataContext.cs" />
+    <Compile Include="Models\Properties\Enums.cs" />
     <Compile Include="Models\SectionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -330,9 +332,7 @@
     <Content Include="Content\client\images\window\Window_004.png" />
     <Content Include="Content\client\images\window\window_005_more_blur.png" />
     <Content Include="Content\client\images\window\Window_005_withShadow.png" />
-    <Content Include="Content\client\images\window\Window_006.png" />
     <Content Include="Content\client\images\window\Window_006_lighter.png" />
-    <Content Include="Content\client\images\window\Window_007.png" />
     <Content Include="Content\client\images\window\window_007_lighter_bg.png" />
     <Content Include="Content\client\js\excluded\jquery-2.0.3.js" />
     <Content Include="Content\client\js\libraries\CSSRulePlugin.js" />

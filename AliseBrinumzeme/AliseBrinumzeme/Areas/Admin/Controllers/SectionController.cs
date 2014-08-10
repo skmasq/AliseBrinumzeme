@@ -1,12 +1,14 @@
-﻿using AliseBrinumzeme.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace AliseBrinumzeme.Areas.Admin.Controllers
+﻿namespace AliseBrinumzeme.Areas.Admin.Controllers
 {
+    using AliseBrinumzeme.Infrastructure.RequireAuthorization;
+    using AliseBrinumzeme.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+
+    [RequireAuthorization]
     public class SectionController : Controller
     {
         MainDataContext _db = new MainDataContext();
@@ -40,14 +42,14 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
             return Json(returnItems, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
             var section = _db.Sections.FirstOrDefault(x => x.ID == id);
 
             return View(section);
         }
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
             var section = _db.Sections.Single(x => x.ID == id);
             _db.Sections.Remove(section);
