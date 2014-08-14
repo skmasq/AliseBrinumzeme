@@ -602,7 +602,7 @@ html {
   width: 151px;
   margin-bottom: 0;
   margin-left: 49px;
-  z-index: 550;
+  z-index: 400;
   box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
   -moz-transform: rotate(93deg);
   -ms-transform: rotate(93deg);
