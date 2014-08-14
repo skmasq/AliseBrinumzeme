@@ -8,6 +8,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using AliseBrinumzeme.Models;
+using AliseBrinumzeme.Models.Properties;
 
 namespace AliseBrinumzeme.Infrastructure.Repositories
 {
@@ -17,8 +18,8 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
     public class ImageRepository : IImageRepository
     {
         public MainDataContext _db = new MainDataContext();
-
         private FileParameters _getFileParameters;
+
         public FileParameters FileParameters
         {
             get { return _getFileParameters; }
@@ -26,6 +27,7 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
         }
 
         private static ImageRepository _imageRepository;
+
         public static ImageRepository Instance
         {
             get 
@@ -67,16 +69,21 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
         /// <param name="size"></param>
         /// <param name="quality"></param>
         /// <param name="filePath"></param>
-        public void AddNewImage(HttpPostedFileBase file, Size size, long quality = 1000L, string filePath = "")
+        public void AddNewImage(HttpPostedFileBase file, Size size, long quality = 100L, string filePath = "")
         {
-            //Gets the uploaded image
             Image img = System.Drawing.Image.FromStream(file.InputStream);
-            //Creating bitmap from image
-            Bitmap b = new Bitmap(img);
-            //Cropps and resizes the image
-            CroppResize(img, size.Width = 111, size.Height = 89);
-            //disposing the image
+            Image imgCropped = System.Drawing.Image.FromStream(file.InputStream);
+
+            img = FitImage(img, 260, 360);
+
+            SaveImageByType(img, FileParameters.Path, FileParameters.Name, quality);
+
+            imgCropped = CroppImage(img, 111, 89);
+
+            SaveImageByType(imgCropped, FileParameters.Path, FileParameters.Name, 60, ImageType.Thumbnail);
+
             img.Dispose();
+            imgCropped.Dispose();
         }
 
         /// <summary>
@@ -86,107 +93,6 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
         public String RandomFileName()
         {
             return DateTime.Now.ToString("ddMMyyyy") + DateTime.Now.Ticks.ToString();
-        }
-
-        /// <summary>
-        /// Crops and resizes the specified image
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="maxWidth"></param>
-        /// <param name="maxHeight"></param>
-        /// <param name="filePath"></param>
-        /// <returns></returns>
-        public Boolean CroppResize(Image image, int maxWidth, int maxHeight)
-        {
-            ImageCodecInfo jpgInfo = ImageCodecInfo.GetImageEncoders()
-                                     .Where(codecInfo =>
-                                     codecInfo.MimeType == "image/jpeg").First();
-
-            Image finalImage = image;
-            System.Drawing.Bitmap bitmap = null;
-
-            try
-            {
-                int left = 0, top = 0, srcWidth = maxWidth, srcHeight = maxHeight;
-                bitmap = new System.Drawing.Bitmap(maxWidth, maxHeight);
-                double croppedHeightToWidth = (double)maxHeight / maxWidth;
-                double croppedWidthToHeight = (double)maxWidth / maxHeight;
-
-                if (image.Width > image.Height)
-                {
-                    srcWidth = (int)(Math.Round(image.Height * croppedWidthToHeight));
-                    if (srcWidth < image.Width)
-                    {
-                        srcHeight = image.Height;
-                        left = (image.Width - srcWidth) / 2;
-                    }
-                    else
-                    {
-                        srcHeight = (int)Math.Round(image.Height * ((double)image.Width / srcWidth));
-                        srcWidth = image.Width;
-                        top = (image.Height - srcHeight) / 2;
-                    }
-                }
-                else
-                {
-                    srcHeight = (int)(Math.Round(image.Width * croppedHeightToWidth));
-                    if (srcHeight < image.Height)
-                    {
-                        srcWidth = image.Width;
-                        top = (image.Height - srcHeight) / 2;
-                    }
-                    else
-                    {
-                        srcWidth = (int)Math.Round(image.Width * ((double)image.Height / srcHeight));
-                        srcHeight = image.Height;
-                        left = (image.Width - srcWidth) / 2;
-                    }
-                }
-
-                using (Graphics g = Graphics.FromImage(bitmap))
-                {
-                    g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                    g.CompositingQuality = CompositingQuality.HighQuality;
-                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    g.DrawImage(image, new Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                    new Rectangle(left, top, srcWidth, srcHeight), GraphicsUnit.Pixel);
-                }
-
-                finalImage = bitmap;
-            }
-            catch 
-            { }
-
-            try
-            {
-                using (EncoderParameters encParams = new EncoderParameters(1))
-                {
-                    encParams.Param[0] = new EncoderParameter(Encoder.Quality, (long)100);
-
-                    SaveImage(
-                        path: FileParameters.Path + FileParameters.NoExtensionName + "_cropped" + FileParameters.FileExtension,
-                        img: finalImage as Bitmap,
-                        quality: 1000
-                    );
-
-                    SaveImage(
-                        path: FileParameters.Path + FileParameters.Name,
-                        img: image as Bitmap,
-                        quality: 1000
-                    );
-
-                    return true;
-                }
-            }
-            catch 
-            { }
-
-            if (bitmap != null)
-            {
-                bitmap.Dispose();
-            }
-            return false;
         }
 
         /// <summary>
@@ -252,6 +158,183 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
         }
 
         /// <summary>
+        /// Resize image to specified 'maxWidth' and 'maxHeight'
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
+        /// <returns></returns>
+        public Image FitImage(Image image, int maxWidth, int maxHeight)
+        {
+            Image finalImage = image;
+
+            // Get the image's original width and height
+            int originalWidth = image.Width;
+            int originalHeight = image.Height;
+
+            // To preserve the aspect ratio
+            float ratioX = (float)maxWidth / (float)originalWidth;
+            float ratioY = (float)maxHeight / (float)originalHeight;
+            float ratio = Math.Min(ratioX, ratioY);
+
+            // New width and height based on aspect ratio
+            int newWidth = (int)(originalWidth * ratio);
+            int newHeight = (int)(originalHeight * ratio);
+
+            finalImage = ResizeImage(image, newWidth, newHeight);
+
+            //when dispose newImage it trows an axception..
+            //newImage.Dispose();
+
+            return finalImage;
+        }
+
+        public Image ResizeImage(Image image, int width, int height)
+        {
+            // Convert other formats (including CMYK) to RGB.
+            Bitmap newImage = new Bitmap(width, height, PixelFormat.Format24bppRgb);
+
+            // Draws the image in the specified size with quality mode set to HighQuality
+            using (Graphics graphics = Graphics.FromImage(newImage))
+            {
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.DrawImage(image, 0, 0, width, height);
+            }
+
+            return newImage;
+        }
+
+        /// <summary>
+        /// Cropps the image
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
+        /// <returns></returns>
+        public Image CroppImage(Image image, int maxWidth, int maxHeight)
+        {
+            Image finalImage = image;
+            System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(maxWidth, maxHeight);
+
+            int left = 0, top = 0, srcWidth = maxWidth, srcHeight = maxHeight;
+            double croppedHeightToWidth = (double)maxHeight / maxWidth;
+            double croppedWidthToHeight = (double)maxWidth / maxHeight;
+
+            if (image.Width > image.Height)
+            {
+                srcWidth = (int)(Math.Round(image.Height * croppedWidthToHeight));
+                if (srcWidth < image.Width)
+                {
+                    srcHeight = image.Height;
+                    left = (image.Width - srcWidth) / 2;
+                }
+                else
+                {
+                    srcHeight = (int)Math.Round(image.Height * ((double)image.Width / srcWidth));
+                    srcWidth = image.Width;
+                    top = (image.Height - srcHeight) / 2;
+                }
+            }
+            else
+            {
+                srcHeight = (int)(Math.Round(image.Width * croppedHeightToWidth));
+                if (srcHeight < image.Height)
+                {
+                    srcWidth = image.Width;
+                    top = (image.Height - srcHeight) / 2;
+                }
+                else
+                {
+                    srcWidth = (int)Math.Round(image.Width * ((double)image.Height / srcHeight));
+                    srcHeight = image.Height;
+                    left = (image.Width - srcWidth) / 2;
+                }
+            }
+
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.DrawImage(image,
+                    new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                    new Rectangle(left, top, srcWidth, srcHeight),
+                    GraphicsUnit.Pixel);
+            }
+
+            finalImage = bitmap;
+
+            //when dispose bitmap it trows an axception..
+            //bitmap.Dispose();
+
+            return finalImage;
+        }
+
+        /// <summary>
+        /// Saves image with specified parameters
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="filePath"></param>
+        /// <param name="imageName"></param>
+        /// <param name="imageQuality"></param>
+        /// <param name="isLargeImage"></param>
+        /// <returns></returns>
+        public bool SaveImageByType(Image image, string filePath, string imageName, long imageQuality = 100, 
+            ImageType imageType = ImageType.LargeImage)
+        {
+            string imageType1 = "_cropped";
+            string imageType2 = "_thumbnail";
+            string fileExtension = Path.GetExtension(imageName);
+            string noExtensionName = Path.GetFileNameWithoutExtension(imageName);
+            string fullPath = "";
+            var stringB = new System.Text.StringBuilder();
+
+            try
+            {
+                using (EncoderParameters encParams = new EncoderParameters(1))
+                {
+                    encParams.Param[0] = new EncoderParameter(Encoder.Quality, imageQuality);
+
+                    switch(imageType)
+                    {
+                        case ImageType.LargeImage:
+                             fullPath = stringB.Append(filePath).Append(imageName).ToString();
+                            break;
+
+                        case ImageType.Thumbnail: 
+                            fullPath = stringB
+                                .Append(filePath)
+                                .Append(noExtensionName)
+                                .Append(imageType1)
+                                .Append(fileExtension).ToString();
+                            break;
+
+                        case ImageType.JoinedThumbnails:
+                            fullPath = stringB
+                                .Append(filePath)
+                                .Append(noExtensionName)
+                                .Append(imageType2)
+                                .Append(fileExtension).ToString();
+                            break;
+
+                        default: break;
+                    }
+
+                    SaveImage(path: fullPath, img: image as Bitmap, quality: imageQuality);
+                    stringB.Clear();
+                    return true;
+                }
+            }
+            catch
+            {
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Saves the image to the folder
         /// </summary>
         /// <param name="path"></param>
@@ -259,10 +342,11 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
         /// <param name="quality"></param>
         public void SaveImage(string path, Bitmap img, long quality)
         {
-            EncoderParameter qualityParam = new EncoderParameter(Encoder.Quality, 1000L);
+            EncoderParameter qualityParam = new EncoderParameter(Encoder.Quality, quality);
             ImageCodecInfo jpegCodec = getEncoderInfo("image/jpeg");
 
-            if (jpegCodec == null) return;
+            if (jpegCodec == null) 
+                return;
 
             EncoderParameters encoderParams = new EncoderParameters(1);
             encoderParams.Param[0] = qualityParam;
@@ -273,6 +357,7 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
                 path, System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite);
 
             img.Save(mss, jpegCodec, encoderParams);
+
             byte[] matriz = mss.ToArray();
             fs.Write(matriz, 0, matriz.Length);
 
@@ -280,65 +365,39 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
             fs.Close();
         }
 
-        /// <summary>
-        /// Increasing image order nr. for specified section
-        /// </summary>
-        /// <param name="imageId"></param>
-        public void IncreasingOrder(int id)
+        public void ChangeOrder(int id, bool increaseOrder)
         {
             var image = (from img in _db.Images where img.ID == id select img).FirstOrDefault();
             var imagesList = _db.Images.OrderBy(x => x.Order).Where(x => x.SectionID == image.SectionID).ToList();
 
-            if (imagesList.Count() > 1 && image.Order != imagesList.Count())
+            if(increaseOrder)
             {
-                for (int i = 0; i < imagesList.Count(); i++)
+                if (imagesList.Count() > 1 && image.Order < imagesList.Count())
                 {
-                    if (imagesList[i].ID == image.ID)
+                    for (int i = 0; i < imagesList.Count(); i++)
                     {
-                        imagesList[i].Order = imagesList[i].Order + 1;
-                        imagesList[i + 1].Order = imagesList[i + 1].Order - 1;
+                        if (imagesList[i].ID == image.ID && i < imagesList.Count() - 1)
+                        {
+                            imagesList[i].Order = imagesList[i].Order + 1;
+                            imagesList[i + 1].Order = imagesList[i + 1].Order - 1;
+                        }
                     }
                 }
             }
-            _db.SaveChanges();
-        }
-
-        /// <summary>
-        /// Decreasing image order nr. for specified section
-        /// </summary>
-        /// <param name="imageId"></param>
-        public void DecreasingOrder(int id)
-        {
-            var image = (from img in _db.Images where img.ID == id select img).FirstOrDefault();
-            var imagesList = _db.Images.OrderBy(x => x.Order).Where(x => x.SectionID == image.SectionID).ToList();
-
-            if (imagesList.Count() > 1 && image.Order != 1)
+            else
             {
-                for (int i = 0; i < imagesList.Count(); i++)
+                if (imagesList.Count() > 1 && image.Order > 1)
                 {
-                    if (imagesList[i].ID == image.ID)
+                    for (int i = 0; i < imagesList.Count(); i++)
                     {
-                        imagesList[i].Order = imagesList[i].Order - 1;
-                        imagesList[i - 1].Order = imagesList[i - 1].Order + 1;
+                        if (imagesList[i].ID == image.ID && i > 0)
+                        {
+                            imagesList[i].Order = imagesList[i].Order - 1;
+                            imagesList[i - 1].Order = imagesList[i - 1].Order + 1;
+                        }
                     }
                 }
             }
-            _db.SaveChanges();
-        }
-
-        /// <summary>
-        /// Resets the Order nr. so each value would differ from other by 1
-        /// </summary>
-        /// <param name="sectionId"></param>
-        public void ResetImageOrder(int sectionId)
-        {
-            var imagesList = _db.Images.OrderBy(x => x.Order).Where(x => x.SectionID == sectionId).ToList();
-
-            for (int i = 0; i < imagesList.Count(); i++)
-            {
-                imagesList[i].Order = i + 1;
-            }
-
             _db.SaveChanges();
         }
 

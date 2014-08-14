@@ -74,7 +74,7 @@ namespace AliseBrinumzeme.Areas.Admin.Controllers
             {
                 // Get admin ID from session and return admin object, returns null if no admin object exists
                 int adminId = Convert.ToInt32(Session["adminId"]);
-                return _db.Administrators.Where(x => x.ID == adminId).SingleOrDefault();
+                return _db.Administrators.Where(x => x.ID == adminId).FirstOrDefault();
             }
         }
 
