@@ -31,7 +31,7 @@ html {
   float: left;
   width: 100%;
   height: 100%;
-  background: url(/Content/images/background/Background_tile_002.png);
+  background: url(/Content/client/images/background/Background_tile_002.png);
   background-repeat: repeat;
   overflow: hidden;
   /* Minimal zone */
@@ -671,11 +671,40 @@ html {
   width: 45px;
   cursor: pointer;
 }
-#viewport #contact-page-wrap .contact-page-container .content-container .about-me-container h1.title {
+#viewport #contact-page-wrap .contact-page-container .content-container h1.title {
   padding: 0;
   font-size: 28px;
   color: #5A4228;
   margin-bottom: 0;
+}
+#viewport #contact-page-wrap .contact-page-container .content-container .open-chapter {
+  position: absolute;
+  top: 180px;
+  right: 0;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+}
+#viewport #contact-page-wrap .contact-page-container .content-container .chapter-control {
+  position: relative;
+  float: left;
+  cursor: pointer;
+  width: 50%;
+  text-align: center;
+  display: none;
+}
+#viewport #contact-page-wrap .contact-page-container .content-container .chapter-control.next {
+  float: right;
+}
+#viewport #contact-page-wrap .contact-page-container .content-container .chapter-control.contacts {
+  width: 100%;
+  font-size: 20px;
+  padding-top: 40px;
+}
+#viewport #contact-page-wrap .contact-page-container .content-container .about-me-container {
+  max-height: 90%;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 #viewport #contact-page-wrap .contact-page-container .content-container .about-me-container p.visible-part {
   font-size: 15px;
@@ -1079,6 +1108,7 @@ html {
   height: 193px;
   z-index: 1;
   display: none;
+  overflow: auto;
 }
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .picture-info table {
   margin-top: 30px;
@@ -1086,11 +1116,11 @@ html {
 }
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .picture-info table tr td {
   font-weight: bold;
-  font-size: 16px;
+  font-size: 13px;
+  vertical-align: top;
 }
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .picture-info table tr td + td {
   font-weight: normal;
-  font-size: 18px;
 }
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .thumbnail-scene-wrap {
   position: absolute;

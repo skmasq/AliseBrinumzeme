@@ -74,7 +74,7 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
             Image img = System.Drawing.Image.FromStream(file.InputStream);
             Image imgCropped = System.Drawing.Image.FromStream(file.InputStream);
 
-            img = FitImage(img, 260, 360);
+            img = FitImage(img, 358, 260);
 
             SaveImageByType(img, FileParameters.Path, FileParameters.Name, quality);
 

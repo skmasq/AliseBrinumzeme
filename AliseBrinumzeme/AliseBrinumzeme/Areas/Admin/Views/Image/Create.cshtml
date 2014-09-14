@@ -28,16 +28,22 @@
 
                 <select class="input-block-level" name="SectionID">
 
-                        @foreach (var sections in ViewBag.Section)
-                        {
-                            <option value="@sections.ID">@sections.Title</option>
-                        }
-                    
+                    @foreach (var sections in ViewBag.Section)
+                    {
+                        <option value="@sections.ID">@sections.Title</option>
+                    }
+
                 </select>
 
             </div>
         </div>
 
+        <div class="row">
+            <div class="span12">
+                @Html.LabelFor(x => x.ParameterPlaceHolder, "Parameters")
+                @Html.TextAreaFor(x => x.ParameterPlaceHolder, new { @class = "input-block-level", @rows = 6 })
+            </div>
+        </div>
         <label for="Image">Picture</label>
         <input type="file" name="imageFile" id="image" class="input-block-level" />
         <input type="submit" class="btn btn-primary pull-right" value="Add" />

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AliseBrinumzeme.Infrastructure;
 
 namespace AliseBrinumzeme.Models
 {
@@ -19,6 +20,14 @@ namespace AliseBrinumzeme.Models
             get
             {
                 return Infrastructure.Helpers.GenerateSlug(this.Title);
+            }
+        }
+        public string ParameterPlaceHolder { get; set; }
+        public string Parameters
+        {
+            get
+            {
+                return Helpers.GenerateKeyValue(ParameterPlaceHolder,new string[]{ ":" }, new string[] {"\r\n"});
             }
         }
         public string ImagePath { get; set; }

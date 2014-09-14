@@ -116,6 +116,7 @@
             image.Section.ID = SectionID;
             image.SectionID = SectionID;
             image.Title = Image.Title;
+            image.ParameterPlaceHolder = Image.ParameterPlaceHolder;
             
             if (imageFile != null)
             {
@@ -161,6 +162,7 @@
             image.DateCreated = DateTime.Now;
             image.Title = Image.Title;
             image.SectionID = SectionID;
+            image.ParameterPlaceHolder = Image.ParameterPlaceHolder;
 
             if (imageFile != null)
             {
@@ -174,16 +176,15 @@
 
                 Upload.ImageAdd(SectionID, imageFile, 665, 1000, 60);
                 Upload.RemoveOldImagesFromFolder(SectionID, Image.ID, true, true, true);
-                Upload.CombineAllImages(SectionID, Image.ID);
-
-                if (TryValidateModel(image))
-                {
-                    _db.SaveChanges();
-                }
-
-                return RedirectToAction("index", "image");
+                Upload.CombineAllImages(SectionID, Image.ID); 
             }
-            return View();
+
+            if (TryValidateModel(image))
+            {
+                _db.SaveChanges();
+            }
+
+            return RedirectToAction("index", "image");
         }
 
         public ActionResult IncreaseOrder(int id)

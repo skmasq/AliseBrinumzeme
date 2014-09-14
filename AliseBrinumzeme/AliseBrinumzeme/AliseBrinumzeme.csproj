@@ -333,6 +333,7 @@
     <Content Include="Content\client\images\window\window_005_more_blur.png" />
     <Content Include="Content\client\images\window\Window_005_withShadow.png" />
     <Content Include="Content\client\images\window\Window_006_lighter.png" />
+    <Content Include="Content\client\images\window\Window_007.png" />
     <Content Include="Content\client\images\window\window_007_lighter_bg.png" />
     <Content Include="Content\client\js\excluded\jquery-2.0.3.js" />
     <Content Include="Content\client\js\libraries\CSSRulePlugin.js" />
@@ -361,6 +362,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\Alise Brīnumzemē Version 2.pubxml" />
+    <None Include="Properties\PublishProfiles\LocalPublish.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -415,7 +418,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52405</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:53333/</IISUrl>
+          <IISUrl>http://localhost:28888/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

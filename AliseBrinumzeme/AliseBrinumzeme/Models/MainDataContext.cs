@@ -9,7 +9,8 @@ namespace AliseBrinumzeme.Models
     public class MainDataContext : DbContext
     {
         public MainDataContext() :
-            base("Name=Local") {
+            base("Name=Local")
+        {
                 Database.SetInitializer<MainDataContext>(new CreateDatabaseIfNotExists<MainDataContext>());
         }
 

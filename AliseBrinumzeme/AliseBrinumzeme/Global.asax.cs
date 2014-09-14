@@ -14,7 +14,7 @@ namespace AliseBrinumzeme
     {
         protected void Application_BeginRequest()
         {
-            // Do a permanent redirect if torontoclubscene.com is accessed instead of www.
+            // Do a permanent redirect if alisebrinumzeme.com is accessed instead of www.
             HttpApplication application = (HttpApplication)this;
             HttpContext context = application.Context;
 
