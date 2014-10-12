@@ -30,8 +30,8 @@
                 ImageTitle = x.Title,
                 Date = x.DateCreated,
                 SectionTitle = x.Section.Title,
-                Order = x.Order
-
+                Order = x.Order,
+                Preview = x.ImagePath
             });
 
             var returnItems = new List<object>();
@@ -44,7 +44,8 @@
                     ImageTitle = item.ImageTitle,
                     Date = Convert.ToDateTime(item.Date).ToString("yyyy-MM-dd"),
                     SectionTitle = item.SectionTitle,
-                    Order = item.Order
+                    Order = item.Order,
+                    Preview = item.Preview.Replace(".jpg", "_cropped.jpg")
                 });
             }
 

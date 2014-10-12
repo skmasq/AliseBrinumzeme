@@ -57,25 +57,25 @@ var CONST = {
 			title_size: 40,
 			desc_size: 21
 		},
-		"5": {
+		"1": {
 			title: "Dekorācijas",
 			description: "Svarīgs ir ne tikai svinību saturs, bet arī tā ārejais veidols, gluži kā gaumīgi iesaiņotai konfektei, kas šķitīs daudz gardāka. Tāpēc liela nozīme jāpiešķir it kā nemanāmām detaļām, kas veido kopējo norises vietas noformējumu.",
 			title_size: 36,
 			desc_size: 18
 		},
-		"1": {
+		"3": {
 			title: "Pasākumu Organizēšana",
 			description: "Mazāki vai lielāki, privāti vai korporatīvi pasākumi! Svētku darbnīcas mērķis veidojot pasākumus ir panākt īpašu atmosfēru. Tās panākumu atslēga ir pārdomāts pasākuma koncepts.",
 			title_size: 30,
 			desc_size: 18
 		},
-		"3": {
+		"4": {
 			title: "Karnevālu tērpu un aksesuāru noma",
 			description: "Pasaku tēli, abstrakti tēli, zvēri, klauni, gadu desmitu mode, tautības, cepures, apavi, galvas rotas u.c.",
 			title_size: 27,
 			desc_size: 24
 		},
-		"4": {
+		"5": {
 			title: "Idejas",
 			description: "Paskaties pa atslēgas caurumu darbnīcas radošajās idejās, jaunumos un ieteikumos.",
 			title_size: 40,
@@ -90,6 +90,8 @@ var CONST = {
 		Chapter4: "Gandarījums  - realizēts  sapnis nodarboties ar savām sirdslietām - grims, svētku rīkošana, dekorāciju, tērpu un aksesuāru veidošana...<br/>Radīt atmosfēŗu<br/>Radīt svētkus<br />Radīt ikdienišķo krāšņu<br />Radīt ierasto tēlainu<br />Izcelt skaisto"
 	}
 }
+
+var GlobalApplicationStore;
 
 function ApplicationStore() {
 	var _self = this;
@@ -204,7 +206,7 @@ function ApplicationStore() {
 			return 0;
 		if (isNaN(Number(SectionID)))
 			return 0;
-		return _.find(_self.Store, function (item) { return item.ID === SectionID }) || 0;
+		return _.find(_self.Store, function (item) { return item.ID === +SectionID }) || 0;
 	}
 
 	return {
@@ -336,7 +338,7 @@ function SectionFactory(AppStore) {
 		}
 	}
 
-	_self.Controlers.InjectImages = function () {
+	_self.Controlers.InjectImages = function (SectionID) {
 		return $.Deferred(function (def) {
 			var ImageList = _.sortBy(_self.SectionStore.GetImagesData(), "o");
 			var ImageListLength = ImageList.length;
@@ -370,6 +372,7 @@ function SectionFactory(AppStore) {
 						.addClass("main-scene-image-container")
 						.attr("data-mainsceneimageindex", imageDetails.o)
 						.attr("data-imagedbid", imageDetails.id)
+						.attr("data-section", SectionID)
 						.css({
 							marginLeft: (CONST.MAIN_IMG_MAX_W - NewImage[0].width) / 2,
 							marginTop: (CONST.MAIN_IMG_MAX_H - NewImage[0].height) / 2
@@ -394,7 +397,7 @@ function SectionFactory(AppStore) {
 		}
 	}
 
-	_self.Controlers.SetThumbnails = function (thumb, position, ImagesData) {
+	_self.Controlers.SetThumbnails = function (thumb, position, ImagesData, SectionID) {
 		if (!GLOBAL.THUMBS_ANIMATION_ACTIVE) {
 			if (_.find(ImagesData, function (item) { return item.o === position })) {
 
@@ -410,6 +413,7 @@ function SectionFactory(AppStore) {
 				_.each(_.sortBy(ImagesData, function (item) { return +item.o; }), function (item) {
 					if (item.o === positionCounter && (positionCounter < position + 6)) {
 						_S.Container.Section.Thumbnails.list[elementCounter].attr("data-mainsceneimageindex", positionCounter);
+						_S.Container.Section.Thumbnails.list[elementCounter].attr("data-section", SectionID);
 						var elementToAnimate = _S.Container.Section.Thumbnails.list[elementCounter];
 						var currentPos = positionCounter;
 						nextStateContainer.push(function () {
@@ -436,6 +440,7 @@ function SectionFactory(AppStore) {
 					if (leftoverCounter < 6) {
 						DisabledRight = true;
 						_S.Container.Section.Thumbnails.list[elementCounter].attr("data-mainsceneimageindex", leftoverCounter + 1);
+						_S.Container.Section.Thumbnails.list[elementCounter].attr("data-section", SectionID);
 						var elementToAnimate = _S.Container.Section.Thumbnails.list[leftoverCounter];
 						nextStateContainer.push(function () {
 							var tl = new TimelineMax();
@@ -563,7 +568,7 @@ function SectionFactory(AppStore) {
 			_self.Controlers.loadevents();
 			_self.SectionStore = AppStore.Get(SectionID);
 			log.debug("[" + Date.now() + "] Section [" + SectionID + "]: Injecting images...");
-			$.when(_self.Controlers.InjectImages()).done(function () {
+			$.when(_self.Controlers.InjectImages(SectionID)).done(function () {
 				log.debug("[" + Date.now() + "] Section [" + SectionID + "]: All images have been injected");
 
 				log.debug("[" + Date.now() + "] Section [" + SectionID + "]: Setting section description.");
@@ -578,8 +583,9 @@ function SectionFactory(AppStore) {
 					.css("font-size", secDesc.desc_size + "px");
 
 				_S.Container.Section.Thumbnails.all.css("background", "").addClass("no-image");
-				_self.Controlers.SetThumbnails(_self.SectionStore.GetThumbnail(), 1, _self.SectionStore.GetImagesData());
+				_self.Controlers.SetThumbnails(_self.SectionStore.GetThumbnail(), 1, _self.SectionStore.GetImagesData(), SectionID);
 				_S.Container.Section.Content.fadeIn(animateThumbs);
+				$(".main-scene-wrap > .arrow").attr("data-section", SectionID)
 			});
 		});
 
@@ -1865,7 +1871,7 @@ function chapterControl() {
 			if ($(this).hasClass("prev")) {
 				$(".chapter-control.next").show();
 
-				if(self.currentChapter === 1)
+				if (self.currentChapter === 1)
 					$(".chapter-control.prev").hide();
 				else {
 					self.SelectChapter(self.currentChapter - 1);
@@ -1895,7 +1901,8 @@ function chapterControl() {
 var ChapterController = new chapterControl();
 
 $(document).ready(function () {
-	SectionControler = new SectionFactory(new ApplicationStore());
+	GlobalApplicationStore = new ApplicationStore();
+	SectionControler = new SectionFactory(GlobalApplicationStore);
 	pageInitialization();
 	$.when(initStartPage()).always(function () {
 		bootstarter();
@@ -2191,13 +2198,16 @@ function eventhandler() {
 		.on("click", ".info-book-wrap", tween_api.sections.description.show)
 		.on("click", ".menu-hitbox", function () {
 			log.debug("[" + Date.now() + "] Menu Index [" + $(this).data("menutextindex") + "]");
-			if ($(this).data("menutextindex") != "6")
+			if ($(this).data("menutextindex") != "6") {
 				SectionControler.Navigate($(this).data("menutextindex"));
+				$(".thumbnail-scene-wrap").css({ zIndex: 2 });
+				$(".picture-info").css({ zIndex: 1 });
+			}
 			else {
 				ChapterController.SelectChapter(1);
 				ContactOpen.restart().play();
 			}
-				
+
 		})
 		.on("click", ".overlap-taint", function () {
 			SectionControler.Close();
@@ -2211,10 +2221,16 @@ function eventhandler() {
 		})
 		.on("click", ".close-button-contacts", function () { ContactClose.restart().play(); ChapterController.Normal(); })
 		.on("click", ".info-toggle", function () {
-			if (infoToggled)
+			if (infoToggled) {
+				//$(".thumbnail-scene-wrap").css({zIndex: 2});
+				//$(".picture-info").css({ zIndex: 1 });
 				SwitchToThumbnails.restart().play();
-			else
+			}
+			else {
+				//$(".thumbnail-scene-wrap").css({ zIndex: 1 });
+				//$(".picture-info").css({ zIndex: 2 });
 				SwitchToDetails.restart().play();
+			}
 			infoToggled = !infoToggled;
 		})
 		.on("click", "#contact-page-wrap .logo-container", function () { ContactOpen.restart().play(); })
@@ -2251,7 +2267,8 @@ function eventhandler() {
 				prevImage.css("opacity", "1");
 			}
 			prevImage = $(this);
-		});
+		})
+		.on("click", ".fullscreen-toggle", openFullscreen);
 }
 
 function initBGSwitch() {
@@ -2312,15 +2329,23 @@ function initBGSwitch() {
 			if (_S.Container.Section.Description.base.css("display") === "block")
 				tween_api.sections.description.hide();
 			var nextIndex = $(this).find(".image-seperate-container").eq(0).attr("data-mainsceneimageindex") - 1;
+
+			changeParameters($(this).find(".image-seperate-container").eq(0).attr("data-section"), nextIndex);
+
 			flip(e, nextIndex);
 		})
 		.on("click", ".main-scene-wrap > .arrow", function (e) {
 			if ($(this).hasClass("left")) {
-				if(index !== 0)
-					flip(e, index-1);
+				if (index !== 0) {
+					changeParameters($(this).attr("data-section"), index - 1);
+					flip(e, index - 1);
+
+				}
 			} else {
-				if (index !== $images.length - 1)
+				if (index !== $images.length - 1) {
+					changeParameters($(this).attr("data-section"), index + 1);
 					flip(e, index + 1);
+				}
 			}
 		});
 
@@ -2350,3 +2375,45 @@ var animateThumbs = _.once(function () {
 var animateCursor = _.once(function () {
 	TweenMax.to($(".cursor-icon"), 4, { css: { rotationZ: 360 }, ease: Elastic.easeOut, repeat: -1, repeatDelay: 1 })
 });
+
+var currentImageFullscreen = "";
+
+var changeParameters = function (SectionID, ImgIndex) {
+	$(".picture-info table tbody").html("");
+	var currentSection = GlobalApplicationStore.Get(SectionID);
+	var image = currentSection.GetImagesData()[ImgIndex];
+	console.log(image);
+
+	currentImageFullscreen = image.u;
+
+	var parameters = {};
+
+	if (image.parameters !== "")
+		parameters = JSON.parse(image.parameters);
+
+	_.each(parameters, function (value, key) {
+		var listElement = $("<tr/>");
+		var keyElement = $("<td/>", {
+			text: key
+		});
+		var valueElement = $("<td/>", {
+			text: value
+		});
+		if (value == "") {
+			keyElement.attr("colspan", "2");
+			listElement.append(keyElement);
+		} else {
+			listElement.append(keyElement).append(valueElement);
+		}
+		$(".picture-info table tbody").append(listElement);
+	});
+}
+
+var openFullscreen = function () {
+	$("body").prepend("<div id='image-fullscreen-preview'><img src='/content/u/" + currentImageFullscreen + "' /></div>");
+	$("#image-fullscreen-preview").one("click", closeFullscreen);
+}
+
+var closeFullscreen = function(){
+	$("#image-fullscreen-preview").remove();
+}

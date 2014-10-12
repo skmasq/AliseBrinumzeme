@@ -523,8 +523,8 @@ body, html {
                             font-size: 19px;
                             text-align: right;
                             line-height: 18px;
-                            padding-right: 8px;
-                            margin-top: -6px;
+                            padding-right: 19px;
+                            margin-top: -20px;
 
                             & span.un-span {
                                 padding-right: 80px;
@@ -724,7 +724,7 @@ body, html {
                     text-align: center;
                     display: none;
 
-                    &.next{
+                    &.next {
                         float: right;
                     }
 
@@ -1153,6 +1153,23 @@ body, html {
                                     }
                                 }
 
+                                & .fullscreen-toggle {
+                                    position: absolute;
+                                    right: 64px;
+                                    top: 3px;
+                                    height: 24px;
+                                    font-size: 15px;
+                                    line-height: 28px;
+                                    padding: 0 10px;
+                                    background-color: rgba(128, 128, 128, 0.23);
+                                    cursor: pointer;
+                                    #bundle .fast-transition();
+
+                                    &:hover {
+                                        background-color: rgba(128, 128, 128, 0.4);
+                                    }
+                                }
+
                                 & .social-nets {
                                     position: absolute;
                                     right: 0;
@@ -1197,10 +1214,22 @@ body, html {
                         overflow: auto;
 
                         & table {
-                            margin-top: 30px;
+                            margin-top: 15px;
                             width: 100%;
 
                             & tr {
+                                & td:first-child {
+                                    max-width: 200px;
+                                }
+
+
+                                & td[colspan="2"]:first-child {
+                                    font-weight: normal;
+                                    font-size: 16px;
+                                    padding-bottom: 10px;
+                                    max-width: 100%;
+                                }
+
                                 & td {
                                     font-weight: bold;
                                     font-size: 13px;
@@ -1317,5 +1346,32 @@ body, html {
                 }
             }
         }
+    }
+}
+
+#image-fullscreen-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999999;
+    cursor: pointer;
+
+    & img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 50%;
+        -moz-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+        -o-transform: translate(-50%,-50%);
+        -webkit-transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%);
+
+        border: 5px solid rgba(255, 255, 255, 0.13);
+        box-shadow: 0 0 20px 1px #000;
+        cursor: pointer;
     }
 }

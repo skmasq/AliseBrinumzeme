@@ -519,8 +519,8 @@ html {
   font-size: 19px;
   text-align: right;
   line-height: 18px;
-  padding-right: 8px;
-  margin-top: -6px;
+  padding-right: 19px;
+  margin-top: -20px;
 }
 #viewport #doors-wrap .doors-container .bubble-text-wrap .bubble-text-container .bubble-text-content.ktuai span.un-span {
   padding-right: 80px;
@@ -1072,6 +1072,24 @@ html {
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-toolbar .main-scene-toolbar-container .info-toggle:hover {
   background-color: rgba(128, 128, 128, 0.4);
 }
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-toolbar .main-scene-toolbar-container .fullscreen-toggle {
+  position: absolute;
+  right: 64px;
+  top: 3px;
+  height: 24px;
+  font-size: 15px;
+  line-height: 28px;
+  padding: 0 10px;
+  background-color: rgba(128, 128, 128, 0.23);
+  cursor: pointer;
+  -moz-transition: all 0.15s ease-out;
+  -o-transition: all 0.15s ease-out;
+  -webkit-transition: all 0.15s ease-out;
+  transition: all 0.15s ease-out;
+}
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-toolbar .main-scene-toolbar-container .fullscreen-toggle:hover {
+  background-color: rgba(128, 128, 128, 0.4);
+}
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .main-scene-wrap .main-scene-toolbar .main-scene-toolbar-container .social-nets {
   position: absolute;
   right: 0;
@@ -1111,8 +1129,17 @@ html {
   overflow: auto;
 }
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .picture-info table {
-  margin-top: 30px;
+  margin-top: 15px;
   width: 100%;
+}
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .picture-info table tr td:first-child {
+  max-width: 200px;
+}
+#viewport #section-wrap .section-container .section-content-wrap .section-content-container .picture-info table tr td[colspan="2"]:first-child {
+  font-weight: normal;
+  font-size: 16px;
+  padding-bottom: 10px;
+  max-width: 100%;
 }
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .picture-info table tr td {
   font-weight: bold;
@@ -1213,4 +1240,28 @@ html {
 }
 #viewport #section-wrap .section-container .section-content-wrap .section-content-container .thumbnail-scene-wrap .thumbnail-scene-container .thumbnail-bottom-row {
   margin-top: 5px;
+}
+#image-fullscreen-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 99999999;
+  cursor: pointer;
+}
+#image-fullscreen-preview img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 50%;
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  border: 5px solid rgba(255, 255, 255, 0.13);
+  box-shadow: 0 0 20px 1px #000;
+  cursor: pointer;
 }

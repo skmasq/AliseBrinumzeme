@@ -82,8 +82,13 @@ namespace AliseBrinumzeme.Infrastructure
             foreach (string row in rows)
             {
                 var Key = row.Split(KeySeperator, StringSplitOptions.None)[0];
-                var Value = row.Split(KeySeperator, StringSplitOptions.None)[1];
-                result.Add(Key.Trim(), Value.Trim());
+                string Value = "";
+                if (row.Split(KeySeperator, StringSplitOptions.None).Length > 1)
+                {
+                    Value = row.Split(KeySeperator, StringSplitOptions.None)[1];
+                }
+                if (!result.ContainsKey(Key))
+                    result.Add(Key.Trim(), Value.Trim());
             }
 
             return SerializeObject(result, false);
