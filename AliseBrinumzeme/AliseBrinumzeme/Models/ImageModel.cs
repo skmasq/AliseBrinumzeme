@@ -21,6 +21,7 @@ namespace AliseBrinumzeme.Models
                 return Infrastructure.Helpers.GenerateSlug(this.Title);
             }
         }
+        public string LargeImagePath { get; set; }
         public string ImagePath { get; set; }
         public string Params { get; set; }
         public DateTime DateCreated { get; set; }

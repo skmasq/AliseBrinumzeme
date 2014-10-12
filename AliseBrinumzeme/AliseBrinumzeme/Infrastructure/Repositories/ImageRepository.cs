@@ -71,19 +71,21 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
         /// <param name="filePath"></param>
         public void AddNewImage(HttpPostedFileBase file, Size size, long quality = 100L, string filePath = "")
         {
-            Image img = System.Drawing.Image.FromStream(file.InputStream);
-            Image imgCropped = System.Drawing.Image.FromStream(file.InputStream);
-
-            img = FitImage(img, 260, 360);
-
-            SaveImageByType(img, FileParameters.Path, FileParameters.Name, quality);
-
-            imgCropped = CroppImage(img, 111, 89);
-
-            SaveImageByType(imgCropped, FileParameters.Path, FileParameters.Name, 60, ImageType.Thumbnail);
-
-            img.Dispose();
-            imgCropped.Dispose();
+            //Create full screen image
+            using (Image fullScreenImage = FitImage(System.Drawing.Image.FromStream(file.InputStream), 1100, 700))
+            {
+                SaveImageByType(fullScreenImage, FileParameters.Path, FileParameters.Name, 100L, ImageType.FullScreenImage);
+            }
+            //Create large image
+            using (Image img = FitImage(System.Drawing.Image.FromStream(file.InputStream), 260, 360))
+            {
+                SaveImageByType(img, FileParameters.Path, FileParameters.Name, quality, ImageType.LargeImage);
+            }
+            //Create cropped image
+            using (Image imgCropped = FitImage(System.Drawing.Image.FromStream(file.InputStream), 111, 89))
+            {
+                SaveImageByType(imgCropped, FileParameters.Path, FileParameters.Name, 60, ImageType.Thumbnail);
+            }
         }
 
         /// <summary>
@@ -183,9 +185,6 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
 
             finalImage = ResizeImage(image, newWidth, newHeight);
 
-            //when dispose newImage it trows an axception..
-            //newImage.Dispose();
-
             return finalImage;
         }
 
@@ -282,11 +281,12 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
         /// <param name="imageQuality"></param>
         /// <param name="isLargeImage"></param>
         /// <returns></returns>
-        public bool SaveImageByType(Image image, string filePath, string imageName, long imageQuality = 100, 
+        public bool SaveImageByType(Image image, string filePath, string imageName, long imageQuality = 100L, 
             ImageType imageType = ImageType.LargeImage)
         {
             string imageType1 = "_cropped";
             string imageType2 = "_thumbnail";
+            string imageType3 = "_fullscreen";
             string fileExtension = Path.GetExtension(imageName);
             string noExtensionName = Path.GetFileNameWithoutExtension(imageName);
             string fullPath = "";
@@ -300,6 +300,13 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
 
                     switch(imageType)
                     {
+                        case ImageType.FullScreenImage:
+                            fullPath = stringB
+                                .Append(filePath)
+                                .Append(noExtensionName)
+                                .Append(imageType3)
+                                .Append(fileExtension).ToString();
+                            break;
                         case ImageType.LargeImage:
                              fullPath = stringB.Append(filePath).Append(imageName).ToString();
                             break;

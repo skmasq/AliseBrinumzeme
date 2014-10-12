@@ -120,6 +120,13 @@
             if (imageFile != null)
             {
                 image.ImagePath = fileParams.Name;
+                image.LargeImagePath = stringB
+                    .Append(fileParams.NoExtensionName)
+                    .Append("_fullscreen")
+                    .Append(fileParams.FileExtension)
+                    .ToString();
+
+                stringB.Clear();
 
                 image.Section.ThumbnailPath = stringB
                     .Append(fileParams.NoExtensionName)

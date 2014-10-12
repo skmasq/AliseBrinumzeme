@@ -46,6 +46,7 @@ namespace AliseBrinumzeme.Controllers
                 {
                     u = image.ImagePath,
                     o = image.Order,
+                    fs = image.LargeImagePath,
                     ts = image.TitleSlug,
                     id = image.ID
                 });

@@ -7,6 +7,7 @@
 
     public enum ImageType
     {
+        FullScreenImage,
         LargeImage,
         Thumbnail,
         JoinedThumbnails
