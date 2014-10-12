@@ -15,31 +15,51 @@
         @Html.AntiForgeryToken()
         @Html.ValidationSummary()
 
-        <div class="row">
-            <div class="span12">
-                @Html.LabelFor(x => x.Title, "Image Title")
-                @Html.TextBoxFor(x => x.Title, new { @class = "input-block-level" })
-            </div>
-        </div>
+
 
         <div class="row">
-            <div class="span12">
-                <label for="Section">Section</label>
-                <select class="input-block-level" name="SectionID">
-                    @foreach (var sections in ViewBag.Section)
-                    {
-                        if(sections.ID == Model.Section.ID)
-                        { 
-                            <option selected="selected" value="@sections.ID">@sections.Title</option> 
-                        }
-                        else { 
-                            <option value="@sections.ID">@sections.Title</option> 
-                        }
-                    }
-                </select>
+            <div class="span2">
+                <div class="row">
+                    <img class="span2" src="/Content/u/@Model.ImagePath.Replace(".jpg","_cropped.jpg")" alt="" />
+
+                </div>
+            </div>
+            <div class="span10">
+                <div class="row">
+                    <div class="span10">
+                        @Html.LabelFor(x => x.Title, "Image Title")
+                        @Html.TextBoxFor(x => x.Title, new { @class = "input-block-level" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span10">
+                        <label for="Section">Section</label>
+                        <select class="input-block-level" name="SectionID">
+                            @foreach (var sections in ViewBag.Section)
+                            {
+                                if (sections.ID == Model.Section.ID)
+                                {
+                                    <option selected="selected" value="@sections.ID">@sections.Title</option>
+                                }
+                                else
+                                {
+                                    <option value="@sections.ID">@sections.Title</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
-        
+        <div class="row">
+            <div class="span12" style="height: 20px;"></div>
+        </div>
+        <div class="row">
+            <div class="span12">
+                @Html.LabelFor(x => x.ParameterPlaceHolder, "Parameters")
+                @Html.TextAreaFor(x => x.ParameterPlaceHolder, new { @class = "input-block-level", @rows = 6 })
+            </div>
+        </div>
         <label for="Image">Picture</label>
         <input type="file" name="imageFile" id="image" class="input-block-level" />
         <input type="submit" class="btn btn-primary pull-right" value="Edit" />

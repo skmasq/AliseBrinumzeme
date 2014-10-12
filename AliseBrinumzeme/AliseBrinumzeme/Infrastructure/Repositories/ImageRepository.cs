@@ -84,7 +84,7 @@ namespace AliseBrinumzeme.Infrastructure.Repositories
             //Create cropped image
             using (Image imgCropped = FitImage(System.Drawing.Image.FromStream(file.InputStream), 111, 89))
             {
-                SaveImageByType(imgCropped, FileParameters.Path, FileParameters.Name, 60, ImageType.Thumbnail);
+            SaveImageByType(imgCropped, FileParameters.Path, FileParameters.Name, 60, ImageType.Thumbnail);
             }
         }
 

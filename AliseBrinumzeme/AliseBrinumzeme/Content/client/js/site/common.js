@@ -5,7 +5,13 @@
 var AB_DEBUG = true;
 var SectionControler;
 
-//#region Utils
+if (AB_DEBUG)
+	log.setLevel("trace");
+else
+	log.setLevel("silent");
+
+//#region Utilities
+
 function getFrameLenght(__array, __iterations, __delay) {
 	var resultValue = 0;
 
@@ -20,88 +26,9 @@ function getFrameLenght(__array, __iterations, __delay) {
 	return resultValue
 }
 
-var log = function (object) {
-	if (typeof window.console !== "undefined")
-		if (AB_DEBUG)
-			console.log(object);
+function ran(min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-//#endregion
-
-
-//#region Data
-
-var dataReceived = {
-	s: {
-		id: 1
-	},
-	i: [{
-		id: 1,
-		o: 1,
-		ts: "kaklarotu-turetaja",
-		u: "/Content/images/uploads/Image 0007.png",
-		p: {
-			Foto: "Juris Visvaris",
-			Vieta: "Mellužu 78. Sieviešu Internāta skola"
-		}
-	}, {
-		id: 2,
-		o: 2,
-		ts: "dama-stav-salikusi-rokas-kopa",
-		u: "/Content/images/uploads/Image 0006.png",
-		p: {
-			Foto: "Juris Visvaris",
-			Vieta: "Mellužu 78. Sieviešu Internāta skola"
-		}
-	}, {
-		id: 3,
-		o: 3,
-		ts: "dama-sez-jogas-poza",
-		u: "/Content/images/uploads/Image 0005.png",
-		p: {
-			Foto: "Juris Visvaris",
-			Vieta: "Mellužu 78. Sieviešu Internāta skola"
-		}
-	}, {
-		id: 4,
-		o: 4,
-		ts: "jauniete-krasaini-prieciga",
-		u: "/Content/images/uploads/Image 0004.jpg",
-		p: {
-			Foto: "Juris Visvaris",
-			Vieta: "Mellužu 78. Sieviešu Internāta skola"
-		}
-	}, {
-		id: 5,
-		o: 5,
-		ts: "ielas-tandems",
-		u: "/Content/images/uploads/Image 0003.jpg",
-		p: {
-			Foto: "Juris Visvaris",
-			Vieta: "Mellužu 78. Sieviešu Internāta skola"
-		}
-	}, {
-		id: 6,
-		o: 6,
-		ts: "musdieniga-kundze",
-		u: "/Content/images/uploads/Image 0002.jpg",
-		p: {
-			Foto: "Juris Visvaris",
-			Vieta: "Mellužu 78. Sieviešu Internāta skola"
-		}
-	}, {
-		id: 7,
-		o: 7,
-		ts: "milestibas-vergs",
-		u: "/Content/images/uploads/Image 0001.jpg",
-		p: {
-			Foto: "Juris Visvaris",
-			Vieta: "Mellužu 78. Sieviešu Internāta skola"
-		}
-	}],
-	t: {
-		u: "/Content/images/uploads/t/thubmnails_extended_003.jpg"
-	}
-};
 
 //#endregion
 
@@ -115,20 +42,56 @@ var GLOBAL = {
 	THUMB_LEFT_DISABLED: true,
 	THUMB_RIGHT_DISABLED: false,
 	WEBSITE_LOADED: false,
+	CONTACTS_OPEN: false
 }
 
 var CONST = {
 	THUMBNAIL_STEP: 111,
 	THUMBNAIL_H: 89,
-	MAIN_IMG_MAX_H: 358,
-	MAIN_IMG_MAX_W: 260,
+	MAIN_IMG_MAX_H: 260,
+	MAIN_IMG_MAX_W: 358,
 	SECTIONS: {
-		GRIMS: {
+		"2": {
 			description: "Svaigs, gaisīgs, spilgts, teatrāls...jāveido tā, lai justos skaisti, lai būtu atbilstošs vietai un notikumam!",
-			title: "Grims"
+			title: "Grims",
+			title_size: 40,
+			desc_size: 21
+		},
+		"1": {
+			title: "Dekorācijas",
+			description: "Svarīgs ir ne tikai svinību saturs, bet arī tā ārejais veidols, gluži kā gaumīgi iesaiņotai konfektei, kas šķitīs daudz gardāka. Tāpēc liela nozīme jāpiešķir it kā nemanāmām detaļām, kas veido kopējo norises vietas noformējumu.",
+			title_size: 36,
+			desc_size: 18
+		},
+		"3": {
+			title: "Pasākumu Organizēšana",
+			description: "Mazāki vai lielāki, privāti vai korporatīvi pasākumi! Svētku darbnīcas mērķis veidojot pasākumus ir panākt īpašu atmosfēru. Tās panākumu atslēga ir pārdomāts pasākuma koncepts.",
+			title_size: 30,
+			desc_size: 18
+		},
+		"4": {
+			title: "Karnevālu tērpu un aksesuāru noma",
+			description: "Pasaku tēli, abstrakti tēli, zvēri, klauni, gadu desmitu mode, tautības, cepures, apavi, galvas rotas u.c.",
+			title_size: 27,
+			desc_size: 24
+		},
+		"5": {
+			title: "Idejas",
+			description: "Paskaties pa atslēgas caurumu darbnīcas radošajās idejās, jaunumos un ieteikumos.",
+			title_size: 40,
+			desc_size: 25
 		}
+	},
+	Story: {
+		Chapter0: "...kādā no Mellužu pagalmiem, kas ievīts ziedošām, krāsainām puķu dobēm, rožu krūmiem un augļu kokiem ...Mazā gaviļniece priekā starodama  iesēdusies dārza malā novietotajā  pludmales strīpota auduma krēslā un mēģina aizmigt...",
+		Chapter1: "...kādā no Mellužu pagalmiem, kas ievīts ziedošām, krāsainām puķu dobēm, rožu krūmiem un augļu kokiem ...Mazā gaviļniece sapucēta kā maza princese kuplos, baltos svārkos iesēdusies dārza malā novietotajā  pludmales strīpota auduma krēslā un mēģina aizmigt, lai nemanot laiks aizskrietu līdz brīdim, kad atveras dārza vārtiņi un mazie viesi nāk sveikt gaviļnieci ietērpti karnevāla tērpos - cits tērpts par mazu kautrīgu līgavu baltā naktskreklā ar aizskara plīvura rotu uz galvas , vēl kāda dāmīte lepni plivina savus čigānietes puķainos svārkus, kāds krāsainos krepapīra svārkos, kautrīgi smejot tēlo mazo meža gulbi.",
+		Chapter2: "Visapkārt virmo svētku noskaņojums. Krepapīra ziedi un zīda lentas  iesietie zaļojošo ābeļu zaros plivinās vejā, gluži kā piedaloties svētku dejā ko papildina apkārtēja kņada un smiekli. Jubilāres krēsls pārklāts ar plīvojošu audumu, kuram piesprausti krasaini rožu ziedi gaida brīdi, kad mazā dzimšanas dienas svinētāja omulīgi iesēdīsies tajā un tiks pacelta tuvāk baltajiem dūnu mākoņiem un spožai, sildošai saulei, skaitot līdzi viens, divi, trīs ...",
+		Chapter3: "No mazām bērnu dienām esmu gaidījusi un izbaudījusi tos brīžus, kuri atsķīrušies no ikdienas, iespējams tieši šīs atmiņas ir tās, kas iedvesmojušas manu radošo garu, baudīt laiku un piešķirt vietai un notikumiem īpašu atmosfēru.",
+		Chapter4: "Gandarījums  - realizēts  sapnis nodarboties ar savām sirdslietām - grims, svētku rīkošana, dekorāciju, tērpu un aksesuāru veidošana...<br/>Radīt atmosfēŗu<br/>Radīt svētkus<br />Radīt ikdienišķo krāšņu<br />Radīt ierasto tēlainu<br />Izcelt skaisto"
 	}
 }
+
+var GlobalApplicationStore;
 
 function ApplicationStore() {
 	var _self = this;
@@ -142,32 +105,38 @@ function ApplicationStore() {
 		_sectionstore.ImageData = [];
 		_sectionstore.Thumbnail = "";
 		_sectionstore.ImagesLoaded = null;
+		_sectionstore.Parameters = {};
 
 		// Fetch data and return a Promise
 		_sectionstore.Loaded = new function () {
 			return $.Deferred(function (def) {
 				var returnedData = {};
+				log.debug("[" + Date.now() + "] Section [" + _sectionstore.ID + "]: Loading images from server...");
 				$.ajax({
+					url: "/api/sectionapi/" + SectionID,
+					type: "GET",
+					contentType: "application/json",
+					dataType: "json",
 					success: function (data) {
-						log("Section [" + _sectionstore.ID + "][" + Date.now() + "]: Images loaded from server");
+						log.debug("[" + Date.now() + "] Section [" + _sectionstore.ID + "]: Images have been loaded");
 						// Mock up data
-						returnedData = dataReceived;
+						returnedData = JSON.parse(data);
+						console.log(returnedData);
 
 						// Set data
 						_sectionstore.ImageData = returnedData.i;
-						_sectionstore.Thumbnail = returnedData.t.u;
-						console.log(_sectionstore.Thumbnail);
+						_sectionstore.Thumbnail = "/Content/u/" + returnedData.t;
 
 
 						// Set Image array
 						_.each(returnedData.i, function (item) {
-							_sectionstore.Images.push(item.u);
+							_sectionstore.Images.push("/Content/u/" + item.u);
 						});
 						setTimeout(def.resolve, 0);
 					},
 					error: function () {
-						log("Section [" + _sectionstore.ID + "][" + Date.now() + "]: Error loading Images from server");
-						log(arguments);
+						log.warn("[" + Date.now() + "] Section [" + _sectionstore.ID + "]: Error loading Images from server");
+						log.debug(arguments);
 						def.resolve();
 					}
 				});
@@ -181,10 +150,11 @@ function ApplicationStore() {
 				$.when(_sectionstore.Loaded).done(function () {
 					var cacheImageCount = _sectionstore.Images.length;
 					var counter = 0;
+					log.debug("[" + Date.now() + "] Section [" + _sectionstore.ID + "]: Caching section images...");
 					$.cacheImage(_sectionstore.Images.concat(_sectionstore.Thumbnail), {
 						complete: function (e) {
 							if (++counter === cacheImageCount) {
-								log("Section [" + _sectionstore.ID + "][" + Date.now() + "]: All Images have been cached");
+								log.debug("[" + Date.now() + "] Section [" + _sectionstore.ID + "]: All Images have been cached");
 								def.resolve();
 							}
 						}
@@ -236,7 +206,7 @@ function ApplicationStore() {
 			return 0;
 		if (isNaN(Number(SectionID)))
 			return 0;
-		return _.find(_self.Store, function (item) { return item.ID === SectionID }) || 0;
+		return _.find(_self.Store, function (item) { return item.ID === +SectionID }) || 0;
 	}
 
 	return {
@@ -287,7 +257,10 @@ function SectionFactory(AppStore) {
 			.addLabel("CloseSectionStart", 0)
 		// Add Element Animations
 			.to(_S.Container.Section.base, 0.5, { css: { alpha: 0, x: "-600px", rotationZ: 45 } }, "CloseSectionStart")
-			.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 0 } }, "CloseSectionStart");
+			.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 0 } }, "CloseSectionStart")
+			.to(_S.Container.Section.Content, 0.3, { css: { alpha: 0 } }, "CloseSectionStart")
+			.set(_S.Container.Section.Content, { css: { alpha: 1, display: "none" } }, "CloseSectionStart+=0.5")
+			.addCallback(function () { tween_api.sections.description.show(); });
 
 		return tl;
 	}
@@ -365,31 +338,50 @@ function SectionFactory(AppStore) {
 		}
 	}
 
-	_self.Controlers.InjectImages = function (ImageList) {
+	_self.Controlers.InjectImages = function (SectionID) {
 		return $.Deferred(function (def) {
+			var ImageList = _.sortBy(_self.SectionStore.GetImagesData(), "o");
 			var ImageListLength = ImageList.length;
 			var counter = 0;
 			var ImageInjectList = [];
 
-			$.cacheImage(ImageList, {
-				complete: function (e) {
+			// Clear list
+			_S.Container.Section.MainScene.Container.children().remove();
 
-					var NewDimensions = _self.Controlers.GetImage_WH(e.target);
+			// Add new images
+			_.forEach(_.sortBy(_self.SectionStore.GetImagesData(), "o"), function (imageDetails) {
 
-					ImageInjectList.push(
-						$(e.target)
-							.attr("width", NewDimensions.Width)
-							.attr("height", NewDimensions.Height)
-							.addClass(NewDimensions.Direction)
-							.addClass("main-scene-image-container")
-					);
+				var NewImage = $("<img />", {
+					src: "/Content/u/" + imageDetails.u
+				});
 
-					if (++counter === ImageListLength) {
-						_S.Container.Section.MainScene.Container.append(ImageInjectList);
-						def.resolve();
-					}
+				//var NewDimensions = _self.Controlers.GetImage_WH(NewImage[0]);
+				var direction = "hspos-image";
+				if (NewImage[0].height > NewImage[0].width) {
+					direction = "vpos-image";
+				} else if (NewImage[0].width >= NewImage[0].height) {
+					direction = "hspos-image";
 				}
+
+				var ContainerWidth = _S.Container.Section.MainScene.Container.width();
+				ImageInjectList.push(
+					NewImage
+						.attr("width", NewImage[0].width)
+						.attr("height", NewImage[0].height)
+						.addClass(direction)
+						.addClass("main-scene-image-container")
+						.attr("data-mainsceneimageindex", imageDetails.o)
+						.attr("data-imagedbid", imageDetails.id)
+						.attr("data-section", SectionID)
+						.css({
+							marginLeft: (CONST.MAIN_IMG_MAX_W - NewImage[0].width) / 2,
+							marginTop: (CONST.MAIN_IMG_MAX_H - NewImage[0].height) / 2
+						})
+				);
 			});
+
+			_S.Container.Section.MainScene.Container.append(ImageInjectList);
+			def.resolve();
 		}).promise();
 	}
 
@@ -405,7 +397,7 @@ function SectionFactory(AppStore) {
 		}
 	}
 
-	_self.Controlers.SetThumbnails = function (thumb, position, ImagesData) {
+	_self.Controlers.SetThumbnails = function (thumb, position, ImagesData, SectionID) {
 		if (!GLOBAL.THUMBS_ANIMATION_ACTIVE) {
 			if (_.find(ImagesData, function (item) { return item.o === position })) {
 
@@ -420,20 +412,20 @@ function SectionFactory(AppStore) {
 				//#region State changes
 				_.each(_.sortBy(ImagesData, function (item) { return +item.o; }), function (item) {
 					if (item.o === positionCounter && (positionCounter < position + 6)) {
+						_S.Container.Section.Thumbnails.list[elementCounter].attr("data-mainsceneimageindex", positionCounter);
+						_S.Container.Section.Thumbnails.list[elementCounter].attr("data-section", SectionID);
 						var elementToAnimate = _S.Container.Section.Thumbnails.list[elementCounter];
 						var currentPos = positionCounter;
 						nextStateContainer.push(function () {
-							TweenMax.to(elementToAnimate, 0.2,
-								{
+							var tl = new TimelineMax();
+							tl
+								.to(elementToAnimate, 0.2, { css: { scale: 0 } })
+								.set(elementToAnimate, {
 									css: {
-										scale: 0
-									},
-									onComplete: function () {
-										elementToAnimate
-											.css("background", "url(" + thumb + ") -" + ((currentPos - 1) * CONST.THUMBNAIL_STEP) + "px 0px no-repeat")
-											.removeClass("no-image")
+										background: "url(" + thumb + ") -" + ((currentPos - 1) * CONST.THUMBNAIL_STEP) + "px 0px no-repeat"
 									}
-								});
+								})
+								.append(function () { elementToAnimate.removeClass("no-image"); });
 						});
 
 						elementCounter++;
@@ -447,19 +439,15 @@ function SectionFactory(AppStore) {
 				_.each([0, 1, 2, 3, 4, 5], function (item) {
 					if (leftoverCounter < 6) {
 						DisabledRight = true;
+						_S.Container.Section.Thumbnails.list[elementCounter].attr("data-mainsceneimageindex", leftoverCounter + 1);
+						_S.Container.Section.Thumbnails.list[elementCounter].attr("data-section", SectionID);
 						var elementToAnimate = _S.Container.Section.Thumbnails.list[leftoverCounter];
 						nextStateContainer.push(function () {
-							TweenMax.to(elementToAnimate, 0.2,
-								{
-									css: {
-										scale: 0
-									},
-									onComplete: function () {
-										elementToAnimate
-											.css("background", "")
-											.addClass("no-image")
-									}
-								});
+							var tl = new TimelineMax();
+							tl
+								.to(elementToAnimate, 0.2, { css: { scale: 0 } })
+								.set(elementToAnimate, { css: { background: "" } })
+								.append(function () { elementToAnimate.addClass("no-image") });
 						});
 					}
 					leftoverCounter++;
@@ -481,7 +469,9 @@ function SectionFactory(AppStore) {
 
 				tl.add(TweenMax.staggerTo((Direction === "left")
 					? _S.Container.Section.Thumbnails.all.get().reverse()
-						: _S.Container.Section.Thumbnails.all, 0.2, { scale: 1 }, 0.05), 0.3);
+						: _S.Container.Section.Thumbnails.all, 0.2, { css: { scale: 1 } }, 0.05), 0.3);
+
+				tl.set(_S.Container.Section.Thumbnails.all, { css: { scale: 1 } })
 
 				if (position === 1) {
 					GLOBAL.THUMB_LEFT_DISABLED = true;
@@ -500,10 +490,10 @@ function SectionFactory(AppStore) {
 	_self.Controlers.LoadOpenAnimation = function () {
 		return $.Deferred(function (def) {
 			_self.PL.Section.Open.eventCallback("onStart", function () {
-				log("Global[" + Date.now() + "]: Section Open Animation Started");
+				log.debug("[" + Date.now() + "] Global: Section Open Animation Started");
 				GLOBAL.SECTION_ANIMATION_ACTIVE = true;
 			}).eventCallback("onComplete", function () {
-				log("Global[" + Date.now() + "]: Section Open Animation Ended");
+				log.debug("[" + Date.now() + "] Global: Section Open Animation Ended");
 				GLOBAL.SECTION_ANIMATION_ACTIVE = false;
 				def.resolve();
 			}).play();
@@ -513,23 +503,24 @@ function SectionFactory(AppStore) {
 	_self.Controlers.LoadCloseAnimation = function () {
 		return $.Deferred(function (def) {
 			_self.PL.Section.Close.eventCallback("onStart", function () {
-				log("Global[" + Date.now() + "]: Section Close Animation Started");
+				log.debug("[" + Date.now() + "] Global: Section Close Animation Started");
 				GLOBAL.SECTION_ANIMATION_ACTIVE = true;
 			}).eventCallback("onComplete", function () {
-				log("Global[" + Date.now() + "]: Section Close Animation Ended");
+				log.debug("[" + Date.now() + "] Global: Section Close Animation Ended");
 				_self.PL.Section.Open.restart().pause();
 				_self.PL.Section.ResetOverlap();
 				_self.PL.Section.ResetSection();
 				GLOBAL.SECTION_ANIMATION_ACTIVE = false;
+				GLOBAL.THUMB_POSITION = 0;
 				def.resolve();
-			}).play();
+			}).restart().play();
 		}).promise();
-	}
+	};
 
 	_self.Controlers.LoadSectionData = function (SectionStore) {
 		return $.Deferred(function (def) {
 			$.when(SectionStore.Loaded, SectionStore.LoadImages()).done(function () {
-				log("Navigate.Section[" + SectionStore.ID + "][" + Date.now() + "]: Section Data and Images have been loaded");
+				log.debug("[" + Date.now() + "] Section [" + SectionStore.ID + "]: Section Data and Images have been loaded");
 				def.resolve();
 			});
 		}).promise();
@@ -576,25 +567,46 @@ function SectionFactory(AppStore) {
 			// TODO[2]: Set thumbnail images
 			_self.Controlers.loadevents();
 			_self.SectionStore = AppStore.Get(SectionID);
-			$.when(_self.Controlers.InjectImages(_self.SectionStore.GetImages())).done(function () {
-				animateThumbs();
-				_self.Controlers.SetThumbnails(_self.SectionStore.GetThumbnail(), 7, _self.SectionStore.GetImagesData());
-				_S.Container.Section.Content.fadeIn();
+			log.debug("[" + Date.now() + "] Section [" + SectionID + "]: Injecting images...");
+			$.when(_self.Controlers.InjectImages(SectionID)).done(function () {
+				log.debug("[" + Date.now() + "] Section [" + SectionID + "]: All images have been injected");
+
+				log.debug("[" + Date.now() + "] Section [" + SectionID + "]: Setting section description.");
+
+				// Section description
+				var secDesc = CONST.SECTIONS["" + SectionID + ""];
+				$(".section-description-container .description-title")
+					.text(secDesc.title)
+					.css("font-size", secDesc.title_size + "px");
+				$(".section-description-container .description-content")
+					.text(secDesc.description)
+					.css("font-size", secDesc.desc_size + "px");
+
+				_S.Container.Section.Thumbnails.all.css("background", "").addClass("no-image");
+				_self.Controlers.SetThumbnails(_self.SectionStore.GetThumbnail(), 1, _self.SectionStore.GetImagesData(), SectionID);
+				_S.Container.Section.Content.fadeIn(animateThumbs);
+				$(".main-scene-wrap > .arrow").attr("data-section", SectionID)
 			});
 		});
 
+	}
+
+	_self.Controlers.InitializeFactory = function () {
+		_self.PL.Section.ResetSection();
+		_self.PL.Section.ResetOverlap();
 	}
 
 	//#endregion
 
 	//#region Actions
 
-	$(document).on();
+	_self.Controlers.InitializeFactory();
 
 	//#endregion
 
 	return {
-		Navigate: _self.Controlers.Navigate
+		Navigate: _self.Controlers.Navigate,
+		Close: _self.Controlers.LoadCloseAnimation
 	}
 }
 
@@ -715,20 +727,27 @@ var _S = {
 			Description: {
 				base: $(".section-description-wrap")
 			},
+			PictureInfo: $("#section-wrap .picture-info"),
 			Thumbnails: {
-				all: $(".image-seperate-container"),
+				base: $(".thumbnail-scene-wrap"),
+				Container: {
+					base: $(".thumbnail-scene-wrap .thumbnail-scene-container")
+				},
+				Arrows: $(".thumbnail-scene-wrap .arrow"),
+				all: $(".thumbnail-scene-wrap .thumbnail-scene-container .image-seperate-container"),
 				list: [
-					$(".image-seperate-container[data-thumbnailposition=1]"),
-					$(".image-seperate-container[data-thumbnailposition=2]"),
-					$(".image-seperate-container[data-thumbnailposition=3]"),
-					$(".image-seperate-container[data-thumbnailposition=4]"),
-					$(".image-seperate-container[data-thumbnailposition=5]"),
-					$(".image-seperate-container[data-thumbnailposition=6]")
+					$(".thumbnail-scene-wrap .thumbnail-scene-container .image-seperate-container[data-thumbnailposition=1]"),
+					$(".thumbnail-scene-wrap .thumbnail-scene-container .image-seperate-container[data-thumbnailposition=2]"),
+					$(".thumbnail-scene-wrap .thumbnail-scene-container .image-seperate-container[data-thumbnailposition=3]"),
+					$(".thumbnail-scene-wrap .thumbnail-scene-container .image-seperate-container[data-thumbnailposition=4]"),
+					$(".thumbnail-scene-wrap .thumbnail-scene-container .image-seperate-container[data-thumbnailposition=5]"),
+					$(".thumbnail-scene-wrap .thumbnail-scene-container .image-seperate-container[data-thumbnailposition=6]")
 				]
 			},
 			MainScene: {
 				base: $(".main-scene-wrap"),
-				Container: $(".main-scene-container")
+				Container: $(".main-scene-container"),
+				InfoToggle: $(".info-toggle")
 			},
 			InfoBook: $(".info-book-wrap"),
 			Content: $(".section-content-wrap")
@@ -737,6 +756,9 @@ var _S = {
 			base: $("#contact-page-wrap"),
 			Logo: {
 				base: $("#contact-page-wrap .logo-container")
+			},
+			Content: {
+				base: $("#contact-page-wrap .content-container")
 			}
 		}
 	}
@@ -838,23 +860,20 @@ var SCENE = {
 	}
 }
 
-var SectionObject = new sectionControler();
-
 var catureScreenshot = _.once(function () {
 	html2canvas($("#viewport"), {
 		background: "#000",
 		onrendered: function (canvas) {
 			$(".overlaping-blur").show();
+
+			// Set fullscreen
 			$("#canvas-container").append(canvas);
-			$(canvas).attr("id", "canvas");
-			setTimeout(function () {
-				stackBlurCanvasRGB(
-									'canvas',
-								0,
-								0,
-								$("#canvas").width(),
-								$("#canvas").height(), 7);
-			}, 0);
+			$(canvas)
+				.attr("id", "canvas")
+				.width($(window).width())
+				.height($(window).height());
+			// Set blur
+			stackBlurCanvasRGB('canvas', 0, 0, $("#canvas").width(), $("#canvas").height(), 7);
 		}
 	});
 });
@@ -912,6 +931,34 @@ var tween_api = {
 
 					return tl;
 				}
+			},
+			changeToDetails: function () {
+				var tl = new TimelineMax({ paused: true });
+
+				tl
+					.add(function () { _S.Container.Section.MainScene.InfoToggle.text("Bildes") }, 0)
+					.to([
+						_S.Container.Section.Thumbnails.Container.base,
+						_S.Container.Section.Thumbnails.Arrows
+					], 0.3, { css: { alpha: 0, rotationX: 50, rotationY: 50, scale: 0.5 } }, 0)
+					.set(_S.Container.Section.PictureInfo, { css: { display: "block", alpha: 0 } })
+					.to(_S.Container.Section.PictureInfo, 0.3, { css: { alpha: 1 } });
+
+				return tl;
+			},
+			changeToThumbnails: function () {
+				var tl = new TimelineMax({ paused: true });
+
+				tl
+					.add(function () { _S.Container.Section.MainScene.InfoToggle.text("Info") }, 0)
+					.to(_S.Container.Section.PictureInfo, 0.1, { css: { alpha: 0 } }, 0)
+					.set(_S.Container.Section.PictureInfo, { css: { display: "none" } })
+					.to([
+						_S.Container.Section.Thumbnails.Container.base,
+						_S.Container.Section.Thumbnails.Arrows
+					], 0.3, { css: { alpha: 1, rotationX: 0, rotationY: 0, scale: 1 } }, 0);
+
+				return tl;
 			}
 		},
 		description: {
@@ -949,25 +996,27 @@ var tween_api = {
 			},
 			show: function () {
 				var tl = new TimelineMax();
+				// Set labels
+				tl
+					.add("start", 0)
 
-				tl.add(function () {
-					_S.Container.Section.Description.base.show();
-					$(".info-toggle").text("Info");
-				});
+				// Prepare elements
+					.add(function () { _S.Container.Section.MainScene.InfoToggle.text("Info") }, "start")
+					.set(_S.Container.Section.Description.base, { css: { display: "block" } }, "start")
 
-				tl.add(
-				TweenMax.to([
-					$(".thumbnail-scene-container"),
-					$(".thumbnail-scene-wrap .arrow")
-				], 0.3, { css: { alpha: 1, rotationX: 0, rotationY: 0, scale: 1 } }), 0)
+				// Animate thumbnails
+					.to([
+						_S.Container.Section.Thumbnails.Container.base,
+						_S.Container.Section.Thumbnails.Arrows
+					], 0.3, { css: { alpha: 1, rotationX: 0, rotationY: 0, scale: 1 } }, "start")
 
-				tl.add(function () {
-					$(".picture-info").fadeOut(100);
-				}, 0)
+				// Hide image details
+					.to(_S.Container.Section.PictureInfo, 0.1, { css: { alpha: 0 } }, "start")
+					.set(_S.Container.Section.PictureInfo, { css: { display: "block" } })
 
-				tl.add([
-					TweenMax.to(_S.Container.Section.InfoBook, 0.1, { css: { alpha: 0 } }),
-					TweenMax.to(_S.Container.Section.Description.base, 0.5, {
+				// Show Sections description
+					.to(_S.Container.Section.InfoBook, 0.1, { css: { alpha: 0 } }, "start")
+					.to(_S.Container.Section.Description.base, 0.5, {
 						css: {
 							transformOrigin: "center top",
 							rotationZ: 0,
@@ -978,12 +1027,12 @@ var tween_api = {
 							scaleY: 1,
 							opacity: 1
 						}
-					}),
-					TweenMax.to(_S.Container.Section.MainScene.base, 0.5, { css: { alpha: 0 } })
-				], 0);
+					}, "start")
+					.to(_S.Container.Section.MainScene.base, 0.5, { css: { alpha: 0 } }, "start")
 
-				tl.set(_S.Container.Section.MainScene.base, { css: { visibility: "hidden", alpha: 1 } }, 0.5);
-				tl.set(_S.Container.Section.InfoBook, { css: { display: "none", alpha: 1 } }, 0.5);
+				// Set elements
+					.set(_S.Container.Section.MainScene.base, { css: { visibility: "hidden" } }, "start+=0.5")
+					.set(_S.Container.Section.InfoBook, { css: { display: "none" } }, "start+=0.5")
 
 				return tl;
 			}
@@ -1373,55 +1422,61 @@ var tween_api = {
 			var tl = new TimelineMax({
 				paused: true,
 				onComplete: function () {
-					contact_page.find(".content-container").eq(0).fadeIn(100);
-					animateCursor();
-
+					GLOBAL.CONTACTS_OPEN = true;
 				}
 			});
 
-			tl.set(_S.Body.BGBlur.OverlapingBlur, { css: { alpha: 0, visibility: "visible", display: "block" } }, 0)
-			tl.add(TweenMax.to(contact_page, 1, {
-				css: {
-					rotation: 0,
-					bottom: "50%",
-					height: 740,
-					width: 498,
-					marginBottom: -370,
-					marginLeft: -249
-				}
-			}), 0)
-			tl.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 1 } }, 0.5);
+			// Prepare elements
+			tl.set(_S.Container.Contacts.base, { css: { zIndex: 550 } }, 0)
+			  .set(_S.Body.BGBlur.OverlapingBlur, { css: { alpha: 0, visibility: "visible", display: "block" } }, 0);
 
-			contact_page.find(".logo-container").eq(0).fadeOut(100, "linear", function () {
-				tl.play();
-			});
+			// Define animation
+			tl.to(_S.Container.Contacts.Logo.base, 0.1, { css: { alpha: 0 } }, 0)
+				.set(_S.Container.Contacts.Logo.base, { css: { display: "none" } })
+				.to(contact_page, 1, {
+					css: {
+						rotation: 0,
+						bottom: "50%",
+						height: 740,
+						width: 498,
+						marginBottom: -370,
+						marginLeft: -249
+					}
+				}, 0.1)
+				.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 1 } }, 0.6)
+				.set(_S.Container.Contacts.Content.base, { css: { display: "block", alpha: 0 } })
+				.to(_S.Container.Contacts.Content.base, 0.1, { css: { alpha: 1 } })
+				.addCallback(animateCursor);
+
+			return tl;
 		},
 		close: function () {
 			var contact_page = $("#contact-page-wrap");
-			var tl = new TimelineMax({
-				paused: true,
-				onComplete: function () {
-					contact_page.find(".logo-container").eq(0).fadeIn(100);
-				}
-			});
+			var tl = new TimelineMax({ paused: true, onComplete: function () { GLOBAL.CONTACTS_OPEN = false; } });
 
-			tl.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 0 } }, 0)
-			tl.add(TweenMax.to(contact_page, 1, {
-				css: {
-					rotation: 93,
-					bottom: 100,
-					height: 225,
-					width: 151,
-					marginBottom: 0,
-					marginLeft: 49
-				}
-			}), 0)
-			tl.set(_S.Body.BGBlur.OverlapingBlur, { css: { visibility: "hidden", display: "none" } }, 1);
+			tl
+				.to(_S.Container.Contacts.Content.base, 0.1, { css: { alpha: 0 } }, 0)
+				.set(_S.Container.Contacts.Content.base, { css: { display: "none" } })
 
+				.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 0 } }, 0)
+				.set(_S.Body.BGBlur.OverlapingBlur, { css: { visibility: "hidden", alpha: 0, display: "none" } })
 
-			contact_page.find(".content-container").eq(0).fadeOut(100, "linear", function () {
-				tl.play();
-			});
+				.to(contact_page, 1, {
+					css: {
+						rotation: 93,
+						bottom: 100,
+						height: 225,
+						width: 151,
+						marginBottom: 0,
+						marginLeft: 125
+					}
+				}, 0)
+				.set(_S.Container.Contacts.base, { css: { zIndex: 400 } })
+				.set(_S.Container.Contacts.Logo.base, { alpha: 0, display: "block" })
+				.to(_S.Container.Contacts.Logo.base, 0.1, { alpha: 1 })
+
+			return tl;
+
 		}
 	},
 	table: {
@@ -1679,119 +1734,188 @@ var bubbleBirdBeakAnimation = function () {
 var test1 = new bubbleBirdBeakAnimation();
 
 function initStartPage() {
+	return $.Deferred(function (def) {
 
-	//#region Put all sets here
-	//tween_api.start.global.startuplogo.set();
-	tween_api.start.doors.base.set();
-	tween_api.start.doors.bubblebird.set();
-	tween_api.start.doors.rabbitncup.set();
-	tween_api.global.lamp.swing.set();
-	tween_api.global.mail.swing.set();
-	tween_api.start.lamp.base.set();
-	tween_api.start.molbert.base.set();
-	tween_api.start.molbert.molbertrabbit.set();
-	tween_api.start.table.base.set();
-	tween_api.table.movingcup.set();
-	tween_api.start.table.pinkbird.set();
-	tween_api.start.table.rabbitnpile.set();
-	tween_api.global.bluedove.keyswing.set();
-	tween_api.start.global.bluedove.base.set();
-	//#endregion
+		//#region Put all sets here
+		//tween_api.start.global.startuplogo.set();
+		tween_api.start.doors.base.set();
+		tween_api.start.doors.bubblebird.set();
+		tween_api.start.doors.rabbitncup.set();
+		tween_api.global.lamp.swing.set();
+		tween_api.global.mail.swing.set();
+		tween_api.start.lamp.base.set();
+		tween_api.start.molbert.base.set();
+		tween_api.start.molbert.molbertrabbit.set();
+		tween_api.start.table.base.set();
+		tween_api.table.movingcup.set();
+		tween_api.start.table.pinkbird.set();
+		tween_api.start.table.rabbitnpile.set();
+		tween_api.global.bluedove.keyswing.set();
+		tween_api.start.global.bluedove.base.set();
+		//#endregion
 
-	var tl = new TimelineMax({
-		delay: 1
-	});
+		var tl = new TimelineMax({
+			delay: 1
+		});
 
-	tl
-		// Labels delegation
-		.addLabel("ACT_I", 0)
-		.addLabel("lampdrop", 0)
-		.addLabel("table", 0.5)
-		.addLabel("doors", 0.75)
-		.addLabel("molbert", 1.5)
-		.addLabel("bluedove", "molbert+=0.5")
-		.addLabel("bubblebird", "bluedove+=0.25")
-		//.addLabel("ACT_II", "bubblebird+=1.5")
-		.addLabel("ACT_II", "ACT_I+=10")
-		.addLabel("keydrop", "ACT_II")
-		.addLabel("cupdrop", "keydrop+=3")
-		.addLabel("animalsHide", "cupdrop+=0.6")
-		.addLabel("ACT_III", "animalsHide+=3")
-		.addLabel("animalsShow", "ACT_III")
+		tl
+			// Labels delegation
+			.addLabel("ACT_I", 0)
+			.addLabel("lampdrop", 0)
+			.addLabel("table", 0.5)
+			.addLabel("doors", 0.75)
+			.addLabel("molbert", 1.5)
+			.addLabel("bluedove", "molbert+=0.5")
+			.addLabel("bubblebird", "bluedove+=0.25")
+			//.addLabel("ACT_II", "bubblebird+=1.5")
+			.addLabel("ACT_II", "ACT_I+=10")
+			.addLabel("keydrop", "ACT_II")
+			.addLabel("cupdrop", "keydrop+=3")
+			.addLabel("animalsHide", "cupdrop+=0.6")
+			.addLabel("ACT_III", "animalsHide+=3")
+			.addLabel("animalsShow", "ACT_III")
 
-		// ACT I
-		.add(tween_api.start.lamp.base.instance(), "lampdrop")
-		.addCallback(tween_api.global.lamp.swing.instance, "lampdrop+=0.5")
-		.add(tween_api.start.table.base.instance(), "table")
-		.add(tween_api.start.table.rabbitnpile.instance(), "table+=0.5")
-		.add(tween_api.start.doors.base.instance(), "doors")
-		.add(tween_api.start.doors.rabbitncup.instance(), "doors+=0.5")
-		.addCallback(function () {
-			$("#section-wrap").show();
-		}, "doors+=1")
-		.addCallback(function () {
-			$("#shelve-wrap").fadeIn(function () {
-				tween_api.global.mail.swing.instance();
-				setTimeout(phoneRingInit, 1500);
-			});
-			$("#window-wrap").fadeIn();
-		}, "doors")
-		.add(tween_api.start.molbert.base.instance(), "molbert")
-		.add(tween_api.start.molbert.molbertrabbit.instance(), "molbert+=0.25")
-		.add(tween_api.start.global.bluedove.base.instance(), "bluedove")
-		.addCallback(tween_api.global.bluedove.keyswing.instance, "bluedove+=0.25")
-		.add(tween_api.start.doors.bubblebird.instance(), "bubblebird")
-		.addCallback(function () {
-			test1.play().eventCallback("onStart", function (something) {
-				$(".empty-bubble").fadeIn(200);
-				$(".bubble-text-content.start").fadeIn(200);
+			// ACT I
+			.add(tween_api.start.lamp.base.instance(), "lampdrop")
+			.addCallback(tween_api.global.lamp.swing.instance, "lampdrop+=0.5")
+			.add(tween_api.start.table.base.instance(), "table")
+			.add(tween_api.start.table.rabbitnpile.instance(), "table+=0.5")
+			.add(tween_api.start.doors.base.instance(), "doors")
+			.add(tween_api.start.doors.rabbitncup.instance(), "doors+=0.5")
+			.addCallback(function () {
+				$("#section-wrap").show();
+			}, "doors+=1")
+			.addCallback(function () {
+				$("#shelve-wrap").fadeIn(function () {
+					tween_api.global.mail.swing.instance();
+					setTimeout(phoneRingInit, 1500);
+				});
+				$("#window-wrap").fadeIn();
+			}, "doors")
+			.add(tween_api.start.molbert.base.instance(), "molbert")
+			.add(tween_api.start.molbert.molbertrabbit.instance(), "molbert+=0.25")
+			.add(tween_api.start.global.bluedove.base.instance(), "bluedove")
+			.addCallback(tween_api.global.bluedove.keyswing.instance, "bluedove+=0.25")
+			.add(tween_api.start.doors.bubblebird.instance(), "bubblebird")
+			.addCallback(function () {
+				test1.play().eventCallback("onStart", function (something) {
+					$(".empty-bubble").fadeIn(200);
+					$(".bubble-text-content.start").fadeIn(200);
 
-				setTimeout(function () {
-					$(".empty-bubble").fadeOut(300);
-					$(".bubble-text-content.start").fadeOut(300);
-				}, 4000);
-			}).eventCallback("onComplete", function () {
-				test1.restart().pause();
-			});
-		}, "bubblebird+=0.5")
-		.add(tween_api.start.table.pinkbird.instance(), "bubblebird+=0.75")
-		.add(tween_api.table.movingcup.instance(), "bubblebird+=1")
-		.addCallback(function () {
-			catureScreenshot();
-			pickFoodInit();
-			doorKnobDemo();
-			doorRabbitEars();
-			setTimeout(tableRabbitEars, 3000);
-		}, "bubblebird+=1.5")
+					setTimeout(function () {
+						$(".empty-bubble").fadeOut(300);
+						$(".bubble-text-content.start").fadeOut(300);
+					}, 2000);
+				}).eventCallback("onComplete", function () {
+					test1.restart().pause();
+				});
+			}, "bubblebird+=0.5")
+			.add(tween_api.start.table.pinkbird.instance(), "bubblebird+=0.75")
+			.add(tween_api.table.movingcup.instance(), "bubblebird+=1")
+			.addCallback(function () {
+				catureScreenshot();
+				pickFoodInit();
+				doorKnobDemo();
+				doorRabbitEars();
+				setTimeout(tableRabbitEars, 3000);
 
-		// ACT II
-		.add(tween_api.global.bluedove.keyswing.drop(), "keydrop")
-		.add(tween_api.table.movingcup.drop(), "cupdrop")
-		.add(tween_api.start.table.rabbitnpile.hide(), "animalsHide")
-		.add(tween_api.start.molbert.molbertrabbit.hide(), "animalsHide+=0.15")
-		.add(tween_api.start.doors.rabbitncup.hide(), "animalsHide+=0.4")
+				// Release events
+				def.resolve();
+			}, "bubblebird+=1.5")
 
-		// ACT III
-		.add(tween_api.start.doors.rabbitncup.instance(), "animalsShow")
-		.add(tween_api.start.table.rabbitnpile.instance(), "animalsShow+=0.5")
-		.add(tween_api.start.molbert.molbertrabbit.instance(), "animalsShow+=2")
+			// ACT II
+			.add(tween_api.global.bluedove.keyswing.drop(), "keydrop")
+			.add(tween_api.table.movingcup.drop(), "cupdrop")
+			.add(tween_api.start.table.rabbitnpile.hide(), "animalsHide")
+			.add(tween_api.start.molbert.molbertrabbit.hide(), "animalsHide+=0.15")
+			.add(tween_api.start.doors.rabbitncup.hide(), "animalsHide+=0.4")
 
+			// ACT III
+			.add(tween_api.start.doors.rabbitncup.instance(), "animalsShow")
+			.add(tween_api.start.table.rabbitnpile.instance(), "animalsShow+=0.5")
+			.add(tween_api.start.molbert.molbertrabbit.instance(), "animalsShow+=2")
+	}).promise();
 };
 
+function chapterControl() {
+	var self = {}
+
+	self.currentChapter = 0;
+
+	self.Normal = function () {
+		$(".visible-part").html(CONST.Story.Chapter0);
+		$(".chapter-control").hide();
+		$(".phone-number-container").fadeIn();
+		$(".email-container").fadeIn();
+		$(".find-us-container").fadeIn();
+		$(".map-container").fadeIn();
+		$(".open-chapter").fadeIn();
+		self.currentChapter = 0;
+	};
+
+	self.SelectChapter = function (chapterID) {
+		$(".visible-part").html(CONST.Story["Chapter" + chapterID]);
+		$(".chapter-control").show();
+		if (chapterID === 1)
+			$(".chapter-control.prev").hide();
+		$(".phone-number-container").hide();
+		$(".open-chapter").hide();
+		$(".email-container").hide();
+		$(".find-us-container").hide();
+		$(".map-container").hide();
+		self.currentChapter = chapterID;
+	}
+
+	$(document)
+		.on("click", ".chapter-control", function () {
+			if ($(this).hasClass("prev")) {
+				$(".chapter-control.next").show();
+
+				if (self.currentChapter === 1)
+					$(".chapter-control.prev").hide();
+				else {
+					self.SelectChapter(self.currentChapter - 1);
+					if (self.currentChapter === 1)
+						$(".chapter-control.prev").hide();
+				}
+			} else if ($(this).hasClass("contacts")) {
+				self.Normal();
+				self.currentChapter = 0;
+			} else {
+				$(".chapter-control.prev").show();
+
+				if (self.currentChapter === 4)
+					$(".chapter-control.next").hide();
+				else {
+					self.SelectChapter(self.currentChapter + 1);
+					if (self.currentChapter === 4)
+						$(".chapter-control.next").hide();
+				}
+			}
+		})
+		.on("click", ".open-chapter", function () { self.SelectChapter(1) })
+
+	return self;
+}
+
+var ChapterController = new chapterControl();
+
 $(document).ready(function () {
-	SectionControler = new SectionFactory(new ApplicationStore());
+	GlobalApplicationStore = new ApplicationStore();
+	SectionControler = new SectionFactory(GlobalApplicationStore);
+	pageInitialization();
+	$.when(initStartPage()).always(function () {
+		bootstarter();
+	});
+});
+
+function pageInitialization() {
 	setWelcomeMessage();
 	$("#shelve-wrap").hide();
 	$("#window-wrap").hide();
-	bootstarter();
-	prepareImageMargins();
 	initBGSwitch();
-	initThumbnails();
-	bubbleTextInit();
 	tween_api.contacts.set();
-	initStartPage();
-	initLogoClick();
-});
+}
 
 function doorKnobDemo() {
 
@@ -2046,10 +2170,22 @@ function bootstarter() {
 
 function eventhandler() {
 	var test234 = _.debounce(function (e) {
-		console.log(e);
+		log.debug(e);
 	}, 200);
-	var rabbitTO;
-	var infoToggled = false;
+	var rabbitTO,
+		infoToggled = false,
+		ContactOpen = tween_api.contacts.open(),
+		ContactClose = tween_api.contacts.close(),
+		SwitchToDetails = tween_api.sections.thumbnails.changeToDetails(),
+		SwitchToThumbnails = tween_api.sections.thumbnails.changeToThumbnails(),
+		comonTimer,
+		prevImage = $(this);
+
+	// Attach animation to thumbnails
+	$("#section-wrap .thumbnail-image-container div.hitbox").each(function () {
+		var hoverTL = new tween_api.sections.thumbnails.hover($(this).parent());
+		$(this).data("hover_tween", hoverTL);
+	});
 
 	$(document)
 		.on("mouseenter", ".shelve-container", function () {
@@ -2058,191 +2194,81 @@ function eventhandler() {
 		.on("mouseleave", ".shelve-container", function () {
 			$(".shelve-hover-state").stop().fadeOut()
 		})
-		.on("click", ".shelve-container", tween_api.contacts.open)
+		.on("click", ".shelve-container", function () { ContactOpen.restart().play(); })
 		.on("click", ".info-book-wrap", tween_api.sections.description.show)
 		.on("click", ".menu-hitbox", function () {
-			console.log($(this).data("menutextindex"));
-			if ($(this).data("menutextindex") != "6")
+			log.debug("[" + Date.now() + "] Menu Index [" + $(this).data("menutextindex") + "]");
+			if ($(this).data("menutextindex") != "6") {
 				SectionControler.Navigate($(this).data("menutextindex"));
-			else
-				tween_api.contacts.open();
+				$(".thumbnail-scene-wrap").css({ zIndex: 2 });
+				$(".picture-info").css({ zIndex: 1 });
+			}
+			else {
+				ChapterController.SelectChapter(1);
+				ContactOpen.restart().play();
+			}
+
 		})
 		.on("click", ".overlap-taint", function () {
-			SectionObject.close();
-			tween_api.contacts.close();
+			SectionControler.Close();
+			if (GLOBAL.CONTACTS_OPEN) {
+				ContactClose.restart().play();
+				ChapterController.Normal();
+			}
 		})
 		.on("click", ".close-button", function () {
-			SectionObject.close()
+			SectionControler.Close()
 		})
-		.on("click", ".close-button-contacts", tween_api.contacts.close)
+		.on("click", ".close-button-contacts", function () { ContactClose.restart().play(); ChapterController.Normal(); })
 		.on("click", ".info-toggle", function () {
 			if (infoToggled) {
-				$(this).text("Info");
-				TweenMax.to([
-					$(".thumbnail-scene-container"),
-					$(".thumbnail-scene-wrap .arrow")
-				], 0.3, { css: { alpha: 1, rotationX: 0, rotationY: 0, scale: 1 } }).eventCallback("onStart", function () {
-					$(".picture-info").fadeOut(100);
-				});
-			} else {
-				$(this).text("Bildes");
-				TweenMax.to([
-					$(".thumbnail-scene-container"),
-					$(".thumbnail-scene-wrap .arrow")
-				], 0.3, { css: { alpha: 0, rotationX: 50, rotationY: 50, scale: 0.5 } }).eventCallback("onComplete", function () {
-					$(".picture-info").fadeIn();
-				});
+				//$(".thumbnail-scene-wrap").css({zIndex: 2});
+				//$(".picture-info").css({ zIndex: 1 });
+				SwitchToThumbnails.restart().play();
+			}
+			else {
+				//$(".thumbnail-scene-wrap").css({ zIndex: 1 });
+				//$(".picture-info").css({ zIndex: 2 });
+				SwitchToDetails.restart().play();
 			}
 			infoToggled = !infoToggled;
-		});
-}
-
-function initLogoClick() {
-	$(document).on("click", "#contact-page-wrap .logo-container", tween_api.contacts.open);
-	//$(document).on("click", "#contact-page-wrap .content-container", tween_api.contacts.close);
-	$(document).on("click", ".floating-tag", tween_api.contacts.open);
-}
-
-function sectionControler() {
-	var self = this;
-	self._section = _S.Container.Section.base;
-
-	self.openTL = new TimelineMax({ paused: true });
-	self.closeTL = new TimelineMax({ paused: true });
-
-	self.resetSection = function () {
-		// Set state
-		TweenMax.set($("#section-wrap"), {
-			css: {
-				rotationX: 200,
-				rotationY: 65,
-				rotationZ: 30,
-				scale: 0.7,
-				x: "-200px",
-				transformPerspective: 300,
-				transformOrigin: "50% 50% -700",
-				zIndex: 0
-			}
-		});
-	}
-
-	self.resetOverlap = function () {
-		TweenMax.set(_S.Body.BGBlur.OverlapingBlur, { css: { visibility: "hidden", display: "none" } });
-	}
-
-	self.init = function () {
-		self.resetOverlap();
-		self.resetSection();
-	}
-
-	//#region Open Timeline Frames
-
-	self.openTL
-		.addLabel("OpenStart", 0)
-		.addLabel("BGBlurStart", 0.5)
-		.set(_S.Body.BGBlur.OverlapingBlur, { css: { alpha: 0, visibility: "visible", display: "block" } }, "OpenStart")
-		.to(self._section, 0.25, { css: { alpha: 1 } }, "OpenStart")
-		.to(self._section, 1, { css: { rotationX: 0, rotationY: 0, rotationZ: 0, scale: 1, x: "0px" } }, "OpenStart")
-		.set(self._section, { css: { zIndex: 600 } }, "OpenStart+=0.25")
-		.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 1 } }, "BGBlurStart")
-
-	//#endregion
-
-	//#region Close Timeline Frames
-
-	self.closeTL
-		.to(self._section, 0.5, { css: { alpha: 0, x: "-600px", rotationZ: 45 } }, 0)
-		.to(_S.Body.BGBlur.OverlapingBlur, 0.5, { css: { alpha: 0 } }, 0)
-
-	//#endregion
-
-
-	self.init();
-
-	return {
-		open: function () {
-			self.openTL.play().eventCallback("onComplete", function () {
-				self._section.find(".section-content-wrap").eq(0).fadeIn(function () {
-					animateThumbs();
+		})
+		.on("click", "#contact-page-wrap .logo-container", function () { ContactOpen.restart().play(); })
+		.on("mouseenter", ".menu-hitbox", function () {
+			var $ele = $(this);
+			$(".empty-bubble").fadeOut(100);
+			$("[data-bubbletextindex=0]").fadeOut(100);
+			$(".bubble-text-content").fadeOut(100);
+			comonTimer = setTimeout(function () {
+				test1.play().eventCallback("onStart", function (something) {
+					$(".empty-bubble").fadeIn(200);
+					$("[data-bubbletextindex=" + $ele.data("menutextindex") + "]").fadeIn(200);
+				}).eventCallback("onComplete", function () {
+					test1.restart().pause();
 				});
-			});
-		},
-		close: function () {
-			self.closeTL.restart().play().eventCallback("onComplete", function () {
-				self.openTL.restart().pause();
-				self.resetOverlap();
-				self.resetSection();
-			}).eventCallback("onStart", function () {
-				self._section.find(".section-content-wrap").eq(0).fadeOut();
-			});
-		}
-	}
-};
+			}, 300);
+		})
+		.on("mouseleave", ".menu-hitbox", function () {
+			var $ele = $(this);
+			clearTimeout(comonTimer);
+			$(".empty-bubble").stop().fadeOut(100);
+			$("[data-bubbletextindex=" + $ele.data("menutextindex") + "]").stop().fadeOut(100);
+		})
+		.on("mouseenter", ".thumbnail-image-container div.hitbox", function () {
+			$(this).data("hover_tween").play();
+		})
+		.on("mouseleave", ".thumbnail-image-container div.hitbox", function () {
+			$(this).data("hover_tween").reverse();
+		})
+		.on("click", ".thumbnail-image", function () {
+			$(this).css("opacity", ".7");
 
-function bubbleTextInit() {
-	var comonTimer;
-	$(document).on("mouseenter", ".menu-hitbox", function () {
-		var $ele = $(this);
-		$(".empty-bubble").fadeOut(100);
-		$("[data-bubbletextindex=0]").fadeOut(100);
-		$(".bubble-text-content").fadeOut(100);
-		comonTimer = setTimeout(function () {
-			test1.play().eventCallback("onStart", function (something) {
-				$(".empty-bubble").fadeIn(200);
-				$("[data-bubbletextindex=" + $ele.data("menutextindex") + "]").fadeIn(200);
-			}).eventCallback("onComplete", function () {
-				test1.restart().pause();
-			});
-		}, 300);
-	}).on("mouseleave", ".menu-hitbox", function () {
-		var $ele = $(this);
-		clearTimeout(comonTimer);
-		$(".empty-bubble").stop().fadeOut(100);
-		$("[data-bubbletextindex=" + $ele.data("menutextindex") + "]").stop().fadeOut(100);
-	});
-}
-
-function initThumbnails() {
-
-	var prevImage = $(this);
-
-	$("#section-wrap .thumbnail-image-container div.hitbox").each(function () {
-		var hoverTL = new tween_api.sections.thumbnails.hover($(this).parent());
-		$(this).data("hover_tween", hoverTL);
-	});
-
-	$(document).on("mouseenter", ".thumbnail-image-container div.hitbox", function () {
-		$(this).data("hover_tween").play();
-	}).on("mouseleave", ".thumbnail-image-container div.hitbox", function () {
-		$(this).data("hover_tween").reverse();
-	});
-
-	//Makes clicked thumbnail less visiable
-	$(document).on("click", ".thumbnail-image", function () {
-		$(this).css("opacity", ".7");
-
-		if (prevImage.attr("src") != $(this).attr("src")) {
-			prevImage.css("opacity", "1");
-		}
-		prevImage = $(this);
-	});
-
-}
-
-function prepareImageMargins() {
-
-	$('.main-scene-container').find("img").each(function (index) {
-		if ($(this).hasClass("hpos-image")) {
-			$(this).css({
-				"margin-top": ((260 - $(this).height()) / 2) + "px"
-			})
-		} else {
-			$(this).css({
-				"margin-left": ((346 - $(this).width()) / 2) + "px"
-			})
-		}
-	});
-
+			if (prevImage.attr("src") != $(this).attr("src")) {
+				prevImage.css("opacity", "1");
+			}
+			prevImage = $(this);
+		})
+		.on("click", ".fullscreen-toggle", openFullscreen);
 }
 
 function initBGSwitch() {
@@ -2253,7 +2279,6 @@ function initBGSwitch() {
 		$images = $imgWrap.find('img'),
 		$currImg = $images.eq(0),
 		index = 0,
-		numImgs = $images.length,
 		isAnimating = false;
 
 	// Animation properties
@@ -2280,7 +2305,7 @@ function initBGSwitch() {
 		});
 
 		tl.to($currImg, flipDur / 2, {
-			css: { rotationY: 90, z: flipDepth, rotationX: randomVal, alpha: 0.3 },
+			css: { rotationY: 90, z: flipDepth, rotationX: randomVal, alpha: 0.3, transformPerspective: 500 },
 			ease: Expo.easeIn
 		});
 
@@ -2291,69 +2316,104 @@ function initBGSwitch() {
 
 		tl.fromTo($images.eq(index), flipDur / 2,
 			// We need to flip the number sign fo rotationX, so we do -randomVal instead of randomVal
-			{ css: { rotationY: -90, z: flipDepth, rotationX: -randomVal, alpha: 0.3 } },
-			{ css: { rotationY: 0, z: 0, rotationX: 0, alpha: 1 }, ease: Expo.easeOut }
+			{ css: { rotationY: -90, z: flipDepth, rotationX: -randomVal, alpha: 0.3, transformPerspective: 500 } },
+			{ css: { rotationY: 0, z: 0, rotationX: 0, alpha: 1, transformPerspective: 500 }, ease: Expo.easeOut }
 		);
 	};
 
-	// Animate first image in
-	TweenMax.fromTo($currImg, 1.8,
-		{ css: { rotationY: -110, rotationX: Math.random() * 35, z: -1000, alpha: 0 } },
-		{
-			css: { rotationY: 0, rotationX: 0, z: 0, alpha: 1 }, ease: Power3.easeInOut
+	$(document)
+		.on("click", ".thumbnail-image-container", function (e) {
+			// Get new list of images
+			$images = $imgWrap.find('img');
+
+			if (_S.Container.Section.Description.base.css("display") === "block")
+				tween_api.sections.description.hide();
+			var nextIndex = $(this).find(".image-seperate-container").eq(0).attr("data-mainsceneimageindex") - 1;
+
+			changeParameters($(this).find(".image-seperate-container").eq(0).attr("data-section"), nextIndex);
+
+			flip(e, nextIndex);
+		})
+		.on("click", ".main-scene-wrap > .arrow", function (e) {
+			if ($(this).hasClass("left")) {
+				if (index !== 0) {
+					changeParameters($(this).attr("data-section"), index - 1);
+					flip(e, index - 1);
+
+				}
+			} else {
+				if (index !== $images.length - 1) {
+					changeParameters($(this).attr("data-section"), index + 1);
+					flip(e, index + 1);
+				}
+			}
 		});
 
-	//$currImg.show();
-
-	$(document).on("click", ".thumbnail-image-container", function (e) {
-		if (_S.Container.Section.Description.base.css("display") === "block")
-			tween_api.sections.description.hide();
-		var nextIndex = $(this).find("img").eq(0).data("mainsceneimageindex") - 1;
-		flip(e, nextIndex);
-	});
-
-}
-
-function ran(min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 var rotateThumb = function (_element, _delay) {
-	var tl = new TimelineMax({ paused: true, repeat: -1 });
+	var tl = new TimelineMax({ paused: true, repeat: -1, yoyo: true });
 
-	tl.add(TweenMax.to(_element, 0.4, {
-		rotationX: 7,
-		rotationY: -7,
-		delay: _delay
-	}))
-        .add(TweenMax.to(_element, 0.4, {
-        	rotationX: -7,
-        	rotationY: -7,
-        	delay: _delay
-        }))
-    .add(TweenMax.to(_element, 0.4, {
-    	rotationX: -7,
-    	rotationY: 7,
-    	delay: _delay
-    }))
-    .add(TweenMax.to(_element, 0.4, {
-    	rotationX: 7,
-    	rotationY: 7,
-    	delay: _delay
-    }));
+	tl
+		.to(_element, 0.6, { css: { rotationX: 7, rotationY: -7 } }, 0)
+		.to(_element, 0.6, { css: { rotationX: -7, rotationY: -7 }, delay: _delay })
+		.to(_element, 0.6, { css: { rotationX: -7, rotationY: 7 }, delay: _delay })
+		.to(_element, 0.6, { css: { rotationX: 7, rotationY: 7 }, delay: _delay });
+
 	return tl;
 }
 
 var animateThumbs = _.once(function () {
 
-	var $thumbnails = $("#section-wrap .thumbnail-image-container div.image-seperate-container img.thumbnail-image");
-
-	for (var i = 0; i < $thumbnails.length; i++) {
-		rotateThumb($thumbnails[i], ran(1, 1.6)).play();
-	}
+	//var $thumbnails = $("#section-wrap .thumbnail-image-container div.image-seperate-container");
+	//TweenMax.set($("#section-wrap .thumbnail-image-container .hitbox"), { css: { zIndex: 200 } })
+	//for (var i = 0; i < $thumbnails.length; i++) {
+	//	rotateThumb($thumbnails[i], 2).play();
+	//}
 });
 
 var animateCursor = _.once(function () {
 	TweenMax.to($(".cursor-icon"), 4, { css: { rotationZ: 360 }, ease: Elastic.easeOut, repeat: -1, repeatDelay: 1 })
 });
 
+var currentImageFullscreen = "";
+
+var changeParameters = function (SectionID, ImgIndex) {
+	$(".picture-info table tbody").html("");
+	var currentSection = GlobalApplicationStore.Get(SectionID);
+	var image = currentSection.GetImagesData()[ImgIndex];
+	console.log(image);
+
+	currentImageFullscreen = image.u;
+
+	var parameters = {};
+
+	if (image.parameters !== "")
+		parameters = JSON.parse(image.parameters);
+
+	_.each(parameters, function (value, key) {
+		var listElement = $("<tr/>");
+		var keyElement = $("<td/>", {
+			text: key
+		});
+		var valueElement = $("<td/>", {
+			text: value
+		});
+		if (value == "") {
+			keyElement.attr("colspan", "2");
+			listElement.append(keyElement);
+		} else {
+			listElement.append(keyElement).append(valueElement);
+		}
+		$(".picture-info table tbody").append(listElement);
+	});
+}
+
+var openFullscreen = function () {
+	$("body").prepend("<div id='image-fullscreen-preview'><img src='/content/u/" + currentImageFullscreen + "' /></div>");
+	$("#image-fullscreen-preview").one("click", closeFullscreen);
+}
+
+var closeFullscreen = function(){
+	$("#image-fullscreen-preview").remove();
+}

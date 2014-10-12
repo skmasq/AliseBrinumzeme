@@ -30,8 +30,8 @@
                 ImageTitle = x.Title,
                 Date = x.DateCreated,
                 SectionTitle = x.Section.Title,
-                Order = x.Order
-
+                Order = x.Order,
+                Preview = x.ImagePath
             });
 
             var returnItems = new List<object>();
@@ -44,7 +44,8 @@
                     ImageTitle = item.ImageTitle,
                     Date = Convert.ToDateTime(item.Date).ToString("yyyy-MM-dd"),
                     SectionTitle = item.SectionTitle,
-                    Order = item.Order
+                    Order = item.Order,
+                    Preview = item.Preview.Replace(".jpg", "_cropped.jpg")
                 });
             }
 
@@ -116,6 +117,7 @@
             image.Section.ID = SectionID;
             image.SectionID = SectionID;
             image.Title = Image.Title;
+            image.ParameterPlaceHolder = Image.ParameterPlaceHolder;
             
             if (imageFile != null)
             {
@@ -168,6 +170,7 @@
             image.DateCreated = DateTime.Now;
             image.Title = Image.Title;
             image.SectionID = SectionID;
+            image.ParameterPlaceHolder = Image.ParameterPlaceHolder;
 
             if (imageFile != null)
             {
@@ -181,16 +184,15 @@
 
                 Upload.ImageAdd(SectionID, imageFile, 665, 1000, 60);
                 Upload.RemoveOldImagesFromFolder(SectionID, Image.ID, true, true, true);
-                Upload.CombineAllImages(SectionID, Image.ID);
-
-                if (TryValidateModel(image))
-                {
-                    _db.SaveChanges();
-                }
-
-                return RedirectToAction("index", "image");
+                Upload.CombineAllImages(SectionID, Image.ID); 
             }
-            return View();
+
+            if (TryValidateModel(image))
+            {
+                _db.SaveChanges();
+            }
+
+            return RedirectToAction("index", "image");
         }
 
         public ActionResult IncreaseOrder(int id)

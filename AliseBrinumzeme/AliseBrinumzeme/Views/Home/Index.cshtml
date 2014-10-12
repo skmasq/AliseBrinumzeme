@@ -58,11 +58,11 @@
                 <!-- #endregion -->
                 <!-- #region Menu Hitboxes -->
                 <!--
-                    Section 1:  Dekorācijas
-                    Section 2:  Grims
-                    Section 3:  Pasākumu Organizēšana
-                    Section 4:  Karnevālu tērpu un aksesuāru noma
-                    Section 5:  Idejas
+                    Section 1[ID:5]:  Dekorācijas
+                    Section 2[ID:2]:  Grims
+                    Section 3[ID:1]:  Pasākumu Organizēšana
+                    Section 4[ID:3]:  Karnevālu tērpu un aksesuāru noma
+                    Section 5[ID:4]:  Idejas
                     Section 6:  Par Mani
                 -->
 
@@ -175,14 +175,19 @@
                 </div>
                 <div class="content-container">
                     <img class="close-button-contacts" src="~/Content/client/images/molbert/contactpage/contacticons/Location_001.png" alt="" />
-                    <div class="about-me-container">
-                        <h1 class="title">
+                    <h1 class="title">
                             Par Mani
                         </h1>
+                    <div class="about-me-container">
+
                         <p class="visible-part">
                             „...kādā no Mellužu pagalmiem, kas ievīts ziedošām, krāsainām puķu dobēm, rožu krūmiem un augļu kokiem ...Mazā gaviļniece priekā starodama  iesēdusies dārza malā novietotajā  pludmales strīpota auduma krēslā un mēģina aizmigt...
                         </p>
                     </div>
+                    <div class="open-chapter">Lasīt vairāk...</div>
+                    <div class="chapter-control prev"><< Atpakaļ</div>
+                    <div class="chapter-control next">Tālāk >></div>
+                    <div class="chapter-control contacts">Uz Kontaktiem</div>
                     <div class="phone-number-container">
                         <img src="~/Content/client/images/molbert/contactpage/contacticons/Phone_001.png" alt="" class="a-contact-icon phone-icon" />
                         <div class="a-contact-section-title">+371 2620 6362</div>
@@ -270,26 +275,30 @@
                     <img class="close-button" src="~/Content/client/images/molbert/contactpage/contacticons/Location_001.png" alt="" />
                     <div class="section-description-wrap">
                         <div class="section-description-container">
-                            <h1 class="description-title">Grims</h1>
-                            <p class="description-content">Svaigs, gaisīgs, spilgts, teatrāls...jāveido tā, lai justos skaisti, lai būtu atbilstošs vietai un notikumam!</p>
+                            <h1 class="description-title"></h1>
+                            <p class="description-content"></p>
                         </div>
                     </div>
                     <div class="main-scene-wrap">
                         <div class="main-scene-toolbar">
                             <div class="main-scene-toolbar-container">
-                                <div class="info-toggle" style="border-radius: 11px">Info</div>
-                                <div class="social-nets">
-                                    <div class="facebook-container">
-                                        <img src="~/Content/client/images/section/social/facebook_small_logo.png" alt="" />
-                                    </div>
-                                    <div class="twitter-container">
-                                        <img src="~/Content/client/images/section/social/twitter_small_logo.png" alt="" />
-                                    </div>
-                                </div>
+                                <div class="info-toggle" style="border-radius: 11px; right: 0;">Info</div>
+                                <div class="fullscreen-toggle" style="border-radius: 11px;">Palielināt</div>
+
+                                @*<div class="social-nets">
+                                        <div class="facebook-container">
+                                            <img src="~/Content/client/images/section/social/facebook_small_logo.png" alt="" />
+                                        </div>
+                                        <div class="twitter-container">
+                                            <img src="~/Content/client/images/section/social/twitter_small_logo.png" alt="" />
+                                        </div>
+                                    </div>*@
                             </div>
                         </div>
-                        <img src="~/Content/client/images/section/left_arrow_002.png" alt="" class="arrow left " />
-                        <img src="~/Content/client/images/section/right_arrow_002.png" alt="" class="arrow right " />
+                        @*<img src="~/Content/client/images/section/left_arrow_002.png" alt="" class="arrow left " />
+                        <img src="~/Content/client/images/section/right_arrow_002.png" alt="" class="arrow right " />*@
+                        <img src="~/Content/client/images/section/left_arrow_thumb_002.png" alt="" class="arrow left " />
+                        <img src="~/Content/client/images/section/right_arrow_thumb_002.png" alt="" class="arrow right " />
                         <div class="main-scene-container">
                             @*
                                 <img src="~/Content/images/uploads/Image 0005.jpg" alt="" class="main-scene-image-container hpos-image" height="231" width="358" />
@@ -318,23 +327,23 @@
                             <tbody>
                                 <tr>
                                     <td>Stils</td>
-                                    <td>Dace Sīmane</td>
+                                    <td>Jānis Ozols</td>
                                 </tr>
                                 <tr>
                                     <td>Grims</td>
-                                    <td>Edgars Šturms</td>
+                                    <td>RIčards Līksne</td>
                                 </tr>
                                 <tr>
                                     <td>Matu Sakārtojums</td>
-                                    <td>Silvestrs Kante</td>
+                                    <td>Edgars Bērziņš</td>
                                 </tr>
                                 <tr>
                                     <td>Foto</td>
-                                    <td>Niks Piliens</td>
+                                    <td>Niks Roterdams</td>
                                 </tr>
                                 <tr>
                                     <td>Norises vieta</td>
-                                    <td>SDK "Evita"</td>
+                                    <td>"Klusā Daba"</td>
                                 </tr>
                             </tbody>
                         </table>

@@ -78,6 +78,13 @@
             }
         },
         'aoColumns': [
+			{
+				'mData': 'Preview',
+				'sTitle': 'Preview',
+				'mRender': function (data, type, full) {
+					return '<img src="/Content/u/' + data + '">';
+				}
+			},
             {
                 'mData': 'ImageTitle',
                 'sTitle': 'Image Title'

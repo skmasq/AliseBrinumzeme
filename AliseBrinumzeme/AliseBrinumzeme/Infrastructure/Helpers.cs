@@ -17,10 +17,10 @@ namespace AliseBrinumzeme.Infrastructure
         /// <returns>JSON string</returns>
         public static string SerializeObject(Object input, bool debug = true)
         {
-            string json = JsonConvert.SerializeObject(input, Formatting.Indented, new JsonSerializerSettings() 
+            string json = JsonConvert.SerializeObject(input, Formatting.Indented, new JsonSerializerSettings()
             {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore, 
-                MaxDepth = 2 
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                MaxDepth = 2
             });
 
             if (debug)
@@ -69,6 +69,29 @@ namespace AliseBrinumzeme.Infrastructure
             // Replace spaces with line
             str = Regex.Replace(str, @"\s", "-");
             return str;
+        }
+
+        public static string GenerateKeyValue(string InputStream, string[] KeySeperator, string[] RowSeperator)
+        {
+            if (InputStream == null)
+                return "";
+            var rows = InputStream.Split(RowSeperator, StringSplitOptions.None);
+
+            var result = new Dictionary<string, string>();
+
+            foreach (string row in rows)
+            {
+                var Key = row.Split(KeySeperator, StringSplitOptions.None)[0];
+                string Value = "";
+                if (row.Split(KeySeperator, StringSplitOptions.None).Length > 1)
+                {
+                    Value = row.Split(KeySeperator, StringSplitOptions.None)[1];
+                }
+                if (!result.ContainsKey(Key))
+                    result.Add(Key.Trim(), Value.Trim());
+            }
+
+            return SerializeObject(result, false);
         }
     }
 }

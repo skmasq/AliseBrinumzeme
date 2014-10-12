@@ -8,18 +8,19 @@ namespace AliseBrinumzeme
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            string[] SingleScriptInclude = new string[] { };
+            string[] SingleStyleInclude = new string[] {
+                "~/Content/client/css/site.css"
+            };
 
             #region Client
 
             Bundle ClientStyleBundle = new StyleBundle("~/Client/css")
-                .Include(SingleScriptInclude)
-                .IncludeDirectory("~/Content/plugins/css/", "*.css", false)
-                .IncludeDirectory("~/Content/client/css/", "*.css", false);
+                .Include(SingleStyleInclude);
+            //.IncludeDirectory("~/Content/plugins/css/", "*.css", false)
+            //.IncludeDirectory("~/Content/client/css/", "*.css", false);
             bundles.Add(ClientStyleBundle);
 
             Bundle ClientScriptBundle = new ScriptBundle("~/Client/js")
-                .Include(SingleScriptInclude)
                 .IncludeDirectory("~/Content/client/js/libraries", "*.js", false)
                 .IncludeDirectory("~/Content/client/js/site", "*.js", false);
             bundles.Add(ClientScriptBundle);

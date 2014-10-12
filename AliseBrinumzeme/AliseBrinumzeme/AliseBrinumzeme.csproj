@@ -333,12 +333,14 @@
     <Content Include="Content\client\images\window\window_005_more_blur.png" />
     <Content Include="Content\client\images\window\Window_005_withShadow.png" />
     <Content Include="Content\client\images\window\Window_006_lighter.png" />
+    <Content Include="Content\client\images\window\Window_007.png" />
     <Content Include="Content\client\images\window\window_007_lighter_bg.png" />
     <Content Include="Content\client\js\excluded\jquery-2.0.3.js" />
     <Content Include="Content\client\js\libraries\CSSRulePlugin.js" />
     <Content Include="Content\client\js\libraries\html2canvas.js" />
     <Content Include="Content\client\js\libraries\jquery-1.10.2.js" />
     <Content Include="Content\client\js\libraries\lodash.js" />
+    <Content Include="Content\client\js\libraries\loglevel.js" />
     <Content Include="Content\client\js\libraries\StackBlur.js" />
     <Content Include="Content\client\js\libraries\TweenMax.js" />
     <Content Include="Content\client\js\site\cacheImage.js" />
@@ -360,6 +362,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\Alise Brīnumzemē Version 2.pubxml" />
+    <None Include="Properties\PublishProfiles\LocalPublish.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -410,11 +414,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52405</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:52888/</IISUrl>
+          <IISUrl>http://localhost:28888/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
